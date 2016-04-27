@@ -11,7 +11,7 @@
 #import "MayBarCodeScannerController.h"
 #import "MayISBN.h"
 #import "MayISBNFormatter.h"
-#import "MayISBNResolver.h"
+#import "MayISBNGoogleResolver.h"
 #import "Product.h"
 
 @interface MayEntriesController()
@@ -67,13 +67,18 @@
   willDisplayCell:(MayEntryCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    Product *model;
-    
-    model = [fetchedResultsController objectAtIndexPath:indexPath];
+    Product *model =
+    [fetchedResultsController objectAtIndexPath:indexPath];
     
     [cell configureWithModel:model
                  atIndexPath:indexPath
                 withDelegate:self];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView
+heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 88;
 }
 
 //- (void)tableView:(UITableView *)tableView
@@ -277,20 +282,40 @@ canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     model.productCode = formattedIsbn;
     model.productCodeType = @(MayProductCodeTypeISBN);
     model.productType = @(MayProductTypeBook);
-    
-    if (![managedObjectContext save:&error]) {
 
-        NSLog(@"Unresolved error %@, %@", error, [error localizedDescription]);
-    }
+//    if (![managedObjectContext save:&error]) {
+//
+//        NSLog(@"Unresolved error %@, %@", error, [error localizedDescription]);
+//    }
+//    
+//    [self.tableView reloadData];
     
-    [self.tableView reloadData];
-    
-    MayISBNResolver *resolver = [MayISBNResolver new];
+    MayISBNGoogleResolver *resolver = [MayISBNGoogleResolver new];
     [resolver resolveWithISBN:isbn.isbnCode complete:^(NSDictionary *result, NSError *error) {
 
-        NSLog(@"%@", result);
-        // wenn keine Fehler passiert sind und result Daten enthält,
-        // wird
+        NSDictionary *volumeInfo = [result objectForKey:@"volumeInfo"];
+        
+//        NSLog(@"%@", volumeInfo);
+        
+        NSArray  *authors = [volumeInfo objectForKey:@"authors"];
+        if (authors != nil) {
+            model.authors = [authors componentsJoinedByString:@"\n"];
+        }
+        model.title = [volumeInfo objectForKey:@"title"];
+        model.subtitle = [volumeInfo objectForKey:@"subtitle"];
+        model.publishedDate = [volumeInfo objectForKey:@"publishedDate"];
+        model.publisher = [volumeInfo objectForKey:@"publisher"];
+        model.pageCount = [[volumeInfo objectForKey:@"pageCount"] stringValue];
+        model.printType = [volumeInfo objectForKey:@"printType"];
+        model.language = [volumeInfo objectForKey:@"language"];
+
+        if (![managedObjectContext save:&error]) {
+            
+            NSLog(@"Unresolved error %@, %@", error, [error localizedDescription]);
+        }
+        
+        [self.tableView reloadData];
+        
     }];
 }
 

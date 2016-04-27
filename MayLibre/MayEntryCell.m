@@ -15,6 +15,12 @@
 @interface MayEntryCell()
 
 @property (nonatomic, weak) IBOutlet UILabel *productCodeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *authorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *printType;
+@property (weak, nonatomic) IBOutlet UILabel *publishedDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *publisher;
+
 @property (nonatomic, weak) id delegate;
 
 @end
@@ -39,6 +45,12 @@
     
     self.indexPath = indexPath;
     self.productCodeLabel.text = [managedObject valueForKey:@"productCode"];
+    self.titleLabel.text = [managedObject valueForKey:@"title"];
+    self.authorLabel.text = [managedObject valueForKey:@"authors"];
+    self.printType.text = [managedObject valueForKey:@"printType"];
+    self.publisher.text= [managedObject valueForKey:@"publisher"];
+    self.publishedDateLabel.text= [managedObject valueForKey:@"publishedDate"];
+    
     self.delegate = delegate;
 }
 

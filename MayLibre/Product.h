@@ -2,14 +2,12 @@
 //  Product.h
 //  MayLibre
 //
-//  Created by Jo Brunner on 26.04.16.
+//  Created by Jo Brunner on 27.04.16.
 //  Copyright © 2016 Mayflower. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
-NS_ASSUME_NONNULL_BEGIN
 
 typedef enum MayProductCodeType : NSUInteger {
     MayProductCodeTypeUnknown = 0,
@@ -20,6 +18,8 @@ typedef enum MayProductType : NSUInteger {
     MayProductCodeUnknown = 0,
     MayProductTypeBook = 1
 } MayProductType;
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface Product : NSManagedObject
 
