@@ -10,12 +10,14 @@
 @import CoreData;
 
 #import "MayBarCodeScannerController.h"
+#import "MGSwipeTableCell.h"
 
 @interface MayEntriesController : UITableViewController <
     MayBarCodeScannerDelegate,
     UITableViewDelegate,
     UITableViewDataSource,
-    NSFetchedResultsControllerDelegate> {
+    NSFetchedResultsControllerDelegate,
+    MGSwipeTableCellDelegate> {
 
     NSFetchedResultsController *fetchedResultsController;
     NSManagedObjectContext *managedObjectContext;
