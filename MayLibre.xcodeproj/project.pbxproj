@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2425E1311CE01BB300EEECB7 /* MayAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2425E1301CE01BB300EEECB7 /* MayAuthor.m */; };
 		2469A6091CD00DC200079F58 /* MayEntryFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A6081CD00DC200079F58 /* MayEntryFormController.m */; };
 		2469A60C1CD02CA300079F58 /* MayISBNGoogleResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A60B1CD02CA300079F58 /* MayISBNGoogleResolver.m */; };
-		2469A6111CD0495100079F58 /* Product+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A60E1CD0495100079F58 /* Product+CoreDataProperties.m */; };
-		2469A6121CD0495100079F58 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A6101CD0495100079F58 /* Product.m */; };
+		2469A6111CD0495100079F58 /* Entry+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A60E1CD0495100079F58 /* Entry+CoreDataProperties.m */; };
+		2469A6121CD0495100079F58 /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A6101CD0495100079F58 /* Entry.m */; };
+		247A9F6C1CD1F2BF007A0D78 /* MayDigest.m in Sources */ = {isa = PBXBuildFile; fileRef = 247A9F6B1CD1F2BF007A0D78 /* MayDigest.m */; };
+		247A9F711CD2CA47007A0D78 /* Category+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 247A9F6E1CD2CA47007A0D78 /* Category+CoreDataProperties.m */; };
+		247A9F721CD2CA47007A0D78 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 247A9F701CD2CA47007A0D78 /* Category.m */; };
+		247A9F751CD4C278007A0D78 /* HomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 247A9F741CD4C278007A0D78 /* HomeController.m */; };
+		247A9F781CD57ACB007A0D78 /* MayImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 247A9F771CD57ACB007A0D78 /* MayImageManager.m */; };
 		248ED2611CCA8E2800D57EF9 /* MayISBN.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2601CCA8E2800D57EF9 /* MayISBN.m */; };
 		248ED2661CCCBE9800D57EF9 /* MayISBNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2651CCCBE9800D57EF9 /* MayISBNTests.m */; };
 		248ED2691CCD02D000D57EF9 /* MayISBNFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2681CCD02D000D57EF9 /* MayISBNFormatter.m */; };
@@ -46,14 +52,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2425E12F1CE01BB300EEECB7 /* MayAuthor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayAuthor.h; sourceTree = "<group>"; };
+		2425E1301CE01BB300EEECB7 /* MayAuthor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayAuthor.m; sourceTree = "<group>"; };
 		2469A6071CD00DC200079F58 /* MayEntryFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayEntryFormController.h; sourceTree = "<group>"; };
 		2469A6081CD00DC200079F58 /* MayEntryFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayEntryFormController.m; sourceTree = "<group>"; };
 		2469A60A1CD02CA300079F58 /* MayISBNGoogleResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayISBNGoogleResolver.h; sourceTree = "<group>"; };
 		2469A60B1CD02CA300079F58 /* MayISBNGoogleResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBNGoogleResolver.m; sourceTree = "<group>"; };
-		2469A60D1CD0495100079F58 /* Product+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Product+CoreDataProperties.h"; sourceTree = "<group>"; };
-		2469A60E1CD0495100079F58 /* Product+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Product+CoreDataProperties.m"; sourceTree = "<group>"; };
-		2469A60F1CD0495100079F58 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
-		2469A6101CD0495100079F58 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
+		2469A60D1CD0495100079F58 /* Entry+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Entry+CoreDataProperties.h"; sourceTree = "<group>"; };
+		2469A60E1CD0495100079F58 /* Entry+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Entry+CoreDataProperties.m"; sourceTree = "<group>"; };
+		2469A60F1CD0495100079F58 /* Entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
+		2469A6101CD0495100079F58 /* Entry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entry.m; sourceTree = "<group>"; };
+		247A9F6A1CD1F2BF007A0D78 /* MayDigest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayDigest.h; sourceTree = "<group>"; };
+		247A9F6B1CD1F2BF007A0D78 /* MayDigest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayDigest.m; sourceTree = "<group>"; };
+		247A9F6D1CD2CA47007A0D78 /* Category+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Category+CoreDataProperties.h"; sourceTree = "<group>"; };
+		247A9F6E1CD2CA47007A0D78 /* Category+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Category+CoreDataProperties.m"; sourceTree = "<group>"; };
+		247A9F6F1CD2CA47007A0D78 /* Category.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Category.h; sourceTree = "<group>"; };
+		247A9F701CD2CA47007A0D78 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
+		247A9F731CD4C278007A0D78 /* HomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeController.h; sourceTree = "<group>"; };
+		247A9F741CD4C278007A0D78 /* HomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeController.m; sourceTree = "<group>"; };
+		247A9F761CD57ACB007A0D78 /* MayImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayImageManager.h; sourceTree = "<group>"; };
+		247A9F771CD57ACB007A0D78 /* MayImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayImageManager.m; sourceTree = "<group>"; };
 		248ED25F1CCA8E2800D57EF9 /* MayISBN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayISBN.h; sourceTree = "<group>"; };
 		248ED2601CCA8E2800D57EF9 /* MayISBN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBN.m; sourceTree = "<group>"; };
 		248ED2651CCCBE9800D57EF9 /* MayISBNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBNTests.m; sourceTree = "<group>"; };
@@ -118,9 +136,22 @@
 		10A999DC49B3E5EDC3557A16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				249C62B91CCA3342005F77C1 /* Foundation.framework */,
+				249C62B71CCA3338005F77C1 /* UIKit.framework */,
+				249C62B51CCA3319005F77C1 /* AVFoundation.framework */,
+				249C62B31CCA3312005F77C1 /* CoreGraphics.framework */,
 				41663C847506F0ED3EF32752 /* libPods-MayLibre.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2425E1321CE01BCF00EEECB7 /* MayAuthor */ = {
+			isa = PBXGroup;
+			children = (
+				2425E12F1CE01BB300EEECB7 /* MayAuthor.h */,
+				2425E1301CE01BB300EEECB7 /* MayAuthor.m */,
+			);
+			name = MayAuthor;
 			sourceTree = "<group>";
 		};
 		2469A5EC1CCFE66200079F58 /* MayISBN */ = {
@@ -140,10 +171,14 @@
 			isa = PBXGroup;
 			children = (
 				249C62971CCA31B2005F77C1 /* MayLibre.xcdatamodeld */,
-				2469A60D1CD0495100079F58 /* Product+CoreDataProperties.h */,
-				2469A60E1CD0495100079F58 /* Product+CoreDataProperties.m */,
-				2469A60F1CD0495100079F58 /* Product.h */,
-				2469A6101CD0495100079F58 /* Product.m */,
+				247A9F6D1CD2CA47007A0D78 /* Category+CoreDataProperties.h */,
+				247A9F6E1CD2CA47007A0D78 /* Category+CoreDataProperties.m */,
+				247A9F6F1CD2CA47007A0D78 /* Category.h */,
+				247A9F701CD2CA47007A0D78 /* Category.m */,
+				2469A60D1CD0495100079F58 /* Entry+CoreDataProperties.h */,
+				2469A60E1CD0495100079F58 /* Entry+CoreDataProperties.m */,
+				2469A60F1CD0495100079F58 /* Entry.h */,
+				2469A6101CD0495100079F58 /* Entry.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -151,10 +186,6 @@
 		249C627F1CCA31B2005F77C1 = {
 			isa = PBXGroup;
 			children = (
-				249C62B91CCA3342005F77C1 /* Foundation.framework */,
-				249C62B71CCA3338005F77C1 /* UIKit.framework */,
-				249C62B51CCA3319005F77C1 /* AVFoundation.framework */,
-				249C62B31CCA3312005F77C1 /* CoreGraphics.framework */,
 				249C628A1CCA31B2005F77C1 /* MayLibre */,
 				249C62A71CCA31B2005F77C1 /* MayLibreTests */,
 				249C62891CCA31B2005F77C1 /* Products */,
@@ -176,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				249C62941CCA31B2005F77C1 /* Main.storyboard */,
+				2425E1321CE01BCF00EEECB7 /* MayAuthor */,
 				2469A5F31CCFF58C00079F58 /* Models */,
 				249C628B1CCA31B2005F77C1 /* Supporting Files */,
 				2469A5EC1CCFE66200079F58 /* MayISBN */,
@@ -183,6 +215,8 @@
 				249C628F1CCA31B2005F77C1 /* AppDelegate.m */,
 				249C62BB1CCA3ACE005F77C1 /* MayEntriesController.h */,
 				249C62BC1CCA3ACE005F77C1 /* MayEntriesController.m */,
+				2469A6071CD00DC200079F58 /* MayEntryFormController.h */,
+				2469A6081CD00DC200079F58 /* MayEntryFormController.m */,
 				249C62BE1CCA3B01005F77C1 /* MayEntryCell.h */,
 				249C62BF1CCA3B01005F77C1 /* MayEntryCell.m */,
 				249C62C01CCA3B01005F77C1 /* MayEntryCell.xib */,
@@ -190,10 +224,14 @@
 				249C62C41CCA3D8A005F77C1 /* MayBarCodeScannerController.m */,
 				248ED26A1CCD160700D57EF9 /* MayISBNResolver.h */,
 				248ED26B1CCD160700D57EF9 /* MayISBNResolver.m */,
-				2469A6071CD00DC200079F58 /* MayEntryFormController.h */,
-				2469A6081CD00DC200079F58 /* MayEntryFormController.m */,
 				2469A60A1CD02CA300079F58 /* MayISBNGoogleResolver.h */,
 				2469A60B1CD02CA300079F58 /* MayISBNGoogleResolver.m */,
+				247A9F6A1CD1F2BF007A0D78 /* MayDigest.h */,
+				247A9F6B1CD1F2BF007A0D78 /* MayDigest.m */,
+				247A9F731CD4C278007A0D78 /* HomeController.h */,
+				247A9F741CD4C278007A0D78 /* HomeController.m */,
+				247A9F761CD57ACB007A0D78 /* MayImageManager.h */,
+				247A9F771CD57ACB007A0D78 /* MayImageManager.m */,
 			);
 			path = MayLibre;
 			sourceTree = "<group>";
@@ -280,6 +318,7 @@
 				TargetAttributes = {
 					249C62871CCA31B2005F77C1 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = L79BTFY6FV;
 					};
 					249C62A31CCA31B2005F77C1 = {
 						CreatedOnToolsVersion = 7.3;
@@ -366,20 +405,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2425E1311CE01BB300EEECB7 /* MayAuthor.m in Sources */,
 				249C62C11CCA3B01005F77C1 /* MayEntryCell.m in Sources */,
+				247A9F781CD57ACB007A0D78 /* MayImageManager.m in Sources */,
+				247A9F721CD2CA47007A0D78 /* Category.m in Sources */,
 				248ED2691CCD02D000D57EF9 /* MayISBNFormatter.m in Sources */,
 				2469A60C1CD02CA300079F58 /* MayISBNGoogleResolver.m in Sources */,
 				248ED2611CCA8E2800D57EF9 /* MayISBN.m in Sources */,
 				249C62901CCA31B2005F77C1 /* AppDelegate.m in Sources */,
 				249C62C61CCA3D8A005F77C1 /* MayBarCodeScannerController.m in Sources */,
-				2469A6121CD0495100079F58 /* Product.m in Sources */,
+				2469A6121CD0495100079F58 /* Entry.m in Sources */,
 				249C62991CCA31B2005F77C1 /* MayLibre.xcdatamodeld in Sources */,
 				2469A6091CD00DC200079F58 /* MayEntryFormController.m in Sources */,
 				249C62BD1CCA3ACE005F77C1 /* MayEntriesController.m in Sources */,
-				2469A6111CD0495100079F58 /* Product+CoreDataProperties.m in Sources */,
+				247A9F711CD2CA47007A0D78 /* Category+CoreDataProperties.m in Sources */,
+				2469A6111CD0495100079F58 /* Entry+CoreDataProperties.m in Sources */,
 				248ED2741CCECCCE00D57EF9 /* MayISBNRangeDictionary.m in Sources */,
 				248ED26C1CCD160700D57EF9 /* MayISBNResolver.m in Sources */,
 				249C628D1CCA31B2005F77C1 /* main.m in Sources */,
+				247A9F751CD4C278007A0D78 /* HomeController.m in Sources */,
+				247A9F6C1CD1F2BF007A0D78 /* MayDigest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,8 +556,9 @@
 			baseConfigurationReference = 9B543CBCED83E2B0FE1B8EE6 /* Pods-MayLibre.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = MayLibre/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.jo.MayLibre;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -525,8 +571,9 @@
 			baseConfigurationReference = F12BEF5084F253CEB438BD3E /* Pods-MayLibre.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = MayLibre/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.jo.MayLibre;
 				PRODUCT_NAME = "$(TARGET_NAME)";
