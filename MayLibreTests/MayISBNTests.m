@@ -89,8 +89,7 @@
 - (void)testConstructorWithString {
     
     MayISBN *isbn10 = [MayISBN ISBNFromString:@"3-494-01260-1"];
-    
-    XCTAssertEqualObjects(isbn10.isbnCode, @3494012601);
+    XCTAssertEqualObjects(isbn10.isbnCode, @9783494012605);
     
     MayISBN *isbn13 = [MayISBN ISBNFromString:@"978-3-494-01260-5"];
     XCTAssertEqualObjects(isbn13.isbnCode, @9783494012605);
@@ -175,6 +174,20 @@
     NSString *formattedISBNString = [formatter stringFromISBN:isbn];
     
     XCTAssertEqualObjects(formattedISBNString, @"0-7356-1993-X");
+}
+
+- (void)testSpecialBugISBN {
+
+    NSString *barCode = @"9783940345080";
+    NSError *error = nil;
+    MayISBN *isbn = [MayISBN ISBNFromString:barCode
+                                      error:&error];
+
+    
+    XCTAssertEqualObjects(isbn.isbnCode, @9783940345080);
+    // MayISBNFormatter *formatter = [[MayISBNFormatter alloc] init];
+    
+    XCTAssertEqualObjects([MayISBNFormatter stringFromISBN:isbn], @"978-3-940345-08-0");
 }
 
 @end

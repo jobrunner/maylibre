@@ -17,11 +17,11 @@ static MayISBNFormatter *MayISBNFormatterReusableInstance;
 /**
  * Internal state of ISBN representation
  */
-@property NSUInteger prefix;
-@property NSUInteger groupNumber;
-@property NSUInteger publishingNumber;
-@property NSUInteger titleNumber;
-@property NSUInteger errorCheckingNumber;
+@property (nonatomic, strong) NSString *prefix;
+@property (nonatomic, strong) NSString *groupNumber;
+@property (nonatomic, strong) NSString *publishingNumber;
+@property (nonatomic, strong) NSString *titleNumber;
+@property (nonatomic, strong) NSString *errorCheckingNumber;
 
 @end
 
@@ -104,9 +104,9 @@ static MayISBNFormatter *MayISBNFormatterReusableInstance;
     NSString *checkSumString = (checkSum == 10) ? @"X" : [@(checkSum) stringValue];
     
     return [NSString stringWithFormat:format,
-            @(_groupNumber),
-            @(_publishingNumber),
-            @(_titleNumber),
+            _groupNumber,
+            _publishingNumber,
+            _titleNumber,
             checkSumString];
 }
 
@@ -115,11 +115,11 @@ static MayISBNFormatter *MayISBNFormatterReusableInstance;
     NSString *format = (_isbnSeparators == YES) ? @"%@-%@-%@-%@-%@" : @"%@%@%@%@%@";
     
     return [NSString stringWithFormat:format,
-            @(_prefix),
-            @(_groupNumber),
-            @(_publishingNumber),
-            @(_titleNumber),
-            @(_errorCheckingNumber)];
+            _prefix,
+            _groupNumber,
+            _publishingNumber,
+            _titleNumber,
+            _errorCheckingNumber];
 }
 
 - (void)parseISBNParts:(NSString *)code
@@ -127,25 +127,28 @@ static MayISBNFormatter *MayISBNFormatterReusableInstance;
 
     [self findPrefix:code];
     
-    [self findGroupNumber:code error:error];
+    [self findGroupNumber:code
+                    error:error];
     
     if (*error != nil) {
         return;
     }
     
-    [self findPublishingNumber:code error:error];
+    [self findPublishingNumber:code
+                         error:error];
     
     if (*error != nil) {
         return;
     }
     [self findTitleNumber:code];
     
-    [self findCheckSum:code error:error];
+    [self findCheckSum:code
+                 error:error];
 }
 
 - (void)findPrefix:(NSString *)code {
     
-    _prefix = [[code substringToIndex:3] integerValue];
+    _prefix = [code substringToIndex:3];
 }
 
 - (void)findGroupNumber:(NSString *)code
@@ -161,7 +164,7 @@ static MayISBNFormatter *MayISBNFormatterReusableInstance;
         NSArray *filteredData = [allKeys filteredArrayUsingPredicate:predicate];
         
         if ([filteredData count] == 1) {
-            _groupNumber = [[searchKey substringFromIndex:3] integerValue];
+            _groupNumber = [searchKey substringFromIndex:3];
             *error = nil;
             
             return;
@@ -185,7 +188,7 @@ static MayISBNFormatter *MayISBNFormatterReusableInstance;
 - (void)findPublishingNumber:(NSString *)code
                        error:(NSError **)error {
     
-    NSString *key = [NSString stringWithFormat:@"%@%@", @(_prefix), @(_groupNumber)];
+    NSString *key = [NSString stringWithFormat:@"%@%@", _prefix, _groupNumber];
     
     NSArray *rules = [[MayISBNRangeDictionary rangeDictionary] objectForKey:key];
     NSUInteger startPosition = [key length];
@@ -200,7 +203,7 @@ static MayISBNFormatter *MayISBNFormatterReusableInstance;
         NSUInteger publishingNumber = [[heystack substringWithRange:NSMakeRange(0, length)] integerValue];
         
         if ((publishingNumber >= lower) && (publishingNumber <= upper)) {
-            _publishingNumber = publishingNumber;
+            _publishingNumber = [NSString stringWithFormat:@"%@", @(publishingNumber)];
             *error = nil;
             return;
         }
@@ -220,11 +223,11 @@ static MayISBNFormatter *MayISBNFormatterReusableInstance;
 - (void)findTitleNumber:(NSString *)code {
     
     NSUInteger startPosition = [[NSString stringWithFormat:@"%@%@%@",
-                                 @(_prefix),
-                                 @(_groupNumber),
-                                 @(_publishingNumber)] length];
+                                 _prefix,
+                                 _groupNumber,
+                                 _publishingNumber] length];
     
-    _titleNumber = [[code substringWithRange:NSMakeRange(startPosition, (13 - startPosition - 1))] integerValue];
+    _titleNumber = [code substringWithRange:NSMakeRange(startPosition, (13 - startPosition - 1))];
 }
 
 - (void)findCheckSum:(NSString *)code
@@ -233,7 +236,7 @@ static MayISBNFormatter *MayISBNFormatterReusableInstance;
     NSUInteger checkSum = [[code substringFromIndex:12] integerValue];
     
     if (checkSum == [MayISBN calculcateErrorCheckingNumberISBN13:code]) {
-        _errorCheckingNumber = checkSum;
+        _errorCheckingNumber = [NSString stringWithFormat:@"%@", @(checkSum)];
         *error = nil;
 
         return;
@@ -250,7 +253,7 @@ static MayISBNFormatter *MayISBNFormatterReusableInstance;
 
 - (BOOL)isPossibleISBN10Representation {
     
-    return (_prefix == 978);
+    return ([_prefix integerValue] == 978);
 }
 
 @end

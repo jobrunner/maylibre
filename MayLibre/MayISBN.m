@@ -30,20 +30,20 @@
 
 - (instancetype)initWithISBNFromString:(NSString *)isbnString {
 
+    NSError *error = nil;
     return [self initWithISBNFromString:isbnString
-                                  error:nil];
+                                  error:&error];
 }
 
 - (instancetype)initWithISBNFromString:(NSString *)isbnString
                                  error:(NSError **)error {
-    
+
     if (self = [super init]) {
         
         // Filters all but 0-9 and X.
         NSString *filteredCode = [self filterDigitCharacters:isbnString];
         
         if ([self validateISBN10:filteredCode]) {
-
             NSString *newISBNString = [MayISBN convertISBN10ToISBN13:filteredCode];
             _isbnCode = [self numberWithString:newISBNString];
             *error = nil;
@@ -67,10 +67,11 @@
 + (NSString *)convertISBN10ToISBN13:(NSString *)isbn10Code {
 
     NSString *withoutErrorCheckingNumber = [isbn10Code substringToIndex:9];
+    NSString *isbn13WithoutErrorCheckingCode = [NSString stringWithFormat:@"978%@", withoutErrorCheckingNumber];
     
-    return [NSString stringWithFormat:@"978%@%@",
-            withoutErrorCheckingNumber,
-            @([MayISBN calculcateErrorCheckingNumberISBN13:isbn10Code])];
+    return [NSString stringWithFormat:@"%@%@",
+            isbn13WithoutErrorCheckingCode,
+            @([MayISBN calculcateErrorCheckingNumberISBN13:isbn13WithoutErrorCheckingCode])];
 }
 
 /**
@@ -119,7 +120,7 @@
     
     NSString *string = [self filterDigitCharacters:code];
     
-    return [NSNumber numberWithUnsignedLong:[string longLongValue]];
+    return [NSNumber numberWithLong:[string longLongValue]];
 }
 
 /**
@@ -143,11 +144,11 @@
 }
 
 /**
- * Basic validation of a ISBN-10 without '-' sign.
+ * Calculates error checking number of an ISBN-13 without '-'.
  */
 + (NSUInteger)calculcateErrorCheckingNumberISBN13:(NSString *)code {
     
-    if ([code length] != 13) {
+    if ([code length] < 12) {
         
         return NO;
     }
