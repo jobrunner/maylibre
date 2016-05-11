@@ -7,14 +7,23 @@
 //
 #import "AppDelegate.h"
 #import "MayEntriesController.h"
+#import "MayEntryFormController.h"
 #import "MayEntryCell.h"
 #import "MayBarCodeScannerController.h"
 #import "MayISBN.h"
 #import "MayISBNFormatter.h"
 #import "MayISBNGoogleResolver.h"
-#import "Product.h"
+#import "MayDigest.h"
+#import "Entry.h"
+#import "MayImageManager.h"
+
 
 @interface MayEntriesController()
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *sortSegmentationControl;
+
+- (IBAction)scanBarButton:(UIBarButtonItem *)sender;
+- (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender;
 
 @end
 
@@ -25,6 +34,12 @@
     [super viewDidLoad];
     
     managedObjectContext = ApplicationDelegate.managedObjectContext;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [self.navigationController setToolbarHidden:NO
+                                       animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,7 +82,7 @@
   willDisplayCell:(MayEntryCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    Product *model =
+    Entry *model =
     [fetchedResultsController objectAtIndexPath:indexPath];
     
     [cell configureWithModel:model
@@ -78,7 +93,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 88;
+    return 80;
 }
 
 //- (void)tableView:(UITableView *)tableView
@@ -101,7 +116,42 @@ canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
 }
 
-- (void)deleteRecord:(MayEntryCell *)cell {
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    MayEntryCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    [self performSegueWithIdentifier:@"openEntryFormSegue"
+                              sender:cell];
+}
+
+- (BOOL)swipeTableCell:(MayEntryCell *)cell
+   tappedButtonAtIndex:(NSInteger)index
+             direction:(MGSwipeDirection)direction
+         fromExpansion:(BOOL)fromExpansion {
+    
+    if (direction == MGSwipeDirectionRightToLeft && index == 0) {
+        
+        [self deleteRecordFromCell:cell];
+        
+        return NO;
+    }
+    
+    if (direction == MGSwipeDirectionRightToLeft && index == 1) {
+        
+        [self toggleMarkFromCell:cell];
+    }
+    
+//    if (direction == MGSwipeDirectionRightToLeft && index == 2) {
+//        // Send an email with sample data
+//        [self sendMail:[self.fetchedResultsController objectAtIndexPath:cell.indexPath]];
+//    }
+    
+    return YES;
+}
+
+
+- (void)deleteRecordFromCell:(MayEntryCell *)cell {
     
     void (^action)() = ^{
         
@@ -136,28 +186,61 @@ canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
                      completion:nil];
 }
 
-#pragma mark - NSFetchedResultsControllerDelegate
+- (void)toggleMarkFromCell:(UITableViewCell *)cell {
+    
+    // Mark sample
+    NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+    Entry *entry = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    // toogle isMarked flag
+     entry.isMarked = ([entry.isMarked boolValue]) ? @NO : @YES;
+    
+    NSError *error = nil;
+    
+    if (![context save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error localizedDescription]);
+    }
+}
+
+#pragma mark - NSFetchedResultsController Delegate and Helpers
+
+- (NSArray *)sortDescriptors {
+
+    static NSArray *sortKeysBySegmentation = nil;
+    
+    if (sortKeysBySegmentation == nil) {
+        sortKeysBySegmentation = @[@"authors", @"title", @"creationTime"];
+    }
+
+    NSString *sortKey =
+    [sortKeysBySegmentation objectAtIndex:_sortSegmentationControl.selectedSegmentIndex];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey
+                                                                   ascending:YES];
+    NSLog(@"Sorting: %@", sortKey);
+    return @[sortDescriptor];
+}
 
 - (NSFetchedResultsController *)fetchedResultsController {
     
-    if (fetchedResultsController != nil) {
-        
-        return fetchedResultsController;
-    }
+// Bad Idea to comment out!
+// But for sorting changes, fetchedResultsController cannot be cached the easy way.
+    
+//    if (fetchedResultsController != nil) {
+//        
+//        return fetchedResultsController;
+//    }
     
     NSFetchRequest *request = [NSFetchRequest new];
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Product"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Entry"
                                               inManagedObjectContext:managedObjectContext];
     
     [request setEntity:entity];
     
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"productCode"
-                                                                   ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
-    
-    [request setSortDescriptors:sortDescriptors];
+    [request setSortDescriptors:self.sortDescriptors];
     
     NSFetchedResultsController *resultsController;
     
@@ -165,7 +248,6 @@ canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
                                                             managedObjectContext:managedObjectContext
                                                               sectionNameKeyPath:nil
                                                                        cacheName:nil];
-    
     resultsController.delegate = self;
     
     fetchedResultsController = resultsController;
@@ -247,76 +329,149 @@ canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView endUpdates];
 }
 
-#pragma mark - MAYBarCodeScannerDelegates
+#pragma mark - Helper
 
-- (void)barCodeScannerController:(MayBarCodeScannerController *)controller
-               didCaptureBarCode:(NSString *)barCode {
+- (void)handleInvalidISBN:(NSString *)barCode withError:(NSError *)error {
 
-    // wenn barCode eine ISBN ist, dann wird jetzt eine Netzwerkafrage getriggert und das Ergebnis gespeichert und angezeigt.
-    // Das wollen wir so machen:
-    // 1) zunächst mal gucken, ob die ISBN schon gespeichert ist und nachfragen, ob ein neuer Datensatz angelegt werden soll, denn ISBNs werden manchmal doch für andere Auflagen verwendet, sodass es sich hier um ein zweites physikalisches Exemplar handeln kann. Eine Alternative wäre das Hochzählen eines Bestandscounters. Die Operation soll aber auch einfach abgebrochen werden, weil ein Buch irrtümlich (nocheinmal) hinzugefügt wurde.
-    // 2) Das Produkt mit der ISBN sollte jetzt bereits gespeichert werden und die TableView aktualisiert.
-    // 3) Solange aber noch keine Daten da sind, will ich das als User sehen und wissen, dass etwas passiert - Die Zellen, die Daten nachladen werden grau dargestellt, wenn die Daten da sind schwarz.
-    // 4) Im Hintergrund wird eine Suche auf einem Service über die ISBN gemacht und bei erfolgreicher Suche wird der Datensatz vervollständigt. Natürlich könnte man Fragen, ob das das gesuchte Produkt das ist, dass man "eingescannt" hat. Diese Operation ist aber sehr lässtig.
-    // 5) Während Netzwerkanfragen laufen will ich auf jeden Fall Details der bereits verfügbaren Daten im Detail sehen.
-    // 6) Während Netzwerkabfragen laufen, könnte es cool sein, bereits in den Detail-Datensatz zu gehen. Hier sieht man natürlich nur eine ISBN und der Rest des Formulars ist "in progress" (wie auch immer das gut aussieht)
+    // gescanntes Ding ist zwar ein BarCode, aber kein Buch (oder die ISBN ist sonst falsch).
+    // Retry, Cancel, manuelle Eingabe
     
-    // Andere Alternative
-    // 1) Wenn der User einen BarCode gescannt hat, springt die Ansicht sofort in das Formular.
-    // 2) Wenn keine Daten kommen, kann der User zumindest seinen Datensatz vervollständigen, wenn er das will. Oder den Datensatz einfach nicht speichern und kehrt zurück in die Produktliste.
+
     
+    // Fehler anzeigen und ggf. die manuelle Eingabe einer ISBN ermöglichen.
     
-    NSError *error = nil;
+    void (^retryActionHandler)() = ^{
+        // hierfür brauche ich eine Instanz vom MayBarCodeScannerController...
+        // [_session startRunning];
+    };
     
-    MayISBN *isbn = [MayISBN ISBNFromString:barCode
-                                      error:&error];
-    if (error != nil) {
-        
-        // handle error with a message to the user...
-    }
+    // close scanner without storing entry
+    void (^cancelActionHandler)() = ^{
+        [self.navigationController popViewControllerAnimated:YES];
+    };
     
-    Product *model = [NSEntityDescription insertNewObjectForEntityForName:@"Product"
-                                                   inManagedObjectContext:managedObjectContext];
+    UIAlertController *actionSheet;
+    actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"ISBN invalid", nil)
+                                                      message:error.localizedDescription
+                                               preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *retryAction;
+    retryAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", nil)
+                                           style:UIAlertActionStyleDefault
+                                         handler:retryActionHandler];
+    
+//    UIAlertAction *applyAction;
+//    applyAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Apply", nil)
+//                                           style:UIAlertActionStyleDefault
+//                                         handler:applyActionHandler];
+
+    UIAlertAction *cancelAction;
+    cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                                            style:UIAlertActionStyleDestructive
+                                          handler:cancelActionHandler];
+    
+    [actionSheet addAction:cancelAction];
+//    [actionSheet addAction:retryAction];
+    
+    [self presentViewController:actionSheet
+                       animated:YES
+                     completion:nil];
+    
+}
+
+- (void)storeEntryWithISBN:(MayISBN *)isbn
+                     error:(NSError **)error {
+
+    Entry *model = [NSEntityDescription insertNewObjectForEntityForName:@"Entry"
+                                                 inManagedObjectContext:managedObjectContext];
     
     NSString *formattedIsbn = [MayISBNFormatter stringFromISBN:isbn];
     model.productCode = formattedIsbn;
-    model.productCodeType = @(MayProductCodeTypeISBN);
-    model.productType = @(MayProductTypeBook);
-
-//    if (![managedObjectContext save:&error]) {
-//
-//        NSLog(@"Unresolved error %@, %@", error, [error localizedDescription]);
-//    }
-//    
-//    [self.tableView reloadData];
+    model.productCodeType = @(MayEntryCodeTypeISBN);
+    model.productType = @(MayEntryTypeBook);
     
-    MayISBNGoogleResolver *resolver = [MayISBNGoogleResolver new];
-    [resolver resolveWithISBN:isbn.isbnCode complete:^(NSDictionary *result, NSError *error) {
-
-        NSDictionary *volumeInfo = [result objectForKey:@"volumeInfo"];
+    if (![managedObjectContext save:error]) {
         
-//        NSLog(@"%@", volumeInfo);
+        // Error Message to the User: Could not save...
+        NSLog(@"Unresolved error %@", (*error).localizedDescription);
+        return;
+    }
+    
+    // Trigger asynchronous service call to resolve the isbn to a full book description
+    MayISBNGoogleResolver *resolver = MayISBNGoogleResolver.new;
+    
+    [resolver resolveWithISBN:isbn.isbnCode
+                     complete:^(NSDictionary *result, NSError *error) {
         
-        NSArray  *authors = [volumeInfo objectForKey:@"authors"];
-        if (authors != nil) {
-            model.authors = [authors componentsJoinedByString:@"\n"];
-        }
-        model.title = [volumeInfo objectForKey:@"title"];
-        model.subtitle = [volumeInfo objectForKey:@"subtitle"];
-        model.publishedDate = [volumeInfo objectForKey:@"publishedDate"];
-        model.publisher = [volumeInfo objectForKey:@"publisher"];
-        model.pageCount = [[volumeInfo objectForKey:@"pageCount"] stringValue];
-        model.printType = [volumeInfo objectForKey:@"printType"];
-        model.language = [volumeInfo objectForKey:@"language"];
+                         if (error) {
+                             NSLog(@"Error while resolving ISBN: %@", error.localizedDescription);
+                             return;
+                         }
+                         
+                         NSDictionary *volumeInfo = [result objectForKey:@"volumeInfo"];
+        
+                         NSArray  *authors = [volumeInfo objectForKey:@"authors"];
+                         if (authors != nil) {
+                             model.authors = [authors componentsJoinedByString:@"\n"];
+                         }
+                         model.title = [volumeInfo objectForKey:@"title"];
+                         model.subtitle = [volumeInfo objectForKey:@"subtitle"];
+                         model.publishedDate = [volumeInfo objectForKey:@"publishedDate"];
+                         model.publisher = [volumeInfo objectForKey:@"publisher"];
+                         model.pageCount = [[volumeInfo objectForKey:@"pageCount"] stringValue];
+                         model.printType = [volumeInfo objectForKey:@"printType"];
+                         model.language = [volumeInfo objectForKey:@"language"];
+        
+                         NSString *imageUrl = [[volumeInfo objectForKey:@"imageLinks"] objectForKey:@"thumbnail"];
 
-        if (![managedObjectContext save:&error]) {
+                         model.coverUrl = imageUrl;
+                         
+                         if (![managedObjectContext save:&error]) {
+
+                             // completion handler mit error aufrufen
+                             NSLog(@"Error while storing Resolved ISBN Data: %@", error.localizedDescription);
             
-            NSLog(@"Unresolved error %@, %@", error, [error localizedDescription]);
-        }
-        
-        [self.tableView reloadData];
-        
+                             return;
+                         }
     }];
+    error = nil;
+}
+
+#pragma mark - MAYBarCodeScannerDelegates
+
+- (void)barCodeScannerController:(MayBarCodeScannerController *)controller
+                  didCaptureISBN:(MayISBN *)isbn {
+
+    NSOperationQueue *operationQueue = [NSOperationQueue new];
+    
+    [operationQueue addOperationWithBlock:^{
+        
+        // Background work
+
+        NSError *error = nil;
+
+        [self storeEntryWithISBN:isbn
+                           error:&error];
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+
+            // Main thread work (UI usually)
+            [self.tableView reloadData];
+        }];
+    }];
+}
+
+#pragma mark IBActions
+
+- (IBAction)scanBarButton:(UIBarButtonItem *)sender {
+    
+    [self performSegueWithIdentifier:@"openScanner" sender:sender];
+}
+
+- (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender {
+    
+    NSLog(@"segmented changed to: %ld", (long)sender.selectedSegmentIndex);
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation
@@ -325,12 +480,23 @@ canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 
-    if ([segue.identifier isEqualToString:@"openScanner"]) {
+    if ([segue.identifier isEqualToString:@"openScannerSegue"]) {
         
         MayBarCodeScannerController *controller =
         (MayBarCodeScannerController *)segue.destinationViewController;
         controller.delegate = self;
         // options...
+    }
+    
+    if ([segue.identifier isEqualToString:@"openEntryFormSegue"]) {
+
+        MayEntryFormController *controller =
+        (MayEntryFormController *)segue.destinationViewController;
+
+        MayEntryCell *cell = sender;
+        Entry *model = [self.fetchedResultsController objectAtIndexPath:cell.indexPath];
+        
+        controller.entry = model;
     }
 }
 

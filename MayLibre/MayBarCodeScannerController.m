@@ -9,6 +9,8 @@
 @import AVFoundation;
 
 #import "MayBarCodeScannerController.h"
+#import "MayISBN.h"
+#import "MayISBNFormatter.h"
 
 @interface MayBarCodeScannerController () <
     AVCaptureMetadataOutputObjectsDelegate>
@@ -19,6 +21,8 @@
 @property (nonatomic, strong) AVCaptureMetadataOutput *metadataOutput;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
 @property (nonatomic, strong) UIView *highlightView;
+@property (nonatomic, strong) UIView *consoleView;
+@property (nonatomic, strong) UIButton *cancelButton;
 
 @end
 
@@ -27,7 +31,9 @@
 #pragma mark UIViewController Delegates
 
 - (void)viewDidLoad {
-    
+
+    [self.navigationController setToolbarHidden:YES
+                                       animated:NO];
     [super viewDidLoad];
 
     NSError *error = nil;
@@ -36,6 +42,9 @@
     if (error != nil) {
         // handle Error
         NSLog(@"%@", error.userInfo);
+    }
+    else {
+        [self startScanning];
     }
 }
 
@@ -64,7 +73,6 @@
     _device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     _deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:_device
                                                          error:error];
-
     if (_deviceInput == nil) {
 
         return;
@@ -82,11 +90,63 @@
     _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
     _previewLayer.frame = self.view.bounds;
     _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    
     [self.view.layer addSublayer:_previewLayer];
 
-    [_session startRunning];
-    
+    _consoleView = UIView.new;
+    _consoleView.translatesAutoresizingMaskIntoConstraints = NO;
+    _consoleView.backgroundColor = UIColor.blackColor;
+    _consoleView.alpha = 0.5;
+
+    _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
+    _cancelButton.contentMode = UIViewContentModeScaleAspectFit;
+    [_cancelButton setTitle:NSLocalizedString(@"Cancel", nil)
+                   forState:UIControlStateNormal];
+    [_cancelButton setTitleColor:UIColor.whiteColor
+                        forState:UIControlStateNormal];
+    [_cancelButton addTarget:self
+                      action:@selector(didCancelTouchUpInside:)
+            forControlEvents:UIControlEventTouchUpInside];
+    [_consoleView addSubview:_cancelButton];
+    [self.view addSubview:_consoleView];
     [self.view bringSubviewToFront:_highlightView];
+    
+    // Autolayout
+    NSDictionary *viewsDictionary = @{@"consoleView":self.consoleView,
+                                      @"cancelButton":self.cancelButton};
+    [self.view addConstraints:[NSLayoutConstraint
+                               constraintsWithVisualFormat:@"H:|[consoleView]|"
+                               options:NSLayoutFormatDirectionLeadingToTrailing
+                               metrics:nil
+                               views:viewsDictionary]];
+    
+    [self.view addConstraints:[NSLayoutConstraint
+                               constraintsWithVisualFormat:@"V:[consoleView(66)]-|"
+                               options:NSLayoutFormatDirectionLeadingToTrailing
+                               metrics:nil
+                               views:viewsDictionary]];
+    [_cancelButton.heightAnchor constraintEqualToConstant:44.0].active = YES;
+    [_cancelButton.centerXAnchor constraintEqualToAnchor:_consoleView.centerXAnchor].active = YES;
+    [_cancelButton.centerYAnchor constraintEqualToAnchor:_consoleView.centerYAnchor].active = YES;
+}
+
+- (void)startScanning {
+    
+    [_session startRunning];
+
+    if ([self.delegate respondsToSelector:@selector(barCodeScannerControllerDidStartScanning:)]) {
+        [self.delegate barCodeScannerControllerDidStartScanning:self];
+    }
+}
+
+- (void)stopScanning {
+    
+    [_session stopRunning];
+
+    if ([self.delegate respondsToSelector:@selector(barCodeScannerControllerDidStopScanning:)]) {
+        [self.delegate barCodeScannerControllerDidStopScanning:self];
+    }
 }
 
 #pragma mark Delegates
@@ -116,7 +176,7 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
         }
         
         if (detectionString != nil) {
-            [_session stopRunning];
+            [self stopScanning];
             [self captureBarCode:detectionString];
             break;
         }
@@ -127,27 +187,29 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
 
 - (void)captureBarCode:(NSString *)barCode {
 
+    NSError *error = nil;
+    MayISBN *isbn = [MayISBN ISBNFromString:barCode
+                                      error:&error];
+    __weak typeof(self)weakSelf = self;
+    
     void (^applyActionHandler)() = ^{
-        if ([self.delegate respondsToSelector:@selector(barCodeScannerController:didCaptureBarCode:)]) {
+        if ([weakSelf.delegate respondsToSelector:@selector(barCodeScannerController:didCaptureISBN:)]) {
             
-            [self.delegate barCodeScannerController:self
-                                  didCaptureBarCode:barCode];
+            [weakSelf.delegate barCodeScannerController:self
+                                         didCaptureISBN:isbn];
         }
-        [self.navigationController popViewControllerAnimated:YES];
+        [weakSelf dismissViewControllerAnimated:YES
+                                     completion:nil];
     };
     
     void (^cancelActionHandler)() = ^{
-        [self.navigationController popViewControllerAnimated:YES];
+        [weakSelf dismissViewControllerAnimated:YES
+                                     completion:nil];
     };
     
     void (^retryActionHandler)() = ^{
-        [_session startRunning];
+        [weakSelf startScanning];
     };
-    
-    UIAlertController *actionSheet;
-    actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"BarCode Found", nil)
-                                                      message:barCode
-                                               preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *applyAction;
     applyAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Apply", nil)
@@ -162,23 +224,39 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
     cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
                                             style:UIAlertActionStyleDestructive
                                           handler:cancelActionHandler];
-    [actionSheet addAction:applyAction];
-    [actionSheet addAction:retryAction];
-    [actionSheet addAction:cancelAction];
-    
+    UIAlertController *actionSheet;
+
+    if (error != nil) {
+        
+        NSLog(@"%@", error.localizedDescription);
+        
+        // Action Sheet negative
+        actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"No valid ISBN", nil)
+                                                          message:barCode
+                                                   preferredStyle:UIAlertControllerStyleActionSheet];
+        [actionSheet addAction:retryAction];
+        [actionSheet addAction:cancelAction];
+    }
+    else {
+        // Action Sheet positive
+        actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"ISBN Found", nil)
+                                                          message:[MayISBNFormatter stringFromISBN:isbn]
+                                                   preferredStyle:UIAlertControllerStyleActionSheet];
+        [actionSheet addAction:applyAction];
+        [actionSheet addAction:retryAction];
+        [actionSheet addAction:cancelAction];
+    }
+
     [self presentViewController:actionSheet
                        animated:YES
                      completion:nil];
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark Actions
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)didCancelTouchUpInside:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
 }
-*/
-
 @end
