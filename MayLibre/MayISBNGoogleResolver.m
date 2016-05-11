@@ -28,65 +28,25 @@
     return self;
 }
 
-
 - (void)resolveWithISBN:(NSNumber *)isbnNumber
                complete:(MayISBNResolverResponse)completeBlock {
     
-//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    
-    
-    
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",
-                                        @"https://www.googleapis.com/books/v1/volumes?q=isbn:",
-                                        isbnNumber]];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",
+                                       @"https://www.googleapis.com/books/v1/volumes?q=isbn:",
+                                       isbnNumber,
+                                       @"&maxResults=1&projection=full&fields=items"]];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
     NSURLSessionDataTask *dataTask =
     [_manager dataTaskWithRequest:request
                 completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-                    if (error) {
-                        // NSLog(@"Error: %@", error);
-                        completeBlock(nil, error);
-                    }
-                    else {
-//                       NSLog(@"%@ %@", response, responseObject);
-//                       NSLog(@"%@", responseObject);
-                        NSString *resourceId = [[[responseObject objectForKey:@"items"] firstObject] objectForKey:@"id"];
-                       
-//                        NSLog(@"resourceId: %@", resourceId);
-                       
-                        [self resolveWithResourceId:resourceId
-                                           complete:^(NSDictionary *result, NSError *error) {
-                                                completeBlock(result, error);
-                                           }];
-                    }
+
+                    NSDictionary *result = [[responseObject objectForKey:@"items"] firstObject];
+    
+                    completeBlock(result, error);
                }];
     
     [dataTask resume];
  }
-
-- (void)resolveWithResourceId:(NSString *)resourceId
-               complete:(MayISBNResolverResponse)completeBlock {
-
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",
-                                       @"https://www.googleapis.com/books/v1/volumes/",
-                                       resourceId]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    
-    NSURLSessionDataTask *dataTask =
-    [_manager dataTaskWithRequest:request
-                completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-                    if (error) {
-                        NSLog(@"Error: %@", error);
-                        completeBlock(nil, error);
-                    }
-                    else {
-                        completeBlock(responseObject, error);
-                    }
-                }];
-    
-    [dataTask resume];
-}
 
 @end
