@@ -8,7 +8,7 @@
 
 @import UIKit;
 #import "MayISBN.h"
-#import "Product.h"
+#import "Entry.h"
 
 @interface MayEntryFormController : UITableViewController <
     UITextFieldDelegate,
@@ -18,10 +18,22 @@
 }
 
 @property (nonatomic, strong) MayISBN *isbn;
-@property (nonatomic, strong) Product *product;
+@property (nonatomic, strong) Entry *entry;
 
-@property (nonatomic, weak) IBOutlet UITextField *productCodeTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *bookImage;
+@property (weak, nonatomic) IBOutlet UITextView *authorsTextView;
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
+@property (weak, nonatomic) IBOutlet UITextField *subtitleTextField;
+@property (weak, nonatomic) IBOutlet UITextField *yearTextField;
+@property (weak, nonatomic) IBOutlet UITextField *publisherTextField;
+@property (weak, nonatomic) IBOutlet UITextField *pagesTextField;
+@property (weak, nonatomic) IBOutlet UITextField *isbnTextField;
 
-- (IBAction)procutCodeEditingDidEnd:(UITextField *)sender;
+- (IBAction)titleTextFieldEditingDidEnd:(UITextField *)sender;
+- (IBAction)subtitleTextFieldEditingDidEnd:(UITextField *)sender;
+- (IBAction)yearTextFieldEditingDidEnd:(UITextField *)sender;
+- (IBAction)publisherTextFieldEditingDidEnd:(UITextField *)sender;
+- (IBAction)pagesTextFieldEditingDidEnd:(UITextField *)sender;
+- (IBAction)isbnEditingDidEnd:(UITextField *)sender;
 
 @end
