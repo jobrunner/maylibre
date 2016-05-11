@@ -9,19 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-typedef enum MayProductCodeType : NSUInteger {
-    MayProductCodeTypeUnknown = 0,
-    MayProductCodeTypeISBN = 1
-} MayProductCodeType;
+typedef enum MayEntryCodeType : NSUInteger {
+    MayEntryCodeTypeUnknown = 0,
+    MayEntryCodeTypeISBN = 1
+} MayEntryCodeType;
 
-typedef enum MayProductType : NSUInteger {
-    MayProductCodeUnknown = 0,
-    MayProductTypeBook = 1
+typedef enum MayEntryType : NSUInteger {
+    MayEntryCodeUnknown = 0,
+    MayEntryTypeBook = 1
 } MayProductType;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Product : NSManagedObject
+@interface Entry : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
 
@@ -29,4 +29,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#import "Product+CoreDataProperties.h"
+#import "Entry+CoreDataProperties.h"

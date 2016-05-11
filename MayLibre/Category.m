@@ -1,14 +1,15 @@
 //
-//  Product.m
+//  Category.m
 //  MayLibre
 //
-//  Created by Jo Brunner on 27.04.16.
+//  Created by Jo Brunner on 29.04.16.
 //  Copyright © 2016 Mayflower. All rights reserved.
 //
 
-#import "Product.h"
+#import "Category.h"
+#import "Entry.h"
 
-@implementation Product
+@implementation Category
 
 // Insert code here to add functionality to your managed object subclass
 
