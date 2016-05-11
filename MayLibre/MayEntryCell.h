@@ -6,14 +6,16 @@
 //  Copyright © 2016 Mayflower. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
-@interface MayEntryCell : UITableViewCell
+#import "MGSwipeTableCell.h"
+
+@interface MayEntryCell : MGSwipeTableCell
 
 @property (strong, nonatomic) NSIndexPath *indexPath;
 
 - (void)configureWithModel:(NSManagedObject *)managedObject
                atIndexPath:(NSIndexPath *)indexPath
-              withDelegate:(id)delegate;
+              withDelegate:(id<MGSwipeTableCellDelegate>)delegate;
 
 @end
