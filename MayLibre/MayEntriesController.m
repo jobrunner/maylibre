@@ -1,5 +1,5 @@
 //
-//  ItemsController.m
+//  MayEntriesController.m
 //  MayLibre
 //
 //  Created by Jo Brunner on 22.04.16.
@@ -16,7 +16,6 @@
 #import "MayDigest.h"
 #import "Entry.h"
 #import "MayImageManager.h"
-
 
 @interface MayEntriesController()
 
@@ -376,7 +375,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self presentViewController:actionSheet
                        animated:YES
                      completion:nil];
-    
 }
 
 - (void)storeEntryWithISBN:(MayISBN *)isbn

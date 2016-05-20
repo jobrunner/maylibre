@@ -1,5 +1,5 @@
 //
-//  ItemsController.h
+//  MayEntriesController.h
 //  MayLibre
 //
 //  Created by Jo Brunner on 22.04.16.
