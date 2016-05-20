@@ -92,8 +92,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 80;
+
+    return 80; // @todo: check autolayout height in xib file!
+    return UITableViewAutomaticDimension;
 }
 
 //- (void)tableView:(UITableView *)tableView
