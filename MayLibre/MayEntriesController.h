@@ -8,6 +8,7 @@
 
 @import UIKit;
 @import CoreData;
+@import MessageUI;
 
 #import "MayBarCodeScannerController.h"
 #import "MGSwipeTableCell.h"
@@ -17,6 +18,7 @@
     UITableViewDelegate,
     UITableViewDataSource,
     NSFetchedResultsControllerDelegate,
+    MFMailComposeViewControllerDelegate,
     MGSwipeTableCellDelegate> {
 
     NSFetchedResultsController *fetchedResultsController;

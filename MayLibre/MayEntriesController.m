@@ -137,15 +137,15 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         return NO;
     }
     
-    if (direction == MGSwipeDirectionRightToLeft && index == 1) {
-        
-        [self toggleMarkFromCell:cell];
-    }
-    
-//    if (direction == MGSwipeDirectionRightToLeft && index == 2) {
-//        // Send an email with sample data
-//        [self sendMail:[self.fetchedResultsController objectAtIndexPath:cell.indexPath]];
+//    if (direction == MGSwipeDirectionRightToLeft && index == 1) {
+//        
+//        [self toggleMarkFromCell:cell];
 //    }
+    
+    if (direction == MGSwipeDirectionRightToLeft && index == 1) {
+        // Send an email with sample data
+        [self sendMail:[self.fetchedResultsController objectAtIndexPath:cell.indexPath]];
+    }
     
     return YES;
 }
@@ -327,6 +327,56 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     
     [self.tableView endUpdates];
+}
+
+- (void)sendMail:(NSManagedObject *)managedObject {
+    
+    NSMutableString *emailBody = [[NSMutableString alloc] init];
+    
+    Entry *entry = (Entry *)managedObject;
+
+    [emailBody appendFormat:@"%@\n", (entry.authors) ? entry.authors : @""];
+    [emailBody appendFormat:@"%@\n", (entry.title) ? entry.title : @""];
+    [emailBody appendFormat:@"%@\n", (entry.subtitle) ? entry.subtitle : @""];
+    [emailBody appendFormat:@"%@\n", (entry.publishedDate) ? entry.publishedDate : @""];
+    [emailBody appendFormat:@"%@\n", (entry.publisher) ? entry.publisher : @""];
+    
+    NSString *recipient = [NSString stringWithFormat:@"%@", @"jo.brunner@mayflower.de"];
+    NSArray *emailRecipients = @[recipient];
+    
+    MFMailComposeViewController *mailComposerController = [[MFMailComposeViewController alloc]init];
+    
+    if ([MFMailComposeViewController canSendMail]) {
+        mailComposerController.mailComposeDelegate = self;
+        
+        [mailComposerController setToRecipients:emailRecipients];
+        [mailComposerController setSubject:@"Buchtitel"];
+        [mailComposerController setMessageBody:emailBody
+                                        isHTML:NO];
+        [self presentViewController:mailComposerController
+                           animated:YES
+                         completion:nil];
+        
+//        [mailComposerController addAttachmentData:[sampleData dataUsingEncoding:NSUTF8StringEncoding]
+//                                         mimeType:@"text/plain"
+//                                         fileName:risFileName];
+    }
+    else {
+        UIAlertController *alertController =
+        [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Mail error", nil)
+                                            message:NSLocalizedString(@"It's not possible to use mail", nil)
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *alertAction;
+        alertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+                                               style:UIAlertActionStyleDefault
+                                             handler:nil];
+        [alertController addAction:alertAction];
+        
+        [self presentViewController:alertController
+                           animated:YES
+                         completion:nil];
+    }
 }
 
 #pragma mark - Helper

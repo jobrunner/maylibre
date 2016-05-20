@@ -32,17 +32,17 @@
     
     //configure right swipe buttons
     self.rightButtons = @[[MGSwipeButton buttonWithTitle:@"" // Delete, index = 1
-                                                    icon:nil // [UIImage imageNamed:@"trash"]
+                                                    icon:[UIImage imageNamed:@"trash"]
                                          backgroundColor:[UIColor redColor]
                                                  padding:28],
-                          [MGSwipeButton buttonWithTitle:@""  // Mark, index = 2
-                                                    icon:[UIImage imageNamed:@"star"]
-                                         backgroundColor:[UIColor orangeColor]
-                                                 padding:28]]; /*,
-                          [MGSwipeButton buttonWithTitle:@""  // More, index = 3
+//                          [MGSwipeButton buttonWithTitle:@""  // Mark, index = 2
+//                                                    icon:[UIImage imageNamed:@"star"]
+//                                         backgroundColor:[UIColor orangeColor]
+//                                                 padding:28]],
+                          [MGSwipeButton buttonWithTitle:@""  // Mail (export), index = 3
                                                     icon:[UIImage imageNamed:@"mail"]
                                          backgroundColor:[UIColor lightGrayColor]
-                                                 padding:28]];*/
+                                                 padding:28]];
     self.rightSwipeSettings.transition = MGSwipeTransitionBorder;
 }
 
