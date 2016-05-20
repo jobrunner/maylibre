@@ -16,8 +16,9 @@
 
 - (void)viewDidLoad {
     
-    [super viewDidLoad];
-    
+    [super viewDidLoad];    
+    [self.navigationController setToolbarHidden:YES
+                                       animated:NO];
     managedObjectContext = ApplicationDelegate.managedObjectContext;
     
     if (_entry == nil) {
