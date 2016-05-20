@@ -218,7 +218,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [sortKeysBySegmentation objectAtIndex:_sortSegmentationControl.selectedSegmentIndex];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey
-                                                                   ascending:YES];
+                                                                   ascending:NO];
     NSLog(@"Sorting: %@", sortKey);
     return @[sortDescriptor];
 }
