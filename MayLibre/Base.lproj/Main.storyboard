@@ -117,7 +117,7 @@
             </objects>
             <point key="canvasLocation" x="391" y="309"/>
         </scene>
-        <!--May Entry Form Controller-->
+        <!--Title-->
         <scene sceneID="dCN-pK-ojZ">
             <objects>
                 <tableViewController modalPresentationStyle="currentContext" id="Fuk-nP-p1H" customClass="MayEntryFormController" sceneMemberID="viewController">
@@ -416,6 +416,9 @@ Klostermann, Maren</string>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Title" id="XlY-qS-AHQ">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="y0m-Hg-Uh6"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="authorsTextView" destination="acD-NO-cL6" id="eA7-OX-A4o"/>
                         <outlet property="bookImage" destination="JCa-V2-9mi" id="T5K-cU-KMV"/>
