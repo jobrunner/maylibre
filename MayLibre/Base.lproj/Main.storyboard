@@ -107,7 +107,11 @@
                                 <action selector="sortSegmentationValueChanged:" destination="nSv-bC-P36" eventType="valueChanged" id="xhh-9p-fNS"/>
                             </connections>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="mmc-dW-RWd"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="mmc-dW-RWd">
+                            <connections>
+                                <segue destination="Fuk-nP-p1H" kind="show" id="0My-dT-hKr"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="sortSegmentationControl" destination="By2-d6-qH9" id="4jo-0J-zd9"/>
@@ -200,7 +204,7 @@ Klostermann, Maren</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="titleTextFieldEditingDidEnd:" destination="Fuk-nP-p1H" eventType="editingDidEnd" id="G6B-MZ-xzi"/>
+                                                        <action selector="titleTextFieldChanged:" destination="Fuk-nP-p1H" eventType="editingChanged" id="wcw-e7-XvY"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -230,7 +234,7 @@ Klostermann, Maren</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="subtitleTextFieldEditingDidEnd:" destination="Fuk-nP-p1H" eventType="editingDidEnd" id="unT-MT-6bn"/>
+                                                        <action selector="subtitleTextFieldChanged:" destination="Fuk-nP-p1H" eventType="editingChanged" id="htF-dr-vmV"/>
                                                     </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJv-dh-mTa">
@@ -268,7 +272,7 @@ Klostermann, Maren</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="yearTextFieldEditingDidEnd:" destination="Fuk-nP-p1H" eventType="editingDidEnd" id="fwp-lf-oMj"/>
+                                                        <action selector="yearTextFieldChanged:" destination="Fuk-nP-p1H" eventType="editingChanged" id="nhz-B5-jpQ"/>
                                                     </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year / Date of publishing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyq-U1-7t2">
@@ -306,7 +310,7 @@ Klostermann, Maren</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="publisherTextFieldEditingDidEnd:" destination="Fuk-nP-p1H" eventType="editingDidEnd" id="aGd-Xr-mi8"/>
+                                                        <action selector="publisherTextFieldChanged:" destination="Fuk-nP-p1H" eventType="editingChanged" id="c1V-36-bTj"/>
                                                     </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publisher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BbV-nm-IQM">
@@ -344,7 +348,7 @@ Klostermann, Maren</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="pagesTextFieldEditingDidEnd:" destination="Fuk-nP-p1H" eventType="editingDidEnd" id="DNs-e9-W1i"/>
+                                                        <action selector="pagesTextFieldChanged:" destination="Fuk-nP-p1H" eventType="editingChanged" id="w6A-On-sgT"/>
                                                     </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JI5-EU-LJ5">
@@ -382,7 +386,7 @@ Klostermann, Maren</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
-                                                        <action selector="isbnEditingDidEnd:" destination="Fuk-nP-p1H" eventType="editingDidEnd" id="vCE-dn-VD7"/>
+                                                        <action selector="isbnTextFieldChanged:" destination="Fuk-nP-p1H" eventType="editingChanged" id="jpb-oP-3QZ"/>
                                                     </connections>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ISBN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xNG-np-QmH">
@@ -418,7 +422,11 @@ Klostermann, Maren</string>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Title" id="XlY-qS-AHQ">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="y0m-Hg-Uh6"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="y0m-Hg-Uh6">
+                            <connections>
+                                <action selector="updateButtonTaped:" destination="Fuk-nP-p1H" id="duo-eA-T3U"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="authorsTextView" destination="acD-NO-cL6" id="eA7-OX-A4o"/>
@@ -507,4 +515,7 @@ Klostermann, Maren</string>
         <image name="LibraryBackground" width="260" height="175"/>
         <image name="scanner" width="44" height="31"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="ZoL-dc-KCT"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -19,6 +19,8 @@
     [super viewDidLoad];
     [self.navigationController setToolbarHidden:YES
                                        animated:NO];
+    self.authorsTextView.delegate = self;
+    
     managedObjectContext = ApplicationDelegate.managedObjectContext;
     
     if (_entry == nil) {
@@ -65,24 +67,62 @@
     self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Create", @"Create");
     self.navigationItem.rightBarButtonItem.enabled = false;
     
-    if (_isbn != nil) {
-        // suche im Hintergrund starten
-        // Ergebnisse anzeigen
+    _authorsTextView.text = @"";
+    _titleTextField.text = @"";
+    _subtitleTextField.text = @"";
+    _yearTextField.text = @"";
+    _publisherTextField.text = @"";
+    _pagesTextField.text = @"";
+    _isbnTextField.text = @"";
+}
+
+- (void)saveForm {
+    
+    _entry.authors = _authorsTextView.text;
+    _entry.title = _titleTextField.text;
+    _entry.subtitle = _subtitleTextField.text;
+    _entry.publishedDate = _yearTextField.text;
+    _entry.publisher = _publisherTextField.text;
+    _entry.pageCount = _pagesTextField.text;
+    _entry.productCode = _isbnTextField.text;
+    
+    NSError *error = nil;
+    
+    [managedObjectContext save:&error];
+    
+    if (error) {
+        NSLog(@"Error: %@", [error localizedDescription]);
     }
 }
 
-#pragma form helper
+#pragma mark - Helper
 
 - (void)formDidChanged:(id)sender {
     
     self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
+- (void)goToPreviousViewController {
+    
+    UINavigationController *navigationController =
+    self.navigationController;
+    
+    [navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark UITextView Delegates
+
+- (void)textViewDidChange:(UITextView *)textView {
+    
+    [self formDidChanged:textView];
+}
+
 #pragma mark IBActions
 
-- (IBAction)authorTextFieldEditingDidEnd:(UITextField *)sender {
-    
-    [self formDidChanged:sender];
+- (IBAction)updateButtonTaped:(UIBarButtonItem *)sender {
+
+    [self saveForm];
+    [self goToPreviousViewController];
 }
 
 - (IBAction)titleTextFieldChanged:(UITextField *)sender {
