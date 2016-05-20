@@ -85,32 +85,32 @@
     [self formDidChanged:sender];
 }
 
-- (IBAction)titleTextFieldEditingDidEnd:(UITextField *)sender {
+- (IBAction)titleTextFieldChanged:(UITextField *)sender {
     
     [self formDidChanged:sender];
 }
 
-- (IBAction)subtitleTextFieldEditingDidEnd:(UITextField *)sender {
+- (IBAction)subtitleTextFieldChanged:(UITextField *)sender {
     
     [self formDidChanged:sender];
 }
 
-- (IBAction)yearTextFieldEditingDidEnd:(UITextField *)sender {
+- (IBAction)yearTextFieldChanged:(UITextField *)sender {
     
     [self formDidChanged:sender];
 }
 
-- (IBAction)publisherTextFieldEditingDidEnd:(UITextField *)sender {
+- (IBAction)publisherTextFieldChanged:(UITextField *)sender {
     
     [self formDidChanged:sender];
 }
 
-- (IBAction)pagesTextFieldEditingDidEnd:(UITextField *)sender {
+- (IBAction)pagesTextFieldChanged:(UITextField *)sender {
     
     [self formDidChanged:sender];
 }
 
-- (IBAction)isbnEditingDidEnd:(UITextField *)sender {
+- (IBAction)isbnTextFieldChanged:(UITextField *)sender {
     
     [self formDidChanged:sender];
 }

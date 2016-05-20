@@ -29,11 +29,12 @@
 @property (weak, nonatomic) IBOutlet UITextField *pagesTextField;
 @property (weak, nonatomic) IBOutlet UITextField *isbnTextField;
 
-- (IBAction)titleTextFieldEditingDidEnd:(UITextField *)sender;
-- (IBAction)subtitleTextFieldEditingDidEnd:(UITextField *)sender;
-- (IBAction)yearTextFieldEditingDidEnd:(UITextField *)sender;
-- (IBAction)publisherTextFieldEditingDidEnd:(UITextField *)sender;
-- (IBAction)pagesTextFieldEditingDidEnd:(UITextField *)sender;
-- (IBAction)isbnEditingDidEnd:(UITextField *)sender;
+- (IBAction)updateButtonTaped:(UIBarButtonItem *)sender;
+- (IBAction)titleTextFieldChanged:(UITextField *)sender;
+- (IBAction)subtitleTextFieldChanged:(UITextField *)sender;
+- (IBAction)yearTextFieldChanged:(UITextField *)sender;
+- (IBAction)publisherTextFieldChanged:(UITextField *)sender;
+- (IBAction)pagesTextFieldChanged:(UITextField *)sender;
+- (IBAction)isbnTextFieldChanged:(UITextField *)sender;
 
 @end
