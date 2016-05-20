@@ -63,9 +63,18 @@
     self.productCodeLabel.text = [managedObject valueForKey:@"productCode"];
     
     // handle last point for subtitle.
+    NSString *title = [managedObject valueForKey:@"title"];
+    if (title == nil) {
+        title = [NSString stringWithFormat:@""];
+    }
+    NSString *subtitle = [managedObject valueForKey:@"subtitle"];
+    if (subtitle == nil) {
+        subtitle = @"";
+    }
+    
     self.titleCompositionLabel.text = [NSString stringWithFormat:@"%@. %@",
-                                       [managedObject valueForKey:@"title"],
-                                       [managedObject valueForKey:@"subtitle"]];
+                                       title,
+                                       subtitle];
     self.authorLabel.text = [[managedObject valueForKey:@"authors"] stringByReplacingOccurrencesOfString:@"\n"
                                                                                               withString:@", "];
     self.printType.text = [managedObject valueForKey:@"printType"];
