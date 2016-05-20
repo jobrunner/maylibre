@@ -20,7 +20,6 @@
 		248ED2611CCA8E2800D57EF9 /* MayISBN.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2601CCA8E2800D57EF9 /* MayISBN.m */; };
 		248ED2661CCCBE9800D57EF9 /* MayISBNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2651CCCBE9800D57EF9 /* MayISBNTests.m */; };
 		248ED2691CCD02D000D57EF9 /* MayISBNFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2681CCD02D000D57EF9 /* MayISBNFormatter.m */; };
-		248ED26C1CCD160700D57EF9 /* MayISBNResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED26B1CCD160700D57EF9 /* MayISBNResolver.m */; };
 		248ED26E1CCEADD200D57EF9 /* export_rangemessage.xml in Resources */ = {isa = PBXBuildFile; fileRef = 248ED26D1CCEADD200D57EF9 /* export_rangemessage.xml */; };
 		248ED2741CCECCCE00D57EF9 /* MayISBNRangeDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2731CCECCCE00D57EF9 /* MayISBNRangeDictionary.m */; };
 		249C628D1CCA31B2005F77C1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 249C628C1CCA31B2005F77C1 /* main.m */; };
@@ -77,8 +76,6 @@
 		248ED2651CCCBE9800D57EF9 /* MayISBNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBNTests.m; sourceTree = "<group>"; };
 		248ED2671CCD02D000D57EF9 /* MayISBNFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayISBNFormatter.h; sourceTree = "<group>"; };
 		248ED2681CCD02D000D57EF9 /* MayISBNFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBNFormatter.m; sourceTree = "<group>"; };
-		248ED26A1CCD160700D57EF9 /* MayISBNResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayISBNResolver.h; sourceTree = "<group>"; };
-		248ED26B1CCD160700D57EF9 /* MayISBNResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBNResolver.m; sourceTree = "<group>"; };
 		248ED26D1CCEADD200D57EF9 /* export_rangemessage.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = export_rangemessage.xml; sourceTree = "<group>"; };
 		248ED2721CCECCCE00D57EF9 /* MayISBNRangeDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayISBNRangeDictionary.h; sourceTree = "<group>"; };
 		248ED2731CCECCCE00D57EF9 /* MayISBNRangeDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBNRangeDictionary.m; sourceTree = "<group>"; };
@@ -222,8 +219,6 @@
 				249C62C01CCA3B01005F77C1 /* MayEntryCell.xib */,
 				249C62C31CCA3D8A005F77C1 /* MayBarCodeScannerController.h */,
 				249C62C41CCA3D8A005F77C1 /* MayBarCodeScannerController.m */,
-				248ED26A1CCD160700D57EF9 /* MayISBNResolver.h */,
-				248ED26B1CCD160700D57EF9 /* MayISBNResolver.m */,
 				2469A60A1CD02CA300079F58 /* MayISBNGoogleResolver.h */,
 				2469A60B1CD02CA300079F58 /* MayISBNGoogleResolver.m */,
 				247A9F6A1CD1F2BF007A0D78 /* MayDigest.h */,
@@ -421,7 +416,6 @@
 				247A9F711CD2CA47007A0D78 /* Category+CoreDataProperties.m in Sources */,
 				2469A6111CD0495100079F58 /* Entry+CoreDataProperties.m in Sources */,
 				248ED2741CCECCCE00D57EF9 /* MayISBNRangeDictionary.m in Sources */,
-				248ED26C1CCD160700D57EF9 /* MayISBNResolver.m in Sources */,
 				249C628D1CCA31B2005F77C1 /* main.m in Sources */,
 				247A9F751CD4C278007A0D78 /* HomeController.m in Sources */,
 				247A9F6C1CD1F2BF007A0D78 /* MayDigest.m in Sources */,
