@@ -16,6 +16,7 @@
 #import "MayDigest.h"
 #import "Entry.h"
 #import "MayImageManager.h"
+#import "NSString+MayDisplayExtension.h"
 
 @interface MayEntriesController()
 
@@ -345,24 +346,48 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Entry *entry = (Entry *)managedObject;
 
-    [emailBody appendFormat:@"%@\n", (entry.authors) ? entry.authors : @""];
-    [emailBody appendFormat:@"%@\n", (entry.title) ? entry.title : @""];
-    [emailBody appendFormat:@"%@\n", (entry.subtitle) ? entry.subtitle : @""];
-    [emailBody appendFormat:@"%@\n", (entry.publishedDate) ? entry.publishedDate : @""];
-    [emailBody appendFormat:@"%@\n", (entry.publisher) ? entry.publisher : @""];
+    NSString *emailSubject = [entry.title.unnil shortenToLength:80];
     
-    NSString *recipient = [NSString stringWithFormat:@"%@", @"jo.brunner@mayflower.de"];
-    NSArray *emailRecipients = @[recipient];
+    [emailBody appendFormat:@"%@", [entry.authors.unnil stringByReplacingOccurrencesOfString:@"\n"
+                                                                                  withString:@", "]];
+    if (entry.publishedDate) {
+        [emailBody appendFormat:@" (%@): ", entry.publishedDate.unnil];
+    }
+    else {
+        [emailBody appendFormat:@" (%@): ", @"n.a."];
+    }
+
+    [emailBody appendFormat:@"%@.", entry.title.unnil.trimPuctuation];
+    
+    if (entry.subtitle) {
+        [emailBody appendFormat:@" %@.", entry.subtitle.unnil.trimPuctuation];
+    }
+
+    if (entry.publisher) {
+        [emailBody appendFormat:@" %@", entry.publisher.unnil];
+    }
+
+    if (entry.pageCount) {
+        [emailBody appendFormat:@" %@pp.", entry.pageCount.unnil];
+    }
+    
+    // where is the place?!
+    
+    [emailBody appendFormat:@" ISBN: %@.", entry.productCode.unnil];
+    
+    NSArray *emailRecipients = @[];
     
     MFMailComposeViewController *mailComposerController = [[MFMailComposeViewController alloc]init];
     
     if ([MFMailComposeViewController canSendMail]) {
         mailComposerController.mailComposeDelegate = self;
         
-        [mailComposerController setToRecipients:emailRecipients];
-        [mailComposerController setSubject:@"Buchtitel"];
+        mailComposerController.toRecipients = emailRecipients;
+        mailComposerController.subject = emailSubject;
+        
         [mailComposerController setMessageBody:emailBody
                                         isHTML:NO];
+        
         [self presentViewController:mailComposerController
                            animated:YES
                          completion:nil];
