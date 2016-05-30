@@ -12,7 +12,7 @@
 
 @implementation MayEntryFormController
 
-#pragma mark UITableViewController Delegates
+#pragma mark UIViewController Delegates
 
 - (void)viewDidLoad {
     
