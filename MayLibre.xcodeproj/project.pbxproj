@@ -37,6 +37,7 @@
 		249C62C11CCA3B01005F77C1 /* MayEntryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 249C62BF1CCA3B01005F77C1 /* MayEntryCell.m */; };
 		249C62C21CCA3B01005F77C1 /* MayEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 249C62C01CCA3B01005F77C1 /* MayEntryCell.xib */; };
 		249C62C61CCA3D8A005F77C1 /* MayBarCodeScannerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 249C62C41CCA3D8A005F77C1 /* MayBarCodeScannerController.m */; };
+		24D02F4C1CFC5FA200C8110A /* NSString+MayDisplayExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4B1CFC5FA200C8110A /* NSString+MayDisplayExtension.m */; };
 		E8005C911A93F5FFE210CB92 /* libPods-MayLibre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41663C847506F0ED3EF32752 /* libPods-MayLibre.a */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,8 @@
 		249C62C01CCA3B01005F77C1 /* MayEntryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MayEntryCell.xib; sourceTree = "<group>"; };
 		249C62C31CCA3D8A005F77C1 /* MayBarCodeScannerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayBarCodeScannerController.h; sourceTree = "<group>"; };
 		249C62C41CCA3D8A005F77C1 /* MayBarCodeScannerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayBarCodeScannerController.m; sourceTree = "<group>"; };
+		24D02F4A1CFC5FA200C8110A /* NSString+MayDisplayExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MayDisplayExtension.h"; sourceTree = "<group>"; };
+		24D02F4B1CFC5FA200C8110A /* NSString+MayDisplayExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MayDisplayExtension.m"; sourceTree = "<group>"; };
 		41663C847506F0ED3EF32752 /* libPods-MayLibre.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MayLibre.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B543CBCED83E2B0FE1B8EE6 /* Pods-MayLibre.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MayLibre.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MayLibre/Pods-MayLibre.debug.xcconfig"; sourceTree = "<group>"; };
 		F12BEF5084F253CEB438BD3E /* Pods-MayLibre.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MayLibre.release.xcconfig"; path = "Pods/Target Support Files/Pods-MayLibre/Pods-MayLibre.release.xcconfig"; sourceTree = "<group>"; };
@@ -227,6 +230,8 @@
 				247A9F741CD4C278007A0D78 /* HomeController.m */,
 				247A9F761CD57ACB007A0D78 /* MayImageManager.h */,
 				247A9F771CD57ACB007A0D78 /* MayImageManager.m */,
+				24D02F4A1CFC5FA200C8110A /* NSString+MayDisplayExtension.h */,
+				24D02F4B1CFC5FA200C8110A /* NSString+MayDisplayExtension.m */,
 			);
 			path = MayLibre;
 			sourceTree = "<group>";
@@ -402,6 +407,7 @@
 			files = (
 				2425E1311CE01BB300EEECB7 /* MayAuthor.m in Sources */,
 				249C62C11CCA3B01005F77C1 /* MayEntryCell.m in Sources */,
+				24D02F4C1CFC5FA200C8110A /* NSString+MayDisplayExtension.m in Sources */,
 				247A9F781CD57ACB007A0D78 /* MayImageManager.m in Sources */,
 				247A9F721CD2CA47007A0D78 /* Category.m in Sources */,
 				248ED2691CCD02D000D57EF9 /* MayISBNFormatter.m in Sources */,
