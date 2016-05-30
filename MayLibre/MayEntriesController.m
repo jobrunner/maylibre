@@ -329,6 +329,16 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView endUpdates];
 }
 
+#pragma mark Mail Composer Delegates
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error {
+    
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
+}
+
 - (void)sendMail:(NSManagedObject *)managedObject {
     
     NSMutableString *emailBody = [[NSMutableString alloc] init];
