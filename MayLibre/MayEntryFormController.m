@@ -31,6 +31,16 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    
+    if (self.isMovingFromParentViewController) {
+        
+        [managedObjectContext rollback];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     
     [super didReceiveMemoryWarning];
