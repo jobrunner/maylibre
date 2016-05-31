@@ -20,9 +20,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleCompositionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *printType;
+@property (weak, nonatomic) IBOutlet UILabel *referenceType;
 @property (weak, nonatomic) IBOutlet UILabel *publisher;
-@property (weak, nonatomic) IBOutlet UILabel *publishedDateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *publishing;
 
 @end
 
@@ -64,10 +64,13 @@
     
     // handle last point for subtitle.
     NSString *title = [managedObject valueForKey:@"title"];
+    
     if (title == nil) {
         title = [NSString stringWithFormat:@""];
     }
+    
     NSString *subtitle = [managedObject valueForKey:@"subtitle"];
+    
     if (subtitle == nil) {
         subtitle = @"";
     }
@@ -77,9 +80,9 @@
                                        subtitle];
     self.authorLabel.text = [[managedObject valueForKey:@"authors"] stringByReplacingOccurrencesOfString:@"\n"
                                                                                               withString:@", "];
-    self.printType.text = [managedObject valueForKey:@"printType"];
-    self.publisher.text= [managedObject valueForKey:@"publisher"];
-    self.publishedDateLabel.text= [managedObject valueForKey:@"publishedDate"];
+//    self.referenceType.text = [managedObject valueForKey:@"referenceType"];
+//    self.publisher.text= [managedObject valueForKey:@"publisher"];
+//    self.publishingLabel.text= [managedObject valueForKey:@"publishing"];
     
     NSString *imageUrl = [managedObject valueForKey:@"coverUrl"];
     

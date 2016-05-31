@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *publisherTextField;
 @property (weak, nonatomic) IBOutlet UITextField *pagesTextField;
 @property (weak, nonatomic) IBOutlet UITextField *isbnTextField;
+@property (weak, nonatomic) IBOutlet UITextField *placeTextField;
 
 - (IBAction)updateButtonTaped:(UIBarButtonItem *)sender;
 - (IBAction)titleTextFieldChanged:(UITextField *)sender;
@@ -36,5 +37,6 @@
 - (IBAction)publisherTextFieldChanged:(UITextField *)sender;
 - (IBAction)pagesTextFieldChanged:(UITextField *)sender;
 - (IBAction)isbnTextFieldChanged:(UITextField *)sender;
+- (IBAction)placeTextFieldChanged:(UITextField *)sender;
 
 @end

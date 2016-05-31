@@ -107,7 +107,7 @@
                                 <action selector="sortSegmentationValueChanged:" destination="nSv-bC-P36" eventType="valueChanged" id="xhh-9p-fNS"/>
                             </connections>
                         </segmentedControl>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="mmc-dW-RWd">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="mmc-dW-RWd">
                             <connections>
                                 <segue destination="Fuk-nP-p1H" kind="show" id="0My-dT-hKr"/>
                             </connections>
@@ -295,8 +295,45 @@ Klostermann, Maren</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MayEntryFormCell" rowHeight="58" id="7TN-4s-aSB">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MayEntryFormCell" rowHeight="58" id="i5k-7X-DV1">
                                         <rect key="frame" x="0.0" y="398.5" width="600" height="58"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i5k-7X-DV1" id="DHx-xM-eK2">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="57.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="PNS-0S-nKZ">
+                                                    <rect key="frame" x="15" y="22" width="577" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="7gq-1E-mt8"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="placeTextFieldChanged:" destination="Fuk-nP-p1H" eventType="editingChanged" id="ji0-SL-KK9"/>
+                                                    </connections>
+                                                </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8i-Kd-RYw">
+                                                    <rect key="frame" x="15" y="8" width="29" height="14"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="14" id="xV9-n0-T9g"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="I8i-Kd-RYw" firstAttribute="leading" secondItem="DHx-xM-eK2" secondAttribute="leadingMargin" constant="7" id="SXB-9s-Jpw"/>
+                                                <constraint firstItem="PNS-0S-nKZ" firstAttribute="top" secondItem="I8i-Kd-RYw" secondAttribute="bottom" id="ntU-DP-RHW"/>
+                                                <constraint firstItem="PNS-0S-nKZ" firstAttribute="leading" secondItem="DHx-xM-eK2" secondAttribute="leadingMargin" constant="7" id="pBJ-sA-xnY"/>
+                                                <constraint firstItem="PNS-0S-nKZ" firstAttribute="trailing" secondItem="DHx-xM-eK2" secondAttribute="trailingMargin" id="soI-ZI-EJ1"/>
+                                                <constraint firstItem="I8i-Kd-RYw" firstAttribute="top" secondItem="DHx-xM-eK2" secondAttribute="topMargin" id="u9l-9V-t4k"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MayEntryFormCell" rowHeight="58" id="7TN-4s-aSB">
+                                        <rect key="frame" x="0.0" y="456.5" width="600" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7TN-4s-aSB" id="xbB-aQ-x99">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="57.5"/>
@@ -334,7 +371,7 @@ Klostermann, Maren</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MayEntryFormCell" rowHeight="58" id="stT-Ec-qhb">
-                                        <rect key="frame" x="0.0" y="456.5" width="600" height="58"/>
+                                        <rect key="frame" x="0.0" y="514.5" width="600" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="stT-Ec-qhb" id="E4U-D0-je5">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="57.5"/>
@@ -372,7 +409,7 @@ Klostermann, Maren</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MayEntryFormCell" rowHeight="58" id="p8H-Ua-8bz">
-                                        <rect key="frame" x="0.0" y="514.5" width="600" height="58"/>
+                                        <rect key="frame" x="0.0" y="572.5" width="600" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p8H-Ua-8bz" id="jbS-eN-glF">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="57.5"/>
@@ -433,6 +470,7 @@ Klostermann, Maren</string>
                         <outlet property="bookImage" destination="JCa-V2-9mi" id="T5K-cU-KMV"/>
                         <outlet property="isbnTextField" destination="7Dk-uu-DSq" id="d0W-sd-xAX"/>
                         <outlet property="pagesTextField" destination="mx0-Nb-y62" id="85o-fJ-3o1"/>
+                        <outlet property="placeTextField" destination="PNS-0S-nKZ" id="GFh-Dy-L7x"/>
                         <outlet property="publisherTextField" destination="5Ub-4S-XLW" id="UEj-C9-TTI"/>
                         <outlet property="subtitleTextField" destination="s1S-WE-mY5" id="3Au-SK-5xv"/>
                         <outlet property="titleTextField" destination="vxw-EP-QxX" id="4G1-mA-G3D"/>

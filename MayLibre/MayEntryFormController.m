@@ -45,10 +45,12 @@
     _authorsTextView.text = _entry.authors;
     _titleTextField.text = _entry.title;
     _subtitleTextField.text = _entry.subtitle;
-    _yearTextField.text = _entry.publishedDate;
+    _yearTextField.text = _entry.publishing;
     _publisherTextField.text = _entry.publisher;
     _pagesTextField.text = _entry.pageCount;
     _isbnTextField.text = _entry.productCode;
+    _placeTextField.text = _entry.place;
+    
     [[MayImageManager sharedManager] imageWithUrlString:_entry.coverUrl
                                              completion:^(UIImage *image, NSError *error) {
                                                  if (error) {
@@ -74,6 +76,8 @@
     _publisherTextField.text = @"";
     _pagesTextField.text = @"";
     _isbnTextField.text = @"";
+    _publisherTextField.text = @"";
+    _placeTextField.text = @"";
 }
 
 - (void)saveForm {
@@ -81,10 +85,11 @@
     _entry.authors = _authorsTextView.text;
     _entry.title = _titleTextField.text;
     _entry.subtitle = _subtitleTextField.text;
-    _entry.publishedDate = _yearTextField.text;
-    _entry.publisher = _publisherTextField.text;
+    _entry.publishing = _yearTextField.text;
+    _entry.place = _placeTextField.text;
     _entry.pageCount = _pagesTextField.text;
     _entry.productCode = _isbnTextField.text;
+    _entry.publisher = _publisherTextField.text;
     
     NSError *error = nil;
     
@@ -104,8 +109,7 @@
 
 - (void)goToPreviousViewController {
     
-    UINavigationController *navigationController =
-    self.navigationController;
+    UINavigationController *navigationController = self.navigationController;
     
     [navigationController popViewControllerAnimated:YES];
 }
@@ -151,6 +155,11 @@
 }
 
 - (IBAction)isbnTextFieldChanged:(UITextField *)sender {
+    
+    [self formDidChanged:sender];
+}
+
+- (IBAction)placeTextFieldChanged:(UITextField *)sender {
     
     [self formDidChanged:sender];
 }

@@ -350,8 +350,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [emailBody appendFormat:@"%@", [entry.authors.unnil stringByReplacingOccurrencesOfString:@"\n"
                                                                                   withString:@", "]];
-    if (entry.publishedDate) {
-        [emailBody appendFormat:@" (%@): ", entry.publishedDate.unnil];
+    if (entry.publishing) {
+        [emailBody appendFormat:@" (%@): ", entry.publishing.unnil];
     }
     else {
         [emailBody appendFormat:@" (%@): ", @"n.a."];
@@ -471,7 +471,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *formattedIsbn = [MayISBNFormatter stringFromISBN:isbn];
     model.productCode = formattedIsbn;
     model.productCodeType = @(MayEntryCodeTypeISBN);
-    model.productType = @(MayEntryTypeBook);
+    model.referenceType = @(MayEntryTypeBook);
     
     if (![managedObjectContext save:error]) {
         
@@ -488,6 +488,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         
                          if (error) {
                              NSLog(@"Error while resolving ISBN: %@", error.localizedDescription);
+                             
                              return;
                          }
                          
@@ -497,13 +498,35 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                          if (authors != nil) {
                              model.authors = [authors componentsJoinedByString:@"\n"];
                          }
-                         model.title = [volumeInfo objectForKey:@"title"];
-                         model.subtitle = [volumeInfo objectForKey:@"subtitle"];
-                         model.publishedDate = [volumeInfo objectForKey:@"publishedDate"];
+                         model.title = [[volumeInfo objectForKey:@"title"] trimPuctuation];
+                         model.subtitle = [[volumeInfo objectForKey:@"subtitle"] trimPuctuation];
+                         
+                         NSString *publishedDate = [volumeInfo objectForKey:@"publishedDate"];
+                         
+                         if (publishedDate.length > 4) {
+                             model.publishing = [publishedDate substringToIndex:4];
+                         }
+                         else {
+                             model.publishing = publishedDate;
+                         }
+                         
                          model.publisher = [volumeInfo objectForKey:@"publisher"];
                          model.pageCount = [[volumeInfo objectForKey:@"pageCount"] stringValue];
-                         model.printType = [volumeInfo objectForKey:@"printType"];
+                         
+                         NSString *printType = [volumeInfo objectForKey:@"printType"];
+
+                         if ([printType isEqualToString:@"BOOK"]) {
+                             model.referenceType = @(MayEntryTypeBookSection);
+                         }
+                         else {
+                             // Default is BOOK.
+                             model.referenceType = @(MayEntryTypeBookSection);
+                         }
+                         
+                         model.productCodeType = @(MayEntryCodeTypeISBN);
                          model.language = [volumeInfo objectForKey:@"language"];
+                         model.summary = [volumeInfo objectForKey:@"description"];
+                         model.place = @"";
         
                          NSString *imageUrl = [[volumeInfo objectForKey:@"imageLinks"] objectForKey:@"thumbnail"];
 

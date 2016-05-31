@@ -9,15 +9,18 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-typedef enum MayEntryCodeType : NSUInteger {
+typedef enum MayEntryCodeType : NSInteger {
     MayEntryCodeTypeUnknown = 0,
-    MayEntryCodeTypeISBN = 1
+    MayEntryCodeTypeISBN = 1,
+    MayEntryCodeTypeISSN = 2
 } MayEntryCodeType;
 
-typedef enum MayEntryType : NSUInteger {
-    MayEntryCodeUnknown = 0,
-    MayEntryTypeBook = 1
-} MayProductType;
+typedef enum MayEntryType : NSInteger {
+    MayEntryTypeArticle = 0,
+    MayEntryTypeBook = 1,
+    MayEntryTypeBookSection = 7,
+    MayEntryTypeEditiedBook = 9
+} MayEntryType;
 
 NS_ASSUME_NONNULL_BEGIN
 
