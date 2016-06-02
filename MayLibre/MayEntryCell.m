@@ -35,10 +35,10 @@
                                                     icon:[UIImage imageNamed:@"trash"]
                                          backgroundColor:[UIColor redColor]
                                                  padding:28],
-//                          [MGSwipeButton buttonWithTitle:@""  // Mark, index = 2
-//                                                    icon:[UIImage imageNamed:@"star"]
-//                                         backgroundColor:[UIColor orangeColor]
-//                                                 padding:28]],
+                          [MGSwipeButton buttonWithTitle:@""  // Mark, index = 2
+                                                    icon:[UIImage imageNamed:@"star"]
+                                         backgroundColor:[UIColor orangeColor]
+                                                 padding:28],
                           [MGSwipeButton buttonWithTitle:@""  // Mail (export), index = 3
                                                     icon:[UIImage imageNamed:@"mail"]
                                          backgroundColor:[UIColor lightGrayColor]

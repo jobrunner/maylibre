@@ -17,6 +17,7 @@
 #import "Entry.h"
 #import "MayImageManager.h"
 #import "NSString+MayDisplayExtension.h"
+#import "MayUserDefaults.h"
 
 @interface MayEntriesController()
 
@@ -138,12 +139,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         return NO;
     }
     
-//    if (direction == MGSwipeDirectionRightToLeft && index == 1) {
-//        
-//        [self toggleMarkFromCell:cell];
-//    }
-    
     if (direction == MGSwipeDirectionRightToLeft && index == 1) {
+        
+        [self toggleMarkFromCell:cell];
+    }
+    
+    if (direction == MGSwipeDirectionRightToLeft && index == 2) {
         // Send an email with sample data
         [self sendMail:[self.fetchedResultsController objectAtIndexPath:cell.indexPath]];
     }
@@ -240,6 +241,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                               inManagedObjectContext:managedObjectContext];
     
     [request setEntity:entity];
+    
+    if ([[MayUserDefaults sharedInstance] listMarkedEntries]) {
+        NSPredicate *predicate;
+        predicate = [NSPredicate predicateWithFormat:@"isMarked = YES"];
+        [request setPredicate:predicate];
+    }
     
     [request setSortDescriptors:self.sortDescriptors];
     
