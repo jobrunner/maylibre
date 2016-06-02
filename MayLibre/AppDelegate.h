@@ -21,7 +21,9 @@
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
-
+- (void)viewController:(UIViewController *)viewController
+       handleUserError:(NSError *)error
+                 title:(NSString *)title;
 
 @end
 

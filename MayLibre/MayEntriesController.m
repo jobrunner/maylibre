@@ -482,9 +482,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (![managedObjectContext save:error]) {
         
-        // Error Message to the User: Could not save...
-        NSLog(@"Unresolved error %@", (*error).localizedDescription);
-        return;
+        return [App viewController:self
+                   handleUserError:*error
+                             title:nil];
     }
     
     // Trigger asynchronous service call to resolve the isbn to a full book description
@@ -494,9 +494,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                      complete:^(NSDictionary *result, NSError *error) {
         
                          if (error) {
-                             NSLog(@"Error while resolving ISBN: %@", error.localizedDescription);
-                             
-                             return;
+                             return [App viewController:self
+                                        handleUserError:(NSError *)error
+                                                  title:nil];
                          }
                          
                          NSDictionary *volumeInfo = [result objectForKey:@"volumeInfo"];
@@ -541,10 +541,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                          
                          if (![managedObjectContext save:&error]) {
 
-                             // completion handler mit error aufrufen
-                             NSLog(@"Error while storing Resolved ISBN Data: %@", error.localizedDescription);
-            
-                             return;
+                             return [App viewController:self
+                                        handleUserError:(NSError *)error
+                                                  title:nil];
                          }
     }];
     error = nil;

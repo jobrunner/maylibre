@@ -146,4 +146,36 @@
     }
 }
 
+#pragma mark - Error handling
+
+- (void)viewController:(UIViewController *)viewController
+       handleUserError:(NSError *)error
+                 title:(NSString *)title {
+    
+    if (!error) {
+        
+        return;
+    }
+    
+    NSLog(@"%@", error.localizedDescription);
+    
+    if (title == nil) {
+        title = NSLocalizedString(@"Error", nil);
+    }
+    
+    UIAlertController *actionAlert =
+    [UIAlertController alertControllerWithTitle:title
+                                        message:error.localizedDescription
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    [actionAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                                    style:UIAlertActionStyleDefault
+                                                  handler:nil]];
+    
+    
+    [viewController presentViewController:actionAlert
+                                 animated:YES
+                               completion:nil];
+}
+
 @end
