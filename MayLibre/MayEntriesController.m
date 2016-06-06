@@ -492,54 +492,6 @@ heightForFooterInSection:(NSInteger)section {
     }
 }
 
-#pragma mark - Helper
-
-- (void)handleInvalidISBNxxxx:(NSString *)barCode withError:(NSError *)error {
-
-    // gescanntes Ding ist zwar ein BarCode, aber kein Buch (oder die ISBN ist sonst falsch).
-    // Retry, Cancel, manuelle Eingabe
-    
-
-    
-    // Fehler anzeigen und ggf. die manuelle Eingabe einer ISBN ermöglichen.
-    
-    void (^retryActionHandler)() = ^{
-        // hierfür brauche ich eine Instanz vom MayBarCodeScannerController...
-        // [_session startRunning];
-    };
-    
-    // close scanner without storing entry
-    void (^cancelActionHandler)() = ^{
-        [self.navigationController popViewControllerAnimated:YES];
-    };
-    
-    UIAlertController *actionSheet;
-    actionSheet = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"ISBN invalid", nil)
-                                                      message:error.localizedDescription
-                                               preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *retryAction;
-    retryAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", nil)
-                                           style:UIAlertActionStyleDefault
-                                         handler:retryActionHandler];
-    
-//    UIAlertAction *applyAction;
-//    applyAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Apply", nil)
-//                                           style:UIAlertActionStyleDefault
-//                                         handler:applyActionHandler];
-
-    UIAlertAction *cancelAction;
-    cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
-                                            style:UIAlertActionStyleDestructive
-                                          handler:cancelActionHandler];
-    
-    [actionSheet addAction:cancelAction];
-//    [actionSheet addAction:retryAction];
-    
-    [self presentViewController:actionSheet
-                       animated:YES
-                     completion:nil];
-}
-
 - (void)storeEntryWithISBN:(MayISBN *)isbn
                      error:(NSError **)error {
 
