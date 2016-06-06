@@ -24,6 +24,10 @@
 - (void)viewController:(UIViewController *)viewController
        handleUserError:(NSError *)error
                  title:(NSString *)title;
+- (void)viewConroller:(UIViewController *)viewController
+                title:(NSString *)title
+              message:(NSString*)message;
+
 
 @end
 

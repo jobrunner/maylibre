@@ -178,4 +178,22 @@
                                completion:nil];
 }
 
+- (void)viewConroller:(UIViewController *)viewController
+                title:(NSString *)title
+              message:(NSString*)message {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:nil];
+    [alertController addAction:alertAction];
+    
+    [viewController presentViewController:alertController
+                                 animated:YES
+                               completion:nil];
+}
+
 @end
