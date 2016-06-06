@@ -126,6 +126,7 @@
                                options:NSLayoutFormatDirectionLeadingToTrailing
                                metrics:nil
                                views:viewsDictionary]];
+    
     [_cancelButton.heightAnchor constraintEqualToConstant:44.0].active = YES;
     [_cancelButton.centerXAnchor constraintEqualToAnchor:_consoleView.centerXAnchor].active = YES;
     [_cancelButton.centerYAnchor constraintEqualToAnchor:_consoleView.centerYAnchor].active = YES;
@@ -211,19 +212,21 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
         [weakSelf startScanning];
     };
     
-    UIAlertAction *applyAction;
-    applyAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Apply", nil)
-                                           style:UIAlertActionStyleDefault
-                                         handler:applyActionHandler];
+    UIAlertAction *applyAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Apply", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:applyActionHandler];
 
-    UIAlertAction *retryAction;
-    retryAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", nil)
-                                           style:UIAlertActionStyleDefault
-                                         handler:retryActionHandler];
-    UIAlertAction *cancelAction;
-    cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
-                                            style:UIAlertActionStyleDestructive
-                                          handler:cancelActionHandler];
+    UIAlertAction *retryAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Retry", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:retryActionHandler];
+    
+    UIAlertAction *cancelAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                             style:UIAlertActionStyleDestructive
+                           handler:cancelActionHandler];
+    
     UIAlertController *actionSheet;
 
     if (error != nil) {
@@ -259,4 +262,5 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
     [self dismissViewControllerAnimated:YES
                              completion:nil];
 }
+
 @end

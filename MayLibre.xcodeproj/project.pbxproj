@@ -38,6 +38,12 @@
 		249C62C21CCA3B01005F77C1 /* MayEntryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 249C62C01CCA3B01005F77C1 /* MayEntryCell.xib */; };
 		249C62C61CCA3D8A005F77C1 /* MayBarCodeScannerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 249C62C41CCA3D8A005F77C1 /* MayBarCodeScannerController.m */; };
 		24D02F4C1CFC5FA200C8110A /* NSString+MayDisplayExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4B1CFC5FA200C8110A /* NSString+MayDisplayExtension.m */; };
+		24D02F4F1CFEF8F700C8110A /* MayEntrySummaryFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4E1CFEF8F700C8110A /* MayEntrySummaryFormCell.m */; };
+		24D02F521CFF237C00C8110A /* MayEntrySummaryFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F511CFF237C00C8110A /* MayEntrySummaryFormController.m */; };
+		24D02F551CFFB75B00C8110A /* MayUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F541CFFB75B00C8110A /* MayUserDefaults.m */; };
+		24D02F581D0038B500C8110A /* MayEntryDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F571D0038B500C8110A /* MayEntryDetailsController.m */; };
+		24D02F5D1D03A26300C8110A /* Place+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F5A1D03A26300C8110A /* Place+CoreDataProperties.m */; };
+		24D02F5E1D03A26300C8110A /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F5C1D03A26300C8110A /* Place.m */; };
 		E8005C911A93F5FFE210CB92 /* libPods-MayLibre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41663C847506F0ED3EF32752 /* libPods-MayLibre.a */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +111,18 @@
 		249C62C41CCA3D8A005F77C1 /* MayBarCodeScannerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayBarCodeScannerController.m; sourceTree = "<group>"; };
 		24D02F4A1CFC5FA200C8110A /* NSString+MayDisplayExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MayDisplayExtension.h"; sourceTree = "<group>"; };
 		24D02F4B1CFC5FA200C8110A /* NSString+MayDisplayExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MayDisplayExtension.m"; sourceTree = "<group>"; };
+		24D02F4D1CFEF8F700C8110A /* MayEntrySummaryFormCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayEntrySummaryFormCell.h; sourceTree = "<group>"; };
+		24D02F4E1CFEF8F700C8110A /* MayEntrySummaryFormCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayEntrySummaryFormCell.m; sourceTree = "<group>"; };
+		24D02F501CFF237C00C8110A /* MayEntrySummaryFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayEntrySummaryFormController.h; sourceTree = "<group>"; };
+		24D02F511CFF237C00C8110A /* MayEntrySummaryFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayEntrySummaryFormController.m; sourceTree = "<group>"; };
+		24D02F531CFFB75B00C8110A /* MayUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayUserDefaults.h; sourceTree = "<group>"; };
+		24D02F541CFFB75B00C8110A /* MayUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayUserDefaults.m; sourceTree = "<group>"; };
+		24D02F561D0038B500C8110A /* MayEntryDetailsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MayEntryDetailsController.h; path = ../MayEntryDetailsController.h; sourceTree = "<group>"; };
+		24D02F571D0038B500C8110A /* MayEntryDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MayEntryDetailsController.m; path = ../MayEntryDetailsController.m; sourceTree = "<group>"; };
+		24D02F591D03A26300C8110A /* Place+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Place+CoreDataProperties.h"; sourceTree = "<group>"; };
+		24D02F5A1D03A26300C8110A /* Place+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Place+CoreDataProperties.m"; sourceTree = "<group>"; };
+		24D02F5B1D03A26300C8110A /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
+		24D02F5C1D03A26300C8110A /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
 		41663C847506F0ED3EF32752 /* libPods-MayLibre.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MayLibre.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B543CBCED83E2B0FE1B8EE6 /* Pods-MayLibre.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MayLibre.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MayLibre/Pods-MayLibre.debug.xcconfig"; sourceTree = "<group>"; };
 		F12BEF5084F253CEB438BD3E /* Pods-MayLibre.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MayLibre.release.xcconfig"; path = "Pods/Target Support Files/Pods-MayLibre/Pods-MayLibre.release.xcconfig"; sourceTree = "<group>"; };
@@ -170,6 +188,10 @@
 		2469A5F31CCFF58C00079F58 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				24D02F591D03A26300C8110A /* Place+CoreDataProperties.h */,
+				24D02F5A1D03A26300C8110A /* Place+CoreDataProperties.m */,
+				24D02F5B1D03A26300C8110A /* Place.h */,
+				24D02F5C1D03A26300C8110A /* Place.m */,
 				249C62971CCA31B2005F77C1 /* MayLibre.xcdatamodeld */,
 				247A9F6D1CD2CA47007A0D78 /* Category+CoreDataProperties.h */,
 				247A9F6E1CD2CA47007A0D78 /* Category+CoreDataProperties.m */,
@@ -215,11 +237,17 @@
 				249C628F1CCA31B2005F77C1 /* AppDelegate.m */,
 				249C62BB1CCA3ACE005F77C1 /* MayEntriesController.h */,
 				249C62BC1CCA3ACE005F77C1 /* MayEntriesController.m */,
-				2469A6071CD00DC200079F58 /* MayEntryFormController.h */,
-				2469A6081CD00DC200079F58 /* MayEntryFormController.m */,
+				24D02F561D0038B500C8110A /* MayEntryDetailsController.h */,
+				24D02F571D0038B500C8110A /* MayEntryDetailsController.m */,
 				249C62BE1CCA3B01005F77C1 /* MayEntryCell.h */,
 				249C62BF1CCA3B01005F77C1 /* MayEntryCell.m */,
 				249C62C01CCA3B01005F77C1 /* MayEntryCell.xib */,
+				2469A6071CD00DC200079F58 /* MayEntryFormController.h */,
+				2469A6081CD00DC200079F58 /* MayEntryFormController.m */,
+				24D02F501CFF237C00C8110A /* MayEntrySummaryFormController.h */,
+				24D02F511CFF237C00C8110A /* MayEntrySummaryFormController.m */,
+				24D02F4D1CFEF8F700C8110A /* MayEntrySummaryFormCell.h */,
+				24D02F4E1CFEF8F700C8110A /* MayEntrySummaryFormCell.m */,
 				249C62C31CCA3D8A005F77C1 /* MayBarCodeScannerController.h */,
 				249C62C41CCA3D8A005F77C1 /* MayBarCodeScannerController.m */,
 				2469A60A1CD02CA300079F58 /* MayISBNGoogleResolver.h */,
@@ -232,6 +260,8 @@
 				247A9F771CD57ACB007A0D78 /* MayImageManager.m */,
 				24D02F4A1CFC5FA200C8110A /* NSString+MayDisplayExtension.h */,
 				24D02F4B1CFC5FA200C8110A /* NSString+MayDisplayExtension.m */,
+				24D02F531CFFB75B00C8110A /* MayUserDefaults.h */,
+				24D02F541CFFB75B00C8110A /* MayUserDefaults.m */,
 			);
 			path = MayLibre;
 			sourceTree = "<group>";
@@ -406,17 +436,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				2425E1311CE01BB300EEECB7 /* MayAuthor.m in Sources */,
+				24D02F4F1CFEF8F700C8110A /* MayEntrySummaryFormCell.m in Sources */,
 				249C62C11CCA3B01005F77C1 /* MayEntryCell.m in Sources */,
 				24D02F4C1CFC5FA200C8110A /* NSString+MayDisplayExtension.m in Sources */,
 				247A9F781CD57ACB007A0D78 /* MayImageManager.m in Sources */,
 				247A9F721CD2CA47007A0D78 /* Category.m in Sources */,
 				248ED2691CCD02D000D57EF9 /* MayISBNFormatter.m in Sources */,
+				24D02F5D1D03A26300C8110A /* Place+CoreDataProperties.m in Sources */,
 				2469A60C1CD02CA300079F58 /* MayISBNGoogleResolver.m in Sources */,
 				248ED2611CCA8E2800D57EF9 /* MayISBN.m in Sources */,
+				24D02F581D0038B500C8110A /* MayEntryDetailsController.m in Sources */,
 				249C62901CCA31B2005F77C1 /* AppDelegate.m in Sources */,
 				249C62C61CCA3D8A005F77C1 /* MayBarCodeScannerController.m in Sources */,
 				2469A6121CD0495100079F58 /* Entry.m in Sources */,
+				24D02F551CFFB75B00C8110A /* MayUserDefaults.m in Sources */,
 				249C62991CCA31B2005F77C1 /* MayLibre.xcdatamodeld in Sources */,
+				24D02F521CFF237C00C8110A /* MayEntrySummaryFormController.m in Sources */,
 				2469A6091CD00DC200079F58 /* MayEntryFormController.m in Sources */,
 				249C62BD1CCA3ACE005F77C1 /* MayEntriesController.m in Sources */,
 				247A9F711CD2CA47007A0D78 /* Category+CoreDataProperties.m in Sources */,
@@ -425,6 +460,7 @@
 				249C628D1CCA31B2005F77C1 /* main.m in Sources */,
 				247A9F751CD4C278007A0D78 /* HomeController.m in Sources */,
 				247A9F6C1CD1F2BF007A0D78 /* MayDigest.m in Sources */,
+				24D02F5E1D03A26300C8110A /* Place.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

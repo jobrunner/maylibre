@@ -20,10 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleCompositionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *referenceType;
-@property (weak, nonatomic) IBOutlet UILabel *publisher;
-@property (weak, nonatomic) IBOutlet UILabel *publishing;
-
 @end
 
 @implementation MayEntryCell
@@ -80,10 +76,6 @@
                                        subtitle];
     self.authorLabel.text = [[managedObject valueForKey:@"authors"] stringByReplacingOccurrencesOfString:@"\n"
                                                                                               withString:@", "];
-//    self.referenceType.text = [managedObject valueForKey:@"referenceType"];
-//    self.publisher.text= [managedObject valueForKey:@"publisher"];
-//    self.publishingLabel.text= [managedObject valueForKey:@"publishing"];
-    
     NSString *imageUrl = [managedObject valueForKey:@"coverUrl"];
     
     [[MayImageManager sharedManager] imageWithUrlString:imageUrl

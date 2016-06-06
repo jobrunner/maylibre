@@ -8,21 +8,30 @@
 
 #import "AppDelegate.h"
 #import "MayEntryFormController.h"
+#import "MayEntrySummaryFormController.h"
 #import "MayImageManager.h"
+#import "MayEntrySummaryFormCell.h"
 
 @implementation MayEntryFormController
 
-#pragma mark UIViewController Delegates
+#pragma mark UIViewControllerDelegates
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     [self.navigationController setToolbarHidden:YES
                                        animated:NO];
+    
+    self.tableView.estimatedRowHeight = 44;
+    
     self.authorsTextView.delegate = self;
     
     managedObjectContext = ApplicationDelegate.managedObjectContext;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(changeSummary:)
+                                                 name:kNotificationEntrySummaryChanged
+                                               object:nil];
     if (_entry == nil) {
         [self createModelForEditing];
     }
@@ -41,10 +50,20 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
+#pragma mark UITableViewDelegates
+
+/**
+ * Although we need static cells here the tableView must know
+ * automatic height otherwise it uses the costum height set
+ * in Interface Builder.
+ */
+- (CGFloat)tableView:(UITableView *)tableView
+heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [super didReceiveMemoryWarning];
+    return UITableViewAutomaticDimension;
 }
+
+#pragma mark MayEntryFormController
 
 - (void)loadModelForUpdate {
     
@@ -60,7 +79,8 @@
     _pagesTextField.text = _entry.pageCount;
     _isbnTextField.text = _entry.productCode;
     _placeTextField.text = _entry.place;
-    
+    _summaryLabel.text = _entry.summary;
+        
     [[MayImageManager sharedManager] imageWithUrlString:_entry.coverUrl
                                              completion:^(UIImage *image, NSError *error) {
                                                  if (error) {
@@ -73,21 +93,21 @@
 
 - (void)createModelForEditing {
     
-    self.entry = [NSEntityDescription insertNewObjectForEntityForName:@"Entry"
-                                                inManagedObjectContext:managedObjectContext];
+    _entry = [NSEntityDescription insertNewObjectForEntityForName:@"Entry"
+                                           inManagedObjectContext:managedObjectContext];
     self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Create", @"Create");
     self.navigationItem.rightBarButtonItem.enabled = false;
     
-    _authorsTextView.text = @"";
-    _titleTextField.text = @"";
-    _subtitleTextField.text = @"";
-    _yearTextField.text = @"";
-    _publisherTextField.text = @"";
-    _pagesTextField.text = @"";
-    _isbnTextField.text = @"";
-    _publisherTextField.text = @"";
-    _placeTextField.text = @"";
+    _authorsTextView.text = _entry.authors;
+    _titleTextField.text = _entry.title;
+    _subtitleTextField.text = _entry.subtitle;
+    _yearTextField.text = _entry.publishing;
+    _publisherTextField.text = _entry.publisher;
+    _pagesTextField.text = _entry.pageCount;
+    _isbnTextField.text = _entry.productCode;
+    _placeTextField.text = _entry.place;
+    _summaryLabel.text = _entry.summary;
 }
 
 - (void)saveForm {
@@ -100,14 +120,37 @@
     _entry.pageCount = _pagesTextField.text;
     _entry.productCode = _isbnTextField.text;
     _entry.publisher = _publisherTextField.text;
+    _entry.summary = _summaryLabel.text;
     
     NSError *error = nil;
     
     [managedObjectContext save:&error];
     
     if (error) {
-        NSLog(@"Error: %@", [error localizedDescription]);
+        [App viewController:self
+            handleUserError:error
+                      title:nil];
     }
+}
+
+- (void)changeSummary:(NSNotification *)notification {
+    
+    _entry.summary = (NSString *)notification.object;
+    _summaryLabel.text = _entry.summary;
+
+    [self refreshTableViewCellAutolayout];
+    [self formDidChanged:_summaryLabel];
+}
+
+- (void)refreshTableViewCellAutolayout {
+    
+    CGPoint currentOffset = [self.tableView contentOffset];
+    [UIView setAnimationsEnabled:NO];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+    [UIView setAnimationsEnabled:YES];
+    [self.tableView setContentOffset:currentOffset
+                            animated:NO];
 }
 
 #pragma mark - Helper
@@ -119,15 +162,14 @@
 
 - (void)goToPreviousViewController {
     
-    UINavigationController *navigationController = self.navigationController;
-    
-    [navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark UITextView Delegates
+#pragma mark UITextViewDelegates
 
 - (void)textViewDidChange:(UITextView *)textView {
     
+    [self refreshTableViewCellAutolayout];
     [self formDidChanged:textView];
 }
 
@@ -172,6 +214,16 @@
 - (IBAction)placeTextFieldChanged:(UITextField *)sender {
     
     [self formDidChanged:sender];
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"openEntrySummaryEditSegue"]) {
+        MayEntrySummaryFormController * controller = segue.destinationViewController;
+        controller.entry = _entry;
+    }
 }
 
 @end

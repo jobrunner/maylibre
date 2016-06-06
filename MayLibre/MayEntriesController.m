@@ -8,6 +8,7 @@
 #import "AppDelegate.h"
 #import "MayEntriesController.h"
 #import "MayEntryFormController.h"
+#import "MayEntryDetailsController.h"
 #import "MayEntryCell.h"
 #import "MayBarCodeScannerController.h"
 #import "MayISBN.h"
@@ -21,14 +22,18 @@
 
 @interface MayEntriesController()
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *sortSegmentationControl;
+@property (nonatomic, weak) IBOutlet UISegmentedControl *sortSegmentationControl;
 
 - (IBAction)scanBarButton:(UIBarButtonItem *)sender;
+- (IBAction)actionBarButton:(UIBarButtonItem *)sender;
+- (IBAction)markBarButton:(UIBarButtonItem *)sender;
 - (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender;
 
 @end
 
 @implementation MayEntriesController
+
+#pragma mark UIViewControllerDelegates
 
 - (void)viewDidLoad {
 
@@ -43,12 +48,42 @@
                                        animated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-
-    [super didReceiveMemoryWarning];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    
+    if ([segue.identifier isEqualToString:@"openScannerSegue"]) {
+        
+        MayBarCodeScannerController *controller =
+        (MayBarCodeScannerController *)segue.destinationViewController;
+        controller.delegate = self;
+        // options...
+    }
+    
+    if ([segue.identifier isEqualToString:@"openEntryDetailsSegue"]) {
+        
+        MayEntryDetailsController *controller =
+        (MayEntryDetailsController *)segue.destinationViewController;
+        
+        MayEntryCell *cell = sender;
+        Entry *model = [self.fetchedResultsController objectAtIndexPath:cell.indexPath];
+        
+        controller.entry = model;
+    }
+    
+    if ([segue.identifier isEqualToString:@"openEntryFormSegue"]) {
+        
+        MayEntryFormController *controller =
+        (MayEntryFormController *)segue.destinationViewController;
+        
+        MayEntryCell *cell = sender;
+        Entry *model = [self.fetchedResultsController objectAtIndexPath:cell.indexPath];
+        
+        controller.entry = model;
+    }
 }
 
-#pragma mark - Table view data source
+#pragma mark  UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
@@ -98,20 +133,18 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;
 }
 
-//- (void)tableView:(UITableView *)tableView
-//didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    // select entry for detail, editing or deletion...
-//}
-
-// Dosn't support native editing of table view cells.
+/**
+ * Dosn't support native editing of table view cells.
+ */
 - (BOOL)tableView:(UITableView *)tableView
 canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return NO;
 }
 
-// Dosn't support conditional rearranging of the table view.
+/** 
+ * Dosn't support conditional rearranging of the table view.
+ */
 - (BOOL)tableView:(UITableView *)tableView
 canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -123,9 +156,29 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     MayEntryCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
-    [self performSegueWithIdentifier:@"openEntryFormSegue"
+    [self performSegueWithIdentifier:@"openEntryDetailsSegue"
                               sender:cell];
 }
+
+/**
+ * Supresses header
+ */
+- (CGFloat)tableView:(UITableView *)tableView
+heightForHeaderInSection:(NSInteger)section {
+    
+    return 0.01;
+}
+
+/**
+ * Supresses footer
+ */
+- (CGFloat)tableView:(UITableView *)tableView
+heightForFooterInSection:(NSInteger)section {
+    
+    return 0.01;
+}
+
+#pragma mark MGSwipeTableCellDelegates
 
 - (BOOL)swipeTableCell:(MayEntryCell *)cell
    tappedButtonAtIndex:(NSInteger)index
@@ -152,125 +205,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
 
-
-- (void)deleteRecordFromCell:(MayEntryCell *)cell {
-    
-    void (^action)() = ^{
-        
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        NSError *error = nil;
-        
-        if (![context save:&error]) {
-            NSLog(@"Unresolved error %@, %@", error, [error localizedDescription]);
-        }
-    };
-    
-    UIAlertController *actionSheet;
-    actionSheet = [UIAlertController alertControllerWithTitle:nil
-                                                      message:nil
-                                               preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *deleteAction;
-    deleteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete Entry", nil)
-                                            style:UIAlertActionStyleDestructive
-                                          handler:action];
-    UIAlertAction *cancelAction;
-    cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
-                                            style:UIAlertActionStyleDefault
-                                          handler:nil];
-    [actionSheet addAction:deleteAction];
-    [actionSheet addAction:cancelAction];
-    
-    [self presentViewController:actionSheet
-                       animated:YES
-                     completion:nil];
-}
-
-- (void)toggleMarkFromCell:(UITableViewCell *)cell {
-    
-    // Mark sample
-    NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    
-    Entry *entry = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    // toogle isMarked flag
-     entry.isMarked = ([entry.isMarked boolValue]) ? @NO : @YES;
-    
-    NSError *error = nil;
-    
-    if (![context save:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error localizedDescription]);
-    }
-}
-
-#pragma mark - NSFetchedResultsController Delegate and Helpers
-
-- (NSArray *)sortDescriptors {
-
-    static NSArray *sortKeysBySegmentation = nil;
-    
-    if (sortKeysBySegmentation == nil) {
-        sortKeysBySegmentation = @[@"authors", @"title", @"creationTime"];
-    }
-
-    NSString *sortKey =
-    [sortKeysBySegmentation objectAtIndex:_sortSegmentationControl.selectedSegmentIndex];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey
-                                                                   ascending:NO];
-    NSLog(@"Sorting: %@", sortKey);
-    return @[sortDescriptor];
-}
-
-- (NSFetchedResultsController *)fetchedResultsController {
-    
-// Bad Idea to comment out!
-// But for sorting changes, fetchedResultsController cannot be cached the easy way.
-    
-//    if (fetchedResultsController != nil) {
-//        
-//        return fetchedResultsController;
-//    }
-    
-    NSFetchRequest *request = [NSFetchRequest new];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Entry"
-                                              inManagedObjectContext:managedObjectContext];
-    
-    [request setEntity:entity];
-    
-    if ([[MayUserDefaults sharedInstance] listMarkedEntries]) {
-        NSPredicate *predicate;
-        predicate = [NSPredicate predicateWithFormat:@"isMarked = YES"];
-        [request setPredicate:predicate];
-    }
-    
-    [request setSortDescriptors:self.sortDescriptors];
-    
-    NSFetchedResultsController *resultsController;
-    
-    resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                            managedObjectContext:managedObjectContext
-                                                              sectionNameKeyPath:nil
-                                                                       cacheName:nil];
-    resultsController.delegate = self;
-    
-    fetchedResultsController = resultsController;
-    
-    NSError *error = nil;
-    
-    if (![fetchedResultsController performFetch:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    return fetchedResultsController;
-}
+#pragma mark NSFetchedResultsControllerDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
     
@@ -337,7 +272,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView endUpdates];
 }
 
-#pragma mark Mail Composer Delegates
+#pragma mark MFMailComposeViewControllerDelegates
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller
           didFinishWithResult:(MFMailComposeResult)result
@@ -347,6 +282,152 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                              completion:nil];
 }
 
+#pragma mark - MAYBarCodeScannerDelegates
+
+- (void)barCodeScannerController:(MayBarCodeScannerController *)controller
+                  didCaptureISBN:(MayISBN *)isbn {
+    
+    [self storeEntryWithISBNAsyc:isbn];
+}
+
+#pragma mark MayEntriesController
+
+/**
+ * Handles swipe action: Deletes record from table view cell and managed object
+ */
+- (void)deleteRecordFromCell:(MayEntryCell *)cell {
+    
+    void (^action)() = ^{
+        
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        NSError *error = nil;
+        
+        if (![context save:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error localizedDescription]);
+        }
+    };
+    
+    UIAlertController *actionSheet;
+    actionSheet = [UIAlertController alertControllerWithTitle:nil
+                                                      message:nil
+                                               preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *deleteAction;
+    deleteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete Entry", nil)
+                                            style:UIAlertActionStyleDestructive
+                                          handler:action];
+    UIAlertAction *cancelAction;
+    cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                                            style:UIAlertActionStyleDefault
+                                          handler:nil];
+    [actionSheet addAction:deleteAction];
+    [actionSheet addAction:cancelAction];
+    
+    [self presentViewController:actionSheet
+                       animated:YES
+                     completion:nil];
+}
+
+/**
+ * Handles swipe action: mark record
+ */
+- (void)toggleMarkFromCell:(UITableViewCell *)cell {
+    
+    // Mark sample
+    NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    
+    Entry *entry = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    // toogle isMarked flag
+    entry.isMarked = ([entry.isMarked boolValue]) ? @NO : @YES;
+    
+    NSError *error = nil;
+    
+    if (![context save:&error]) {
+        return [App viewController:self
+                   handleUserError:error
+                             title:nil];
+    }
+}
+
+/**
+ * Assables sort descriptors for table view.
+ * Function depends on segmentation control.
+ */
+- (NSArray *)sortDescriptors {
+    
+    static NSArray *sortKeysBySegmentation = nil;
+    
+    if (sortKeysBySegmentation == nil) {
+        sortKeysBySegmentation = @[@"authors", @"title", @"creationTime"];
+    }
+    
+    NSString *sortKey =
+    [sortKeysBySegmentation objectAtIndex:_sortSegmentationControl.selectedSegmentIndex];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey
+                                                                   ascending:NO];
+    NSLog(@"Sorting: %@", sortKey);
+    
+    return @[sortDescriptor];
+}
+
+/**
+ * Handles the fetchedResultsController used as source with tabel view
+ */
+- (NSFetchedResultsController *)fetchedResultsController {
+    
+    // Bad Idea to comment out!
+    // But for sorting changes, fetchedResultsController cannot be cached the easy way.
+    
+    //    if (fetchedResultsController != nil) {
+    //
+    //        return fetchedResultsController;
+    //    }
+    
+    NSFetchRequest *request = [NSFetchRequest new];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Entry"
+                                              inManagedObjectContext:managedObjectContext];
+    
+    [request setEntity:entity];
+    
+    if ([[MayUserDefaults sharedInstance] listMarkedEntries]) {
+        NSPredicate *predicate;
+        predicate = [NSPredicate predicateWithFormat:@"isMarked = YES"];
+        [request setPredicate:predicate];
+    }
+    
+    [request setSortDescriptors:self.sortDescriptors];
+    
+    NSFetchedResultsController *resultsController;
+    
+    resultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                            managedObjectContext:managedObjectContext
+                                                              sectionNameKeyPath:nil
+                                                                       cacheName:nil];
+    resultsController.delegate = self;
+    
+    fetchedResultsController = resultsController;
+    
+    NSError *error = nil;
+    
+    if (![fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return fetchedResultsController;
+}
+
+/**
+ * Handles swipe action: sending mail with book entry
+ */
 - (void)sendMail:(NSManagedObject *)managedObject {
     
     NSMutableString *emailBody = [[NSMutableString alloc] init];
@@ -382,13 +463,13 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [emailBody appendFormat:@" ISBN: %@.", entry.productCode.unnil];
     
-    NSArray *emailRecipients = @[];
-    
-    MFMailComposeViewController *mailComposerController = [[MFMailComposeViewController alloc]init];
+    MFMailComposeViewController *mailComposerController = MFMailComposeViewController.new;
     
     if ([MFMailComposeViewController canSendMail]) {
         mailComposerController.mailComposeDelegate = self;
-        
+
+        // perhaps a setting...
+        NSArray *emailRecipients = @[];
         mailComposerController.toRecipients = emailRecipients;
         mailComposerController.subject = emailSubject;
         
@@ -398,32 +479,22 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         [self presentViewController:mailComposerController
                            animated:YES
                          completion:nil];
-        
+        // new feature: Attachement with RIS file
+        // Prequesits: Parsing of sure and lastname comming from service
 //        [mailComposerController addAttachmentData:[sampleData dataUsingEncoding:NSUTF8StringEncoding]
 //                                         mimeType:@"text/plain"
 //                                         fileName:risFileName];
     }
     else {
-        UIAlertController *alertController =
-        [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Mail error", nil)
-                                            message:NSLocalizedString(@"It's not possible to use mail", nil)
-                                     preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *alertAction;
-        alertAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
-                                               style:UIAlertActionStyleDefault
-                                             handler:nil];
-        [alertController addAction:alertAction];
-        
-        [self presentViewController:alertController
-                           animated:YES
-                         completion:nil];
+        [App viewConroller:self
+                     title:NSLocalizedString(@"Mail error", nil)
+                   message:NSLocalizedString(@"It's not possible to use mail", nil)];
     }
 }
 
 #pragma mark - Helper
 
-- (void)handleInvalidISBN:(NSString *)barCode withError:(NSError *)error {
+- (void)handleInvalidISBNxxxx:(NSString *)barCode withError:(NSError *)error {
 
     // gescanntes Ding ist zwar ein BarCode, aber kein Buch (oder die ISBN ist sonst falsch).
     // Retry, Cancel, manuelle Eingabe
@@ -549,68 +620,157 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     error = nil;
 }
 
-#pragma mark - MAYBarCodeScannerDelegates
+#pragma mark IBActions
 
-- (void)barCodeScannerController:(MayBarCodeScannerController *)controller
-                  didCaptureISBN:(MayISBN *)isbn {
+/**
+ * Triggers bar code scanning
+ */
+- (IBAction)scanBarButton:(UIBarButtonItem *)sender {
+    
+    [self performSegueWithIdentifier:@"openScanner"
+                              sender:sender];
+}
+
+- (IBAction)actionBarButton:(UIBarButtonItem *)sender {
+
+    // open action sheet showing what actions can be performed
+    
+    UIAlertController *actionSheet =
+    [UIAlertController alertControllerWithTitle:nil // NSLocalizedString(@"Action", nil)
+                                        message:nil // NSLocalizedString(@"Bla Message", nil)
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    
+
+    UIAlertAction *exportAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Export all Entries", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:nil];
+    
+    UIAlertAction *addEntryAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Add Book Title", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               [self performSegueWithIdentifier:@"createEntryFormSegue"
+                                                         sender:self];
+                           }];
+
+    UIAlertAction *addEntryWithISBNAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Add with ISBN", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               [self addISBNManualy];
+                           }];
+    
+    UIAlertAction *settingsAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Settings", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:nil];
+
+    UIAlertAction *cancelAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                             style:UIAlertActionStyleCancel
+                           handler:nil];
+
+    [actionSheet addAction:addEntryAction];
+    [actionSheet addAction:addEntryWithISBNAction];
+    [actionSheet addAction:exportAction];
+    [actionSheet addAction:settingsAction];
+    [actionSheet addAction:cancelAction];
+    
+    [self presentViewController:actionSheet
+                       animated:YES
+                     completion:nil];
+}
+
+- (IBAction)markBarButton:(UIBarButtonItem *)sender {
+
+
+    if (MayUserDefaults.sharedInstance.toogleListMarkedEntries) {
+        
+        sender.tintColor = [UIColor orangeColor];
+    }
+    else {
+
+        sender.tintColor = [UIColor blueColor];
+    }
+    
+    [self.tableView reloadData];
+}
+
+- (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender {
+    
+    // NSLog(@"segmented changed to: %ld", (long)sender.selectedSegmentIndex);
+    
+    [self.tableView reloadData];
+}
+
+- (void)addISBNManualy {
+    
+    UIAlertController *actionAlert =
+    [UIAlertController alertControllerWithTitle:NSLocalizedString(@"ISBN", nil)
+                                        message:NSLocalizedString(@"Input an ISBN-10 or ISBN-13 with or without seperation signs (-).", nil)
+                                 preferredStyle:UIAlertControllerStyleAlert];
+
+    [actionAlert addTextFieldWithConfigurationHandler:^(UITextField * textField) {
+        textField.borderStyle = UITextBorderStyleNone;
+        textField.clearButtonMode = UITextFieldViewModeAlways;
+        textField.font = [UIFont systemFontOfSize:16.0];
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+        textField.returnKeyType = UIReturnKeySend;
+        textField.text = @"";
+        [textField resignFirstResponder];
+    }];
+
+    [actionAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                                    style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction * action) {
+                                                      NSString *code = actionAlert.textFields[0].text;
+                                                      NSError *error = nil;
+                                                      MayISBN *isbn = [MayISBN ISBNFromString:code
+                                                                                        error:&error];
+                                                      if (error) {
+                                                          return [App viewController:self
+                                                                     handleUserError:(NSError *)error
+                                                                               title:nil];
+                                                      }
+                                                      
+                                                      [self storeEntryWithISBNAsyc:isbn];
+                                                  }]];
+
+    [actionAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                                                    style:UIAlertActionStyleCancel
+                                                  handler:nil]];
+    [self presentViewController:actionAlert
+                       animated:YES
+                     completion:nil];
+}
+
+#pragma mark Operations
+
+- (void)storeEntryWithISBNAsyc:(MayISBN *)isbn {
 
     NSOperationQueue *operationQueue = [NSOperationQueue new];
     
     [operationQueue addOperationWithBlock:^{
         
         // Background work
-
+        
         NSError *error = nil;
-
+        
         [self storeEntryWithISBN:isbn
                            error:&error];
+        if (error) {
+            return [App viewController:self
+                       handleUserError:(NSError *)error
+                                 title:nil];
+        }
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-
+            
             // Main thread work (UI usually)
             [self.tableView reloadData];
         }];
     }];
-}
-
-#pragma mark IBActions
-
-- (IBAction)scanBarButton:(UIBarButtonItem *)sender {
-    
-    [self performSegueWithIdentifier:@"openScanner" sender:sender];
-}
-
-- (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender {
-    
-    NSLog(@"segmented changed to: %ld", (long)sender.selectedSegmentIndex);
-    
-    [self.tableView reloadData];
-}
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-
-    if ([segue.identifier isEqualToString:@"openScannerSegue"]) {
-        
-        MayBarCodeScannerController *controller =
-        (MayBarCodeScannerController *)segue.destinationViewController;
-        controller.delegate = self;
-        // options...
-    }
-    
-    if ([segue.identifier isEqualToString:@"openEntryFormSegue"]) {
-
-        MayEntryFormController *controller =
-        (MayEntryFormController *)segue.destinationViewController;
-
-        MayEntryCell *cell = sender;
-        Entry *model = [self.fetchedResultsController objectAtIndexPath:cell.indexPath];
-        
-        controller.entry = model;
-    }
 }
 
 @end
