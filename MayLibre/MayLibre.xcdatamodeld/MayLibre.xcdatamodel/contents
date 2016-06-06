@@ -11,8 +11,10 @@
         <attribute name="authors" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="coverUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creationTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="exemplars" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="isMarked" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pageCount" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productCode" optional="YES" attributeType="String" syncable="YES"/>
@@ -27,10 +29,10 @@
         <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="category" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="entry" inverseEntity="Category" syncable="YES"/>
     </entity>
-    <entity name="Place" syncable="YES"/>
+    <entity name="Place" representedClassName="Place" syncable="YES"/>
     <elements>
         <element name="Category" positionX="-297" positionY="135" width="128" height="120"/>
-        <element name="Entry" positionX="-299" positionY="-1" width="128" height="315"/>
+        <element name="Entry" positionX="-299" positionY="-1" width="128" height="345"/>
         <element name="Place" positionX="-288" positionY="135" width="128" height="45"/>
     </elements>
 </model>

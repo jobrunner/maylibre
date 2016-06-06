@@ -1,5 +1,5 @@
 //
-//  Category+CoreDataProperties.m
+//  Place+CoreDataProperties.h
 //  MayLibre
 //
 //  Created by Jo Brunner on 05.06.16.
@@ -9,14 +9,13 @@
 //  to delete and recreate this implementation file for your updated model.
 //
 
-#import "Category+CoreDataProperties.h"
+#import "Place.h"
 
-@implementation Category (CoreDataProperties)
+NS_ASSUME_NONNULL_BEGIN
 
-@dynamic creationTime;
-@dynamic name;
-@dynamic updateTime;
-@dynamic version;
-@dynamic entry;
+@interface Place (CoreDataProperties)
+
 
 @end
+
+NS_ASSUME_NONNULL_END
