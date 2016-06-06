@@ -22,6 +22,8 @@
 
 @interface MayEntriesController()
 
+typedef void (^MayActionCompletionHandler)(NSError *error);
+
 @property (nonatomic, weak) IBOutlet UISegmentedControl *sortSegmentationControl;
 
 - (IBAction)scanBarButton:(UIBarButtonItem *)sender;
@@ -493,8 +495,9 @@ heightForFooterInSection:(NSInteger)section {
 }
 
 - (void)storeEntryWithISBN:(MayISBN *)isbn
-                     error:(NSError **)error {
+                completion:(MayActionCompletionHandler)completion {
 
+    NSError *error = nil;
     Entry *model = [NSEntityDescription insertNewObjectForEntityForName:@"Entry"
                                                  inManagedObjectContext:managedObjectContext];
     
@@ -503,11 +506,11 @@ heightForFooterInSection:(NSInteger)section {
     model.productCodeType = @(MayEntryCodeTypeISBN);
     model.referenceType = @(MayEntryTypeBook);
     
-    if (![managedObjectContext save:error]) {
-        
-        return [App viewController:self
-                   handleUserError:*error
-                             title:nil];
+    [managedObjectContext save:&error];
+
+    if (error) {
+        completion(error);
+        return;
     }
     
     // Trigger asynchronous service call to resolve the isbn to a full book description
@@ -517,9 +520,8 @@ heightForFooterInSection:(NSInteger)section {
                      complete:^(NSDictionary *result, NSError *error) {
         
                          if (error) {
-                             return [App viewController:self
-                                        handleUserError:(NSError *)error
-                                                  title:nil];
+                             completion(error);
+                             return;
                          }
                          
                          NSDictionary *volumeInfo = [result objectForKey:@"volumeInfo"];
@@ -561,15 +563,11 @@ heightForFooterInSection:(NSInteger)section {
                          NSString *imageUrl = [[volumeInfo objectForKey:@"imageLinks"] objectForKey:@"thumbnail"];
 
                          model.coverUrl = imageUrl;
-                         
-                         if (![managedObjectContext save:&error]) {
 
-                             return [App viewController:self
-                                        handleUserError:(NSError *)error
-                                                  title:nil];
-                         }
+                         [managedObjectContext save:&error];
+
+                         completion(error);
     }];
-    error = nil;
 }
 
 #pragma mark IBActions
@@ -707,20 +705,18 @@ heightForFooterInSection:(NSInteger)section {
         
         // Background work
         
-        NSError *error = nil;
-        
         [self storeEntryWithISBN:isbn
-                           error:&error];
-        if (error) {
-            return [App viewController:self
-                       handleUserError:(NSError *)error
-                                 title:nil];
-        }
-        
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            
-            // Main thread work (UI usually)
-            [self.tableView reloadData];
+                      completion:^(NSError *error) {
+
+                          [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                              
+                              // Main thread work (UI usually)
+                              [App viewController:self
+                                  handleUserError:error
+                                            title:nil];
+
+                              [self.tableView reloadData];
+                          }];
         }];
     }];
 }
