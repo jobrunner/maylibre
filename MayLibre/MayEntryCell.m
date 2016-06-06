@@ -42,13 +42,6 @@
     self.rightSwipeSettings.transition = MGSwipeTransitionBorder;
 }
 
-- (void)setSelected:(BOOL)selected
-           animated:(BOOL)animated {
-
-    [super setSelected:selected
-              animated:animated];
-}
-
 - (void)configureWithModel:(NSManagedObject *)managedObject
                atIndexPath:(NSIndexPath *)indexPath
               withDelegate:(id)delegate {
@@ -56,7 +49,7 @@
     // handle not to show (null) when string is nil.
     
     self.indexPath = indexPath;
-    self.productCodeLabel.text = [managedObject valueForKey:@"productCode"];
+    _productCodeLabel.text = [managedObject valueForKey:@"productCode"];
     
     // handle last point for subtitle.
     NSString *title = [managedObject valueForKey:@"title"];
@@ -71,10 +64,10 @@
         subtitle = @"";
     }
     
-    self.titleCompositionLabel.text = [NSString stringWithFormat:@"%@. %@",
+    _titleCompositionLabel.text = [NSString stringWithFormat:@"%@. %@",
                                        title,
                                        subtitle];
-    self.authorLabel.text = [[managedObject valueForKey:@"authors"] stringByReplacingOccurrencesOfString:@"\n"
+    _authorLabel.text = [[managedObject valueForKey:@"authors"] stringByReplacingOccurrencesOfString:@"\n"
                                                                                               withString:@", "];
     NSString *imageUrl = [managedObject valueForKey:@"coverUrl"];
     

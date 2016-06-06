@@ -634,7 +634,6 @@ heightForFooterInSection:(NSInteger)section {
 
 - (IBAction)markBarButton:(UIBarButtonItem *)sender {
 
-
     if (MayUserDefaults.sharedInstance.toogleListMarkedEntries) {
         
         sender.tintColor = [UIColor orangeColor];
