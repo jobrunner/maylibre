@@ -637,10 +637,12 @@ heightForFooterInSection:(NSInteger)section {
     if (MayUserDefaults.sharedInstance.toogleListMarkedEntries) {
         
         sender.tintColor = [UIColor orangeColor];
+        sender.image = [UIImage imageNamed:@"star-filled"];
     }
     else {
 
-        sender.tintColor = [UIColor blueColor];
+        sender.tintColor = self.view.tintColor;
+        sender.image = [UIImage imageNamed:@"star"];
     }
     
     [self.tableView reloadData];

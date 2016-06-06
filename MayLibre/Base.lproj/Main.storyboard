@@ -30,7 +30,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="qFN-Xv-9bN"/>
                         <barButtonItem title="Filter" id="lBf-9Q-RPJ"/>
                         <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="p8B-bt-b2t"/>
-                        <barButtonItem tag="1" image="star" id="2cj-eC-6A3">
+                        <barButtonItem image="star" id="2cj-eC-6A3">
                             <connections>
                                 <action selector="markBarButton:" destination="nSv-bC-P36" id="FTs-X6-YgC"/>
                             </connections>
@@ -1029,6 +1029,6 @@
         <image name="star" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xXW-3w-yZu"/>
+        <segue reference="pge-nk-mxR"/>
     </inferredMetricsTieBreakers>
 </document>

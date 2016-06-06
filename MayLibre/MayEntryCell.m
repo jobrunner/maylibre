@@ -81,6 +81,17 @@
     }];
     
     self.delegate = delegate;
+    
+    if ([[managedObject valueForKey:@"isMarked"] boolValue]) {
+    
+        _authorLabel.textColor = UIColor.orangeColor;
+        _titleCompositionLabel.textColor = UIColor.orangeColor;
+    }
+    else {
+        
+        _authorLabel.textColor = UIColor.blackColor;
+        _titleCompositionLabel.textColor = UIColor.blackColor;
+    }
 }
 
 @end
