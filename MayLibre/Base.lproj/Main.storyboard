@@ -787,8 +787,8 @@
                                                     <exclude reference="3Ir-OM-Vbf"/>
                                                     <exclude reference="kpR-ct-p7M"/>
                                                     <exclude reference="JT3-RN-9XT"/>
-                                                    <exclude reference="5EG-YX-Cdr"/>
                                                     <exclude reference="sjW-ZF-edP"/>
+                                                    <exclude reference="5EG-YX-Cdr"/>
                                                     <exclude reference="a17-u0-rbC"/>
                                                     <exclude reference="sEP-CD-TNs"/>
                                                     <exclude reference="Ocx-OV-0hT"/>
@@ -807,9 +807,9 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="Fqc-kO-MmQ"/>
                                                 <exclude reference="JyM-WM-MsS"/>
                                                 <exclude reference="vJn-TX-xfN"/>
+                                                <exclude reference="Fqc-kO-MmQ"/>
                                             </mask>
                                         </variation>
                                     </tableViewCell>
