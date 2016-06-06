@@ -10,6 +10,9 @@
 @import CoreData;
 
 #define ApplicationDelegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
+#define App                 ((AppDelegate *)[UIApplication sharedApplication].delegate)
+
+#define kNotificationEntrySummaryChanged    @"EntrySummaryChanged"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
