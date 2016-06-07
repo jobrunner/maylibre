@@ -86,7 +86,7 @@ heightForFooterInSection:(NSInteger)section {
 - (void)loadModelForUpdate {
     
     self.navigationItem.title = @"";
-    self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Save", @"Save");
+    self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Save", nil);
     self.navigationItem.rightBarButtonItem.enabled = false;
 
     _authorsTextView.text = _entry.authors;
@@ -114,7 +114,7 @@ heightForFooterInSection:(NSInteger)section {
     _entry = [NSEntityDescription insertNewObjectForEntityForName:@"Entry"
                                            inManagedObjectContext:managedObjectContext];
     self.navigationItem.title = @"";
-    self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Create", @"Create");
+    self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Create", nil);
     self.navigationItem.rightBarButtonItem.enabled = false;
     
     _authorsTextView.text = _entry.authors;
