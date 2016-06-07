@@ -63,6 +63,24 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;
 }
 
+/**
+ * Supresses header
+ */
+- (CGFloat)tableView:(UITableView *)tableView
+heightForHeaderInSection:(NSInteger)section {
+    
+    return 0.01;
+}
+
+/**
+ * Supresses footer
+ */
+- (CGFloat)tableView:(UITableView *)tableView
+heightForFooterInSection:(NSInteger)section {
+    
+    return 0.01;
+}
+
 #pragma mark MayEntryFormController
 
 - (void)loadModelForUpdate {
