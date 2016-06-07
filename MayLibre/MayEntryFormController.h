@@ -33,7 +33,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *summaryLabel;
 @property (weak, nonatomic) IBOutlet UITableViewCell *summaryCell;
 
-- (IBAction)updateButtonTaped:(UIBarButtonItem *)sender;
+- (IBAction)cancelButtonSelected:(UIBarButtonItem *)sender;
+- (IBAction)updateButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)titleTextFieldChanged:(UITextField *)sender;
 - (IBAction)subtitleTextFieldChanged:(UITextField *)sender;
 - (IBAction)yearTextFieldChanged:(UITextField *)sender;

@@ -25,10 +25,11 @@
 typedef void (^MayActionCompletionHandler)(NSError *error);
 
 @property (nonatomic, weak) IBOutlet UISegmentedControl *sortSegmentationControl;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *markBarButton;
 
-- (IBAction)scanBarButton:(UIBarButtonItem *)sender;
-- (IBAction)actionBarButton:(UIBarButtonItem *)sender;
-- (IBAction)markBarButton:(UIBarButtonItem *)sender;
+- (IBAction)scanBarButtonSelected:(UIBarButtonItem *)sender;
+- (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender;
+- (IBAction)markBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender;
 
 @end
@@ -46,6 +47,8 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
 - (void)viewDidAppear:(BOOL)animated {
     
+    [self listMarkedEntries:[MayUserDefaults.sharedInstance listMarkedEntries]];
+
     [self.navigationController setToolbarHidden:NO
                                        animated:YES];
 }
@@ -131,6 +134,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    // @todo: Autolayout!!!
     return 80; // @todo: check autolayout height in xib file!
     return UITableViewAutomaticDimension;
 }
@@ -292,6 +296,81 @@ heightForFooterInSection:(NSInteger)section {
     [self storeEntryWithISBNAsyc:isbn];
 }
 
+#pragma mark IBActions
+
+/**
+ * Triggers bar code scanning
+ */
+- (IBAction)scanBarButtonSelected:(UIBarButtonItem *)sender {
+    
+    [self performSegueWithIdentifier:@"openScanner"
+                              sender:sender];
+}
+
+- (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender {
+
+    // open action sheet showing what actions can be performed
+    
+    UIAlertController *actionSheet =
+    [UIAlertController alertControllerWithTitle:nil
+                                        message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+
+    UIAlertAction *exportAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Export all Entries", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:nil];
+    
+    UIAlertAction *addEntryAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Add Book Title", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               [self performSegueWithIdentifier:@"createEntryFormSegue"
+                                                         sender:self];
+                           }];
+
+    UIAlertAction *addEntryWithISBNAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Add with ISBN", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               [self addISBNManualy];
+                           }];
+    
+    UIAlertAction *settingsAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Settings", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:nil];
+
+    UIAlertAction *cancelAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                             style:UIAlertActionStyleCancel
+                           handler:nil];
+
+    [actionSheet addAction:addEntryAction];
+    [actionSheet addAction:addEntryWithISBNAction];
+    [actionSheet addAction:exportAction];
+    [actionSheet addAction:settingsAction];
+    [actionSheet addAction:cancelAction];
+    
+    [self presentViewController:actionSheet
+                       animated:YES
+                     completion:nil];
+}
+
+- (IBAction)markBarButtonSelected:(UIBarButtonItem *)sender {
+
+    [self listMarkedEntries:[MayUserDefaults.sharedInstance toogleListMarkedEntries]];
+    
+    [self.tableView reloadData];
+}
+
+- (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender {
+    
+    // NSLog(@"segmented changed to: %ld", (long)sender.selectedSegmentIndex);
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark MayEntriesController
 
 /**
@@ -322,7 +401,7 @@ heightForFooterInSection:(NSInteger)section {
                                           handler:action];
     UIAlertAction *cancelAction;
     cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
-                                            style:UIAlertActionStyleDefault
+                                            style:UIAlertActionStyleCancel
                                           handler:nil];
     [actionSheet addAction:deleteAction];
     [actionSheet addAction:cancelAction];
@@ -435,7 +514,7 @@ heightForFooterInSection:(NSInteger)section {
     NSMutableString *emailBody = [[NSMutableString alloc] init];
     
     Entry *entry = (Entry *)managedObject;
-
+    
     NSString *emailSubject = [entry.title.unnil shortenToLength:80];
     
     [emailBody appendFormat:@"%@", [entry.authors.unnil stringByReplacingOccurrencesOfString:@"\n"
@@ -446,17 +525,17 @@ heightForFooterInSection:(NSInteger)section {
     else {
         [emailBody appendFormat:@" (%@): ", @"n.a."];
     }
-
+    
     [emailBody appendFormat:@"%@.", entry.title.unnil.trimPuctuation];
     
     if (entry.subtitle) {
         [emailBody appendFormat:@" %@.", entry.subtitle.unnil.trimPuctuation];
     }
-
+    
     if (entry.publisher) {
         [emailBody appendFormat:@" %@", entry.publisher.unnil];
     }
-
+    
     if (entry.pageCount) {
         [emailBody appendFormat:@" %@pp.", entry.pageCount.unnil];
     }
@@ -469,7 +548,7 @@ heightForFooterInSection:(NSInteger)section {
     
     if ([MFMailComposeViewController canSendMail]) {
         mailComposerController.mailComposeDelegate = self;
-
+        
         // perhaps a setting...
         NSArray *emailRecipients = @[];
         mailComposerController.toRecipients = emailRecipients;
@@ -483,9 +562,9 @@ heightForFooterInSection:(NSInteger)section {
                          completion:nil];
         // new feature: Attachement with RIS file
         // Prequesits: Parsing of sure and lastname comming from service
-//        [mailComposerController addAttachmentData:[sampleData dataUsingEncoding:NSUTF8StringEncoding]
-//                                         mimeType:@"text/plain"
-//                                         fileName:risFileName];
+        //        [mailComposerController addAttachmentData:[sampleData dataUsingEncoding:NSUTF8StringEncoding]
+        //                                         mimeType:@"text/plain"
+        //                                         fileName:risFileName];
     }
     else {
         [App viewConroller:self
@@ -496,7 +575,7 @@ heightForFooterInSection:(NSInteger)section {
 
 - (void)storeEntryWithISBN:(MayISBN *)isbn
                 completion:(MayActionCompletionHandler)completion {
-
+    
     NSError *error = nil;
     Entry *model = [NSEntityDescription insertNewObjectForEntityForName:@"Entry"
                                                  inManagedObjectContext:managedObjectContext];
@@ -505,9 +584,10 @@ heightForFooterInSection:(NSInteger)section {
     model.productCode = formattedIsbn;
     model.productCodeType = @(MayEntryCodeTypeISBN);
     model.referenceType = @(MayEntryTypeBook);
+    model.isMarked = @([MayUserDefaults.sharedInstance listMarkedEntries]);
     
     [managedObjectContext save:&error];
-
+    
     if (error) {
         completion(error);
         return;
@@ -518,14 +598,14 @@ heightForFooterInSection:(NSInteger)section {
     
     [resolver resolveWithISBN:isbn.isbnCode
                      complete:^(NSDictionary *result, NSError *error) {
-        
+                         
                          if (error) {
                              completion(error);
                              return;
                          }
                          
                          NSDictionary *volumeInfo = [result objectForKey:@"volumeInfo"];
-        
+                         
                          NSArray  *authors = [volumeInfo objectForKey:@"authors"];
                          if (authors != nil) {
                              model.authors = [authors componentsJoinedByString:@"\n"];
@@ -546,7 +626,7 @@ heightForFooterInSection:(NSInteger)section {
                          model.pageCount = [[volumeInfo objectForKey:@"pageCount"] stringValue];
                          
                          NSString *printType = [volumeInfo objectForKey:@"printType"];
-
+                         
                          if ([printType isEqualToString:@"BOOK"]) {
                              model.referenceType = @(MayEntryTypeBookSection);
                          }
@@ -559,100 +639,15 @@ heightForFooterInSection:(NSInteger)section {
                          model.language = [volumeInfo objectForKey:@"language"];
                          model.summary = [volumeInfo objectForKey:@"description"];
                          model.place = @"";
-        
+                         
                          NSString *imageUrl = [[volumeInfo objectForKey:@"imageLinks"] objectForKey:@"thumbnail"];
-
+                         
                          model.coverUrl = imageUrl;
-
+                         
                          [managedObjectContext save:&error];
-
+                         
                          completion(error);
-    }];
-}
-
-#pragma mark IBActions
-
-/**
- * Triggers bar code scanning
- */
-- (IBAction)scanBarButton:(UIBarButtonItem *)sender {
-    
-    [self performSegueWithIdentifier:@"openScanner"
-                              sender:sender];
-}
-
-- (IBAction)actionBarButton:(UIBarButtonItem *)sender {
-
-    // open action sheet showing what actions can be performed
-    
-    UIAlertController *actionSheet =
-    [UIAlertController alertControllerWithTitle:nil // NSLocalizedString(@"Action", nil)
-                                        message:nil // NSLocalizedString(@"Bla Message", nil)
-                                 preferredStyle:UIAlertControllerStyleActionSheet];
-    
-
-    UIAlertAction *exportAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Export all Entries", nil)
-                             style:UIAlertActionStyleDefault
-                           handler:nil];
-    
-    UIAlertAction *addEntryAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Add Book Title", nil)
-                             style:UIAlertActionStyleDefault
-                           handler:^(UIAlertAction * action) {
-                               [self performSegueWithIdentifier:@"createEntryFormSegue"
-                                                         sender:self];
-                           }];
-
-    UIAlertAction *addEntryWithISBNAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Add with ISBN", nil)
-                             style:UIAlertActionStyleDefault
-                           handler:^(UIAlertAction * action) {
-                               [self addISBNManualy];
-                           }];
-    
-    UIAlertAction *settingsAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Settings", nil)
-                             style:UIAlertActionStyleDefault
-                           handler:nil];
-
-    UIAlertAction *cancelAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
-                             style:UIAlertActionStyleCancel
-                           handler:nil];
-
-    [actionSheet addAction:addEntryAction];
-    [actionSheet addAction:addEntryWithISBNAction];
-    [actionSheet addAction:exportAction];
-    [actionSheet addAction:settingsAction];
-    [actionSheet addAction:cancelAction];
-    
-    [self presentViewController:actionSheet
-                       animated:YES
-                     completion:nil];
-}
-
-- (IBAction)markBarButton:(UIBarButtonItem *)sender {
-
-    if (MayUserDefaults.sharedInstance.toogleListMarkedEntries) {
-        
-        sender.tintColor = [UIColor orangeColor];
-        sender.image = [UIImage imageNamed:@"star-filled"];
-    }
-    else {
-
-        sender.tintColor = self.view.tintColor;
-        sender.image = [UIImage imageNamed:@"star"];
-    }
-    
-    [self.tableView reloadData];
-}
-
-- (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender {
-    
-    // NSLog(@"segmented changed to: %ld", (long)sender.selectedSegmentIndex);
-    
-    [self.tableView reloadData];
+                     }];
 }
 
 - (void)addISBNManualy {
@@ -696,8 +691,6 @@ heightForFooterInSection:(NSInteger)section {
                      completion:nil];
 }
 
-#pragma mark Operations
-
 - (void)storeEntryWithISBNAsyc:(MayISBN *)isbn {
 
     NSOperationQueue *operationQueue = [NSOperationQueue new];
@@ -720,6 +713,20 @@ heightForFooterInSection:(NSInteger)section {
                           }];
         }];
     }];
+}
+
+- (void)listMarkedEntries:(BOOL)marked {
+    
+    if (marked) {
+        
+        _markBarButton.tintColor = [UIColor orangeColor];
+        _markBarButton.image = [UIImage imageNamed:@"star-filled"];
+    }
+    else {
+        
+        _markBarButton.tintColor = self.view.tintColor;
+        _markBarButton.image = [UIImage imageNamed:@"star"];
+    }
 }
 
 @end

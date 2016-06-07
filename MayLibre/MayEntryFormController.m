@@ -11,6 +11,7 @@
 #import "MayEntrySummaryFormController.h"
 #import "MayImageManager.h"
 #import "MayEntrySummaryFormCell.h"
+#import "MayUserDefaults.h"
 
 @implementation MayEntryFormController
 
@@ -139,6 +140,7 @@ heightForFooterInSection:(NSInteger)section {
     _entry.productCode = _isbnTextField.text;
     _entry.publisher = _publisherTextField.text;
     _entry.summary = _summaryLabel.text;
+    _entry.isMarked = @([MayUserDefaults.sharedInstance listMarkedEntries]);
     
     NSError *error = nil;
     
@@ -193,9 +195,14 @@ heightForFooterInSection:(NSInteger)section {
 
 #pragma mark IBActions
 
-- (IBAction)updateButtonTaped:(UIBarButtonItem *)sender {
-
+- (IBAction)updateButtonSelected:(UIBarButtonItem *)sender {
+    
     [self saveForm];
+    [self goToPreviousViewController];
+}
+
+- (IBAction)cancelButtonSelected:(UIBarButtonItem *)sender {
+
     [self goToPreviousViewController];
 }
 
