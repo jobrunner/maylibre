@@ -64,6 +64,8 @@
     _publisherLabel.text = _entry.publisher;
     _publishingLabel.text = _entry.publishing;
     _placeLabel.text = _entry.place;
+    _pagesLabel.text = _entry.pageCount;
+    _summaryLabel.text = _entry.summary;
     _notesTextView.text = _entry.notes;
     _markedSwitch.on = _entry.isMarked.boolValue;
     
