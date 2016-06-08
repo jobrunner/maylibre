@@ -26,6 +26,8 @@
     
     _entrySummaryTextView.delegate = self;
     _entrySummaryTextView.text = _entry.summary;
+    
+    [_entrySummaryTextView becomeFirstResponder];
 }
 
 #pragma mark UITableViewDelegates
