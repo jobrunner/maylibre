@@ -6,6 +6,7 @@
 //  Copyright © 2016 Mayflower. All rights reserved.
 //
 @import UIKit;
+
 @class Entry;
 
 @interface MayEntryDetailsController : UITableViewController <

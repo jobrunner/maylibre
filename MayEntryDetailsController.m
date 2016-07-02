@@ -14,26 +14,22 @@
 
 @interface MayEntryDetailsController ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *coverThumbnail;
-@property (weak, nonatomic) IBOutlet UILabel *authorsLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *titleCompositionLabel;
+@property (nonatomic, weak) IBOutlet UIImageView *coverThumbnail;
+@property (nonatomic, weak) IBOutlet UILabel *authorsLabel;
+@property (nonatomic, weak) IBOutlet UILabel *titleCompositionLabel;
 @property (nonatomic, weak) IBOutlet UILabel *productCodeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *pagesLabel;
+@property (nonatomic, weak) IBOutlet UILabel *placeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *publisherLabel;
+@property (nonatomic, weak) IBOutlet UILabel *publishingLabel;
+@property (nonatomic, weak) IBOutlet UITextView *notesTextView;
+@property (nonatomic, weak) IBOutlet UILabel *summaryLabel;
+@property (nonatomic, weak) IBOutlet UILabel *createdDateLabel;
+@property (nonatomic, weak) IBOutlet UILabel *updatedDateLabel;
+@property (nonatomic, weak) IBOutlet UITextView *notes;
+@property (nonatomic, weak) IBOutlet UISwitch *markedSwitch;
+@property (nonatomic, weak) IBOutlet UITableViewCell *productCell;
 
-@property (weak, nonatomic) IBOutlet UILabel *pagesLabel;
-@property (weak, nonatomic) IBOutlet UILabel *placeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *publisherLabel;
-@property (weak, nonatomic) IBOutlet UILabel *publishingLabel;
-
-@property (weak, nonatomic) IBOutlet UITextView *notesTextView;
-
-@property (weak, nonatomic) IBOutlet UILabel *summaryLabel;
-@property (weak, nonatomic) IBOutlet UILabel *createdDateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *updatedDateLabel;
-@property (weak, nonatomic) IBOutlet UITextView *notes;
-@property (weak, nonatomic) IBOutlet UISwitch *markedSwitch;
-
-@property (weak, nonatomic) IBOutlet UITableViewCell *productCell;
 - (IBAction)markedSwitcheValueChanged:(UISwitch *)sender;
 - (IBAction)exportToMailTouchUpInside:(id)sender;
 - (IBAction)deleteEntryTouchUpInside:(UIButton *)sender;
