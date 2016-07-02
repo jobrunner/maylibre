@@ -41,16 +41,6 @@
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    
-    [super viewWillDisappear:animated];
-    
-    if (self.isMovingFromParentViewController) {
-        
-        [managedObjectContext rollback];
-    }
-}
-
 #pragma mark UITableViewDelegates
 
 /**
@@ -153,6 +143,11 @@ heightForFooterInSection:(NSInteger)section {
     }
 }
 
+- (void)undoForm {
+    
+    [managedObjectContext rollback];
+}
+
 - (void)changeSummary:(NSNotification *)notification {
     
     _entry.summary = (NSString *)notification.object;
@@ -182,7 +177,8 @@ heightForFooterInSection:(NSInteger)section {
 
 - (void)goToPreviousViewController {
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
 }
 
 #pragma mark UITextViewDelegates
@@ -203,6 +199,7 @@ heightForFooterInSection:(NSInteger)section {
 
 - (IBAction)cancelButtonSelected:(UIBarButtonItem *)sender {
 
+    [self undoForm];
     [self goToPreviousViewController];
 }
 
