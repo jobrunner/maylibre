@@ -85,13 +85,14 @@
     _updatedDateLabel.text = [formatter stringFromDate:_entry.updateTime];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue
+                 sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"openEntryFormSegue"]) {
         
-        MayEntryFormController *controller =
-        (MayEntryFormController *)segue.destinationViewController;
+        UINavigationController *navigationController = segue.destinationViewController;
         
+        MayEntryFormController *controller = [navigationController.viewControllers firstObject];
         controller.entry = _entry;
     }
 }
