@@ -31,7 +31,7 @@
 @property (nonatomic, weak) IBOutlet UITableViewCell *productCell;
 
 - (IBAction)markedSwitcheValueChanged:(UISwitch *)sender;
-- (IBAction)exportToMailTouchUpInside:(id)sender;
+- (IBAction)exportToMailTouchUpInside:(UIButton *)sender;
 - (IBAction)deleteEntryTouchUpInside:(UIButton *)sender;
 
 @end
