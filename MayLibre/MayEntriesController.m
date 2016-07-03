@@ -715,15 +715,16 @@ heightForFooterInSection:(NSInteger)section {
     }];
 }
 
+/**
+ * Changes state of marked bar button in lower toolbar
+ */
 - (void)listMarkedEntries:(BOOL)marked {
     
     if (marked) {
-        
         _markBarButton.tintColor = [UIColor orangeColor];
         _markBarButton.image = [UIImage imageNamed:@"star-filled"];
     }
     else {
-        
         _markBarButton.tintColor = self.view.tintColor;
         _markBarButton.image = [UIImage imageNamed:@"star"];
     }
