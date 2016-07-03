@@ -53,36 +53,16 @@
     _notesTextView.delegate = self;
     
     self.tableView.estimatedRowHeight = 44;
+    self.tableView.rowHeight = 44;
 
-    _authorsLabel.text = _entry.authors;
-    _titleCompositionLabel.text = [NSString stringWithFormat:@"%@. %@.", _entry.title, _entry.subtitle];
-    _productCodeLabel.text = _entry.productCode;
-    _publisherLabel.text = _entry.publisher;
-    _publishingLabel.text = _entry.publishing;
-    _placeLabel.text = _entry.place;
-    _pagesLabel.text = _entry.pageCount;
-    _summaryLabel.text = _entry.summary;
-    _notesTextView.text = _entry.notes;
-    _markedSwitch.on = _entry.isMarked.boolValue;
-    
-    NSString *imageUrl = _entry.coverUrl;
-    
-    [[MayImageManager sharedManager] imageWithUrlString:imageUrl
-                                             completion:^(UIImage *image, NSError *error) {
-                                                 if (error) {
-                                                     [App viewController:self
-                                                         handleUserError:error
-                                                                   title:nil];
-                                                 }
-                                                 self.coverThumbnail.image = image;
-                                             }];
+    [self updateViewContent];
+}
 
-    NSDateFormatter *formatter = NSDateFormatter.new;
-    formatter.dateStyle = NSDateFormatterShortStyle;
-    formatter.timeStyle = NSDateFormatterNoStyle;
+- (void)viewDidAppear:(BOOL)animated {
     
-    _createdDateLabel.text = [formatter stringFromDate:_entry.creationTime];
-    _updatedDateLabel.text = [formatter stringFromDate:_entry.updateTime];
+    [super viewDidAppear:animated];
+
+    [self updateViewContent];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue
@@ -107,6 +87,7 @@
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    // NSLog(@"Section %ld Row %ld", (long)[indexPath section], (long)[indexPath row]);
     return UITableViewAutomaticDimension;
 }
 
@@ -170,6 +151,95 @@ heightForFooterInSection:(NSInteger)section {
 }
 
 #pragma mark MayEntryDetailsController
+
+
+- (void)updateViewContent {
+    
+    if (_entry.authors.length > 0) {
+        _authorsLabel.text = _entry.authors;
+    }
+    else {
+        _authorsLabel.text = NSLocalizedString(@"No author", nil);
+    }
+
+    NSString *title;
+    if (_entry.title.length > 0) {
+        title = [NSString stringWithFormat:@"%@.", _entry.title];
+    }
+    else {
+        title = NSLocalizedString(@"No title", nil);
+    }
+
+    NSString *subtitle = nil;
+    if (_entry.subtitle.length > 0) {
+        subtitle = [NSString stringWithFormat:@"%@.", _entry.subtitle];
+    }
+
+    if (subtitle) {
+        _titleCompositionLabel.text = [NSString stringWithFormat:@"%@ %@", title, subtitle];
+    }
+    else {
+        _titleCompositionLabel.text = title;
+    }
+
+    if (_entry.productCode.length > 0) {
+        _productCodeLabel.text = _entry.productCode;
+    }
+    else {
+        _productCodeLabel.text = @"-";
+    }
+    
+    if (_entry.publisher.length > 0) {
+        _publisherLabel.text = _entry.publisher;
+    }
+    else {
+        _publisherLabel.text = @"-";
+    }
+    
+    if (_entry.publishing.length > 0) {
+        _publishingLabel.text = _entry.publishing;
+    }
+    else {
+        _publishingLabel.text = @"-";
+    }
+
+    if (_entry.place.length > 0) {
+        _placeLabel.text = _entry.place;
+    }
+    else {
+        _placeLabel.text = @"-";
+    }
+    
+    if (_entry.pageCount.length > 0) {
+        _pagesLabel.text = _entry.pageCount;
+    }
+    else {
+        _pagesLabel.text = @"-";
+    }
+    
+    _summaryLabel.text = _entry.summary;
+    _notesTextView.text = _entry.notes;
+    _markedSwitch.on = _entry.isMarked.boolValue;
+    
+    NSString *imageUrl = _entry.coverUrl;
+    
+    [[MayImageManager sharedManager] imageWithUrlString:imageUrl
+                                             completion:^(UIImage *image, NSError *error) {
+                                                 if (error) {
+                                                     [App viewController:self
+                                                         handleUserError:error
+                                                                   title:nil];
+                                                 }
+                                                 self.coverThumbnail.image = image;
+                                             }];
+    
+    NSDateFormatter *formatter = NSDateFormatter.new;
+    formatter.dateStyle = NSDateFormatterShortStyle;
+    formatter.timeStyle = NSDateFormatterNoStyle;
+    
+    _createdDateLabel.text = [formatter stringFromDate:_entry.creationTime];
+    _updatedDateLabel.text = [formatter stringFromDate:_entry.updateTime];
+}
 
 - (void)saveForm {
     
