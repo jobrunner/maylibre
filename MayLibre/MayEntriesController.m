@@ -31,6 +31,7 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 - (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)markBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender;
+- (IBAction)sortingBarButton:(UIBarButtonItem *)sender;
 
 @end
 
@@ -371,7 +372,74 @@ heightForFooterInSection:(NSInteger)section {
     [self.tableView reloadData];
 }
 
+- (IBAction)sortingBarButton:(UIBarButtonItem *)sender {
+    
+    UIAlertController *actionSheet =
+    [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Sorting by...", nil)
+                                        message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *sortByAuthorAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Author", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               [self sortBy:@"authors"
+                                  ascending:YES];
+                           }];
+    
+    UIAlertAction *sortByTitleAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Title", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               [self sortBy:@"title"
+                                  ascending:YES];
+                           }];
+    
+    UIAlertAction *sortByCreationTimeAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Creation time", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               [self sortBy:@"creationTime"
+                                  ascending:NO];
+                           }];
+
+    UIAlertAction *sortByUpdateTimeAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Modification time", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               [self sortBy:@"updateTime"
+                                  ascending:NO];
+                           }];
+    
+    UIAlertAction *cancelAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                             style:UIAlertActionStyleCancel
+                           handler:nil];
+    
+    [actionSheet addAction:sortByAuthorAction];
+    [actionSheet addAction:sortByTitleAction];
+    [actionSheet addAction:sortByCreationTimeAction];
+    [actionSheet addAction:sortByUpdateTimeAction];
+    [actionSheet addAction:cancelAction];
+    
+    [self presentViewController:actionSheet
+                       animated:YES
+                     completion:nil];
+}
+
 #pragma mark MayEntriesController
+
+/**
+ *
+ */
+- (void)sortBy:(NSString *)sortField
+     ascending:(BOOL)ascending {
+    
+    [[MayUserDefaults sharedInstance] setSortField:sortField
+                                         forEntity:@"entry"
+                                         ascending:ascending];
+    [self.tableView reloadData];
+}
 
 /**
  * Handles swipe action: Deletes record from table view cell and managed object
@@ -440,19 +508,11 @@ heightForFooterInSection:(NSInteger)section {
  */
 - (NSArray *)sortDescriptors {
     
-    static NSArray *sortKeysBySegmentation = nil;
+    NSString *sortField = [[MayUserDefaults sharedInstance] sortFieldForEntity:@"entry"];
+    BOOL ascending = [[MayUserDefaults sharedInstance] sortAscendingForEntity:@"entry"];
     
-    if (sortKeysBySegmentation == nil) {
-        sortKeysBySegmentation = @[@"authors", @"title", @"creationTime"];
-    }
-    
-    NSString *sortKey =
-    [sortKeysBySegmentation objectAtIndex:_sortSegmentationControl.selectedSegmentIndex];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey
-                                                                   ascending:NO];
-    NSLog(@"Sorting: %@", sortKey);
-    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortField
+                                                                   ascending:ascending];
     return @[sortDescriptor];
 }
 

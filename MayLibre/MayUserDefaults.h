@@ -20,5 +20,8 @@
 - (void)setListMarkedEntries:(BOOL)marked;
 - (BOOL)listMarkedEntries;
 - (BOOL)toogleListMarkedEntries;
+- (void)setSortField:(NSString *)sortField forEntity:(NSString *)entity ascending:(BOOL)ascending;
+- (NSString *)sortFieldForEntity:(NSString *)entity;
+- (BOOL)sortAscendingForEntity:(NSString *)entity;
 
 @end
