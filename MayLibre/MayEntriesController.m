@@ -54,7 +54,7 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
 
-    [self moveSearchBarToBeUnvisible];
+     [self moveSearchBarToBeUnvisible];
 }
 
 #pragma mark UIViewControllerDelegates
@@ -558,20 +558,23 @@ sectionForSectionIndexTitle:(NSString *)title
     _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     _searchController.searchResultsUpdater = self;
     _searchController.dimsBackgroundDuringPresentation = NO;
+    
+    // only a hack. AAAHHHHHH - lösen!
     _searchController.hidesNavigationBarDuringPresentation = NO;
+    _searchController.searchBar.showsScopeBar = NO;
     _searchController.searchBar.delegate = self;
     
     self.tableView.tableHeaderView = _searchController.searchBar;
     self.definesPresentationContext = YES;
     
-    [_searchController.searchBar sizeToFit];
+     [_searchController.searchBar sizeToFit];
 }
 
 /**
  * hides the search bar until user scolls down
  */
 - (void)moveSearchBarToBeUnvisible {
-    
+
     CGPoint searchBarOffset = CGPointMake(0.0, self.tableView.tableHeaderView.frame.size.height);
     [self.tableView setContentOffset:searchBarOffset
                             animated:YES];
