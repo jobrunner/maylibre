@@ -52,13 +52,6 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
 #pragma mark UISearchBarDelegate
 
-- (void)searchBar:(UISearchBar *)searchBar
-selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
-
-    NSLog(@"da kein Scopbutton mehr da ist, sollte das nicht mehr auftreten...");
-    [self updateSearchResultsForSearchController:self.searchController];
-}
-
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
 
     [self moveSearchBarToBeUnvisible];
