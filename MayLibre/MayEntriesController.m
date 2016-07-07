@@ -24,18 +24,45 @@
 
 typedef void (^MayActionCompletionHandler)(NSError *error);
 
-@property (nonatomic, weak) IBOutlet UISegmentedControl *sortSegmentationControl;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *markBarButton;
+@property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) NSMutableArray *searchResults;
 
 - (IBAction)scanBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)markBarButtonSelected:(UIBarButtonItem *)sender;
-- (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender;
 - (IBAction)sortingBarButton:(UIBarButtonItem *)sender;
+- (IBAction)searchButton:(UIBarButtonItem *)sender;
 
 @end
 
 @implementation MayEntriesController
+
+#pragma mark UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    
+    NSString *searchString = searchController.searchBar.text;
+  
+    [self filterContentForSearchText:searchString
+                               scope:nil];
+    
+    [self.tableView reloadData];
+}
+
+#pragma mark UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar
+selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+
+    NSLog(@"da kein Scopbutton mehr da ist, sollte das nicht mehr auftreten...");
+    [self updateSearchResultsForSearchController:self.searchController];
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+
+    [self moveSearchBarToBeUnvisible];
+}
 
 #pragma mark UIViewControllerDelegates
 
@@ -44,6 +71,10 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     [super viewDidLoad];
     
     managedObjectContext = ApplicationDelegate.managedObjectContext;
+
+    [self configureSearch];
+    
+    [self moveSearchBarToBeUnvisible];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -91,14 +122,68 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
 #pragma mark  UITableViewDelegate
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return [[self.fetchedResultsController sections] count];
+- (void)tableView:(UITableView *)tableView
+  willDisplayCell:(MayEntryCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    Entry *model;
+    if (_searchController.active) {
+        model = [self.searchResults objectAtIndex:indexPath.row];
+    }
+    else {
+        model = [fetchedResultsController objectAtIndexPath:indexPath];
+    }
+    
+    [cell configureWithModel:model
+                 atIndexPath:indexPath
+                withDelegate:self];
 }
+
+- (CGFloat)tableView:(UITableView *)tableView
+heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    // @todo: Autolayout!!!
+    return 80; // @todo: check autolayout height in xib file!
+    return UITableViewAutomaticDimension;
+}
+
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    MayEntryCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    [self performSegueWithIdentifier:@"openEntryDetailsSegue"
+                              sender:cell];
+}
+
+/**
+ * Supresses header
+ */
+- (CGFloat)tableView:(UITableView *)tableView
+heightForHeaderInSection:(NSInteger)section {
+
+    return 0.01;
+}
+
+/**
+ * Supresses footer
+ */
+- (CGFloat)tableView:(UITableView *)tableView
+heightForFooterInSection:(NSInteger)section {
+    
+    return 0.01;
+}
+
+#pragma mark UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-
+    
+    if (self.searchController.active) {
+        
+        return [self.searchResults count];
+    }
+    
     return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 }
 
@@ -120,25 +205,16 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView
-  willDisplayCell:(MayEntryCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    Entry *model =
-    [fetchedResultsController objectAtIndexPath:indexPath];
+    if (self.searchController.active) {
+        
+        return 1;
+    }
     
-    [cell configureWithModel:model
-                 atIndexPath:indexPath
-                withDelegate:self];
+    return [[self.fetchedResultsController sections] count];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView
-heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    // @todo: Autolayout!!!
-    return 80; // @todo: check autolayout height in xib file!
-    return UITableViewAutomaticDimension;
-}
 
 /**
  * Dosn't support native editing of table view cells.
@@ -149,7 +225,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
 }
 
-/** 
+/**
  * Dosn't support conditional rearranging of the table view.
  */
 - (BOOL)tableView:(UITableView *)tableView
@@ -158,32 +234,63 @@ canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//- (NSString *)tableView:(UITableView *)tableView
+//titleForHeaderInSection:(NSInteger)section
+//{
+//    if (!self.searchController.active) {
+//        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+//        
+//        return [sectionInfo name];
+//    }
+//    return nil;
+//}
+
+//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+//
+//    if (self.searchController.active) {
+//        return nil;
+//        
+//    }
+//
+//    NSMutableArray *index = [NSMutableArray arrayWithObject:UITableViewIndexSearch];
+//    NSArray *initials = [self.fetchedResultsController sectionIndexTitles];
+//    [index addObjectsFromArray:initials];
+//    
+//    return index;
+//}
+
+- (NSInteger)tableView:(UITableView *)tableView
+sectionForSectionIndexTitle:(NSString *)title
+               atIndex:(NSInteger)index {
     
-    MayEntryCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (self.searchController.active) {
+        
+        return 0;
+    }
     
-    [self performSegueWithIdentifier:@"openEntryDetailsSegue"
-                              sender:cell];
+    if (index > 0) {
+        // The index is offset by one to allow for the extra search icon inserted at the front of the index
+
+        return [self.fetchedResultsController sectionForSectionIndexTitle:title
+                                                                  atIndex:(index - 1)];
+    }
+    else {
+        // The first entry in the index is for the search icon so we return section not found and force the table to scroll to the top.
+        CGRect searchBarFrame = self.searchController.searchBar.frame;
+        
+        [self.tableView scrollRectToVisible:searchBarFrame
+                                   animated:NO];
+            
+        return NSNotFound;
+    }
 }
 
-/**
- * Supresses header
- */
-- (CGFloat)tableView:(UITableView *)tableView
-heightForHeaderInSection:(NSInteger)section {
-    
-    return 0.01;
-}
+//
+//CGRect searchBarFrame = self.searchController.searchBar.frame;
+//[self.tableView scrollRectToVisible:searchBarFrame animated:NO];
+//return NSNotFound;
 
-/**
- * Supresses footer
- */
-- (CGFloat)tableView:(UITableView *)tableView
-heightForFooterInSection:(NSInteger)section {
-    
-    return 0.01;
-}
+
 
 #pragma mark MGSwipeTableCellDelegates
 
@@ -427,6 +534,11 @@ heightForFooterInSection:(NSInteger)section {
                      completion:nil];
 }
 
+- (IBAction)searchButton:(UIBarButtonItem *)sender {
+
+    [self.searchController.searchBar becomeFirstResponder];
+}
+
 #pragma mark MayEntriesController
 
 /**
@@ -439,6 +551,37 @@ heightForFooterInSection:(NSInteger)section {
                                          forEntity:@"entry"
                                          ascending:ascending];
     [self.tableView reloadData];
+}
+
+/**
+ * Configures search bar and search controller
+ */
+- (void)configureSearch {
+    
+    // init search results container
+    _searchResults = [NSMutableArray new];
+    
+    // setup search controller:
+    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    _searchController.searchResultsUpdater = self;
+    _searchController.dimsBackgroundDuringPresentation = NO;
+    _searchController.hidesNavigationBarDuringPresentation = NO;
+    _searchController.searchBar.delegate = self;
+    
+    self.tableView.tableHeaderView = _searchController.searchBar;
+    self.definesPresentationContext = YES;
+    
+    [_searchController.searchBar sizeToFit];
+}
+
+/**
+ * hides the search bar until user scolls down
+ */
+- (void)moveSearchBarToBeUnvisible {
+    
+    CGPoint searchBarOffset = CGPointMake(0.0, self.tableView.tableHeaderView.frame.size.height);
+    [self.tableView setContentOffset:searchBarOffset
+                            animated:YES];
 }
 
 /**
@@ -564,6 +707,22 @@ heightForFooterInSection:(NSInteger)section {
     }
     
     return fetchedResultsController;
+}
+
+#pragma mark - Search
+
+- (void)filterContentForSearchText:(NSString*)searchText
+                             scope:(NSString*)scope {
+    
+    [_searchResults removeAllObjects];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                              @"authors CONTAINS[cd] %@ || title CONTAINS[cd] %@ || subtitle CONTAINS[cd] %@",
+                              searchText, searchText, searchText];
+    
+    NSArray *filteredEntries = [self.fetchedResultsController fetchedObjects];
+    
+    [_searchResults addObjectsFromArray:[filteredEntries filteredArrayUsingPredicate:predicate]];
 }
 
 /**

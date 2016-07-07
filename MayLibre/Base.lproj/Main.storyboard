@@ -48,22 +48,14 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="n1H-xe-Z5W">
                         <nil key="title"/>
-                        <segmentedControl key="titleView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" id="By2-d6-qH9">
-                            <rect key="frame" x="155" y="7" width="290" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="Autor"/>
-                                <segment title="Title"/>
-                                <segment title="Creating time"/>
-                            </segments>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="6el-9k-XqG">
                             <connections>
-                                <action selector="sortSegmentationValueChanged:" destination="nSv-bC-P36" eventType="valueChanged" id="xhh-9p-fNS"/>
+                                <action selector="searchButton:" destination="nSv-bC-P36" id="uSc-59-MLO"/>
                             </connections>
-                        </segmentedControl>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="markBarButton" destination="2cj-eC-6A3" id="W7Z-fs-uyN"/>
-                        <outlet property="sortSegmentationControl" destination="By2-d6-qH9" id="4jo-0J-zd9"/>
                         <segue destination="bkc-9Z-Swl" kind="show" identifier="openEntryDetailsSegue" id="ysu-qN-17s"/>
                         <segue destination="33W-n1-Og1" kind="presentation" identifier="createEntryFormSegue" id="pge-nk-mxR"/>
                     </connections>

@@ -17,6 +17,8 @@
     MayBarCodeScannerDelegate,
     UITableViewDelegate,
     UITableViewDataSource,
+    UISearchResultsUpdating,
+    UISearchBarDelegate,
     NSFetchedResultsControllerDelegate,
     MFMailComposeViewControllerDelegate,
     MGSwipeTableCellDelegate> {
