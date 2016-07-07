@@ -63,7 +63,7 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
     [super viewDidLoad];
     
-    managedObjectContext = ApplicationDelegate.managedObjectContext;
+    managedObjectContext = App.managedObjectContext;
 
     [self configureSearch];
     
