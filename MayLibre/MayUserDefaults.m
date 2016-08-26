@@ -79,7 +79,13 @@
 
     NSString *key = [NSString stringWithFormat:@"%@.%@", entity, @"field"];
 
-    return (NSString *)[preferences objectForKey:key];
+    NSString *sortField = (NSString *)[preferences objectForKey:key];
+    
+    if (sortField == nil) {
+        sortField = @"authors";
+    }
+    
+    return sortField;
 }
 
 - (BOOL)sortAscendingForEntity:(NSString *)entity {
