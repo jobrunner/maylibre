@@ -145,9 +145,45 @@ heightForFooterInSection:(NSInteger)section {
     // see swipe sendMail - place functionality in a single place and call it.
 }
 
+/**
+ * Asks, removes and go back to the list or do nothing.
+ */
 - (IBAction)deleteEntryTouchUpInside:(UIButton *)sender {
 
-    // ask, remove and go back to the list or do nothing.
+    void (^action)() = ^{
+
+        [managedObjectContext deleteObject:_entry];
+
+        NSError *error = nil;
+        [managedObjectContext save:&error];
+        
+        if (error) {
+            [App viewController:self
+                handleUserError:error
+                          title:nil];
+        }
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    };
+    
+    UIAlertController *actionSheet;
+    actionSheet = [UIAlertController alertControllerWithTitle:nil
+                                                      message:nil
+                                               preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *deleteAction;
+    deleteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete Entry", nil)
+                                            style:UIAlertActionStyleDestructive
+                                          handler:action];
+    UIAlertAction *cancelAction;
+    cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
+                                            style:UIAlertActionStyleCancel
+                                          handler:nil];
+    [actionSheet addAction:deleteAction];
+    [actionSheet addAction:cancelAction];
+    
+    [self presentViewController:actionSheet
+                       animated:YES
+                     completion:nil];
 }
 
 #pragma mark MayEntryDetailsController
