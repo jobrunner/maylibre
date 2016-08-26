@@ -20,13 +20,18 @@
 #import "NSString+MayDisplayExtension.h"
 #import "MayUserDefaults.h"
 
-@interface MayEntriesController()
+@interface MayEntriesController() {
+    
+    NSFetchedResultsController *fetchedResultsController;
+    NSManagedObjectContext *managedObjectContext;
+}
 
 typedef void (^MayActionCompletionHandler)(NSError *error);
 
-@property (nonatomic, weak) IBOutlet UIBarButtonItem *markBarButton;
-@property (nonatomic, strong) UISearchController *searchController;
 @property (nonatomic, strong) NSMutableArray *searchResults;
+@property (nonatomic, strong) UISearchController *searchController;
+
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *markBarButton;
 
 - (IBAction)scanBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender;
@@ -38,44 +43,26 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
 @implementation MayEntriesController
 
-#pragma mark UISearchResultsUpdating
-
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
-    NSString *searchString = searchController.searchBar.text;
-  
-    [self filterContentForSearchText:searchString
-                               scope:nil];
-    
-    [self.tableView reloadData];
-}
-
-#pragma mark UISearchBarDelegate
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-
-     [self moveSearchBarToBeUnvisible];
-}
-
 #pragma mark UIViewControllerDelegates
 
 - (void)viewDidLoad {
 
     [super viewDidLoad];
-    
+
     managedObjectContext = App.managedObjectContext;
 
     [self configureSearch];
-    
     [self moveSearchBarToBeUnvisible];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     
+    [super viewDidAppear:animated];
+  
     [self listMarkedEntries:[MayUserDefaults.sharedInstance listMarkedEntries]];
 
     [self.navigationController setToolbarHidden:NO
-                                       animated:YES];
+                                       animated:animated];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -113,6 +100,27 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     }
 }
 
+#pragma mark UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    
+    
+    NSString *searchString = searchController.searchBar.text;
+    
+    [self filterContentForSearchText:searchString
+                               scope:nil];
+    
+    [self.tableView reloadData];
+}
+
+#pragma mark UISearchBarDelegate
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    
+    [self moveSearchBarToBeUnvisible];
+}
+
+
 #pragma mark  UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView
@@ -124,7 +132,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         model = [self.searchResults objectAtIndex:indexPath.row];
     }
     else {
-        model = [fetchedResultsController objectAtIndexPath:indexPath];
+        model = [self.fetchedResultsController objectAtIndexPath:indexPath];
     }
     
     [cell configureWithModel:model
@@ -277,13 +285,6 @@ sectionForSectionIndexTitle:(NSString *)title
         return NSNotFound;
     }
 }
-
-//
-//CGRect searchBarFrame = self.searchController.searchBar.frame;
-//[self.tableView scrollRectToVisible:searchBarFrame animated:NO];
-//return NSNotFound;
-
-
 
 #pragma mark MGSwipeTableCellDelegates
 
@@ -465,13 +466,6 @@ sectionForSectionIndexTitle:(NSString *)title
     [self.tableView reloadData];
 }
 
-- (IBAction)sortSegmentationValueChanged:(UISegmentedControl *)sender {
-    
-    // NSLog(@"segmented changed to: %ld", (long)sender.selectedSegmentIndex);
-    
-    [self.tableView reloadData];
-}
-
 - (IBAction)sortingBarButton:(UIBarButtonItem *)sender {
     
     UIAlertController *actionSheet =
@@ -543,6 +537,8 @@ sectionForSectionIndexTitle:(NSString *)title
     [[MayUserDefaults sharedInstance] setSortField:sortField
                                          forEntity:@"entry"
                                          ascending:ascending];
+    
+    [self refreshFetchedResultsController];
     [self.tableView reloadData];
 }
 
@@ -550,24 +546,26 @@ sectionForSectionIndexTitle:(NSString *)title
  * Configures search bar and search controller
  */
 - (void)configureSearch {
-    
+
     // init search results container
-    _searchResults = [NSMutableArray new];
+    _searchResults = [[NSMutableArray alloc] init];
+    
     
     // setup search controller:
     _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    
+    
     _searchController.searchResultsUpdater = self;
     _searchController.dimsBackgroundDuringPresentation = NO;
+    self.definesPresentationContext = YES;
+    self.tableView.tableHeaderView = _searchController.searchBar;
     
     // only a hack. AAAHHHHHH - lösen!
     _searchController.hidesNavigationBarDuringPresentation = NO;
-    _searchController.searchBar.showsScopeBar = NO;
+    
     _searchController.searchBar.delegate = self;
-    
-    self.tableView.tableHeaderView = _searchController.searchBar;
-    self.definesPresentationContext = YES;
-    
-     [_searchController.searchBar sizeToFit];
+
+    [_searchController.searchBar sizeToFit];
 }
 
 /**
@@ -655,6 +653,12 @@ sectionForSectionIndexTitle:(NSString *)title
     return @[sortDescriptor];
 }
 
+- (void)refreshFetchedResultsController {
+    
+//    [NSFetchedResultsController deleteCacheWithName:@"entriesCache"];
+    fetchedResultsController = nil;
+}
+
 /**
  * Handles the fetchedResultsController used as source with tabel view
  */
@@ -663,16 +667,15 @@ sectionForSectionIndexTitle:(NSString *)title
     // Bad Idea to comment out!
     // But for sorting changes, fetchedResultsController cannot be cached the easy way.
     
-    //    if (fetchedResultsController != nil) {
-    //
-    //        return fetchedResultsController;
-    //    }
+//    if (fetchedResultsController != nil) {
+//    
+//        return fetchedResultsController;
+//    }
     
     NSFetchRequest *request = [NSFetchRequest new];
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Entry"
                                               inManagedObjectContext:managedObjectContext];
-    
     [request setEntity:entity];
     
     if ([[MayUserDefaults sharedInstance] listMarkedEntries]) {
@@ -713,12 +716,17 @@ sectionForSectionIndexTitle:(NSString *)title
     [_searchResults removeAllObjects];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"authors CONTAINS[cd] %@ || title CONTAINS[cd] %@ || subtitle CONTAINS[cd] %@",
-                              searchText, searchText, searchText];
+                              @"authors CONTAINS[cd] %@ || title CONTAINS[cd] %@ || subtitle CONTAINS[cd] %@ || productCode CONTAINS[cd] %@ || publisher CONTAINS[cd] %@ || notes CONTAINS[cd] %@ || summary CONTAINS[cd] %@",
+                              searchText, searchText, searchText, searchText, searchText, searchText, searchText];
     
     NSArray *filteredEntries = [self.fetchedResultsController fetchedObjects];
     
-    [_searchResults addObjectsFromArray:[filteredEntries filteredArrayUsingPredicate:predicate]];
+    if ([searchText isEqualToString:@""] || searchText == nil) {
+        [_searchResults addObjectsFromArray:filteredEntries];
+    }
+    else {
+        [_searchResults addObjectsFromArray:[filteredEntries filteredArrayUsingPredicate:predicate]];
+    }
 }
 
 /**

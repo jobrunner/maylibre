@@ -21,10 +21,6 @@
     UISearchBarDelegate,
     NSFetchedResultsControllerDelegate,
     MFMailComposeViewControllerDelegate,
-    MGSwipeTableCellDelegate> {
-
-    NSFetchedResultsController *fetchedResultsController;
-    NSManagedObjectContext *managedObjectContext;
-}
+    MGSwipeTableCellDelegate>
 
 @end
