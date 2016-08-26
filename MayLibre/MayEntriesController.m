@@ -708,8 +708,9 @@ sectionForSectionIndexTitle:(NSString *)title
     return fetchedResultsController;
 }
 
-#pragma mark - Search
-
+/**
+ * Handles content search and fills search results data structure.
+ */
 - (void)filterContentForSearchText:(NSString*)searchText
                              scope:(NSString*)scope {
     
