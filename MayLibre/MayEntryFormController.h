@@ -1,18 +1,12 @@
-//
-//  MayEntryFormController.h
-//  MayLibre
-//
-//  Created by Jo Brunner on 26.04.16.
-//  Copyright © 2016 Mayflower. All rights reserved.
-//
-
 @import UIKit;
+
 #import "MayISBN.h"
 #import "Entry.h"
 
 @interface MayEntryFormController : UITableViewController <
     UITextFieldDelegate,
-    UITextViewDelegate> {
+    UITextViewDelegate,
+    UIImagePickerControllerDelegate> {
     
     NSManagedObjectContext *managedObjectContext;
 }
