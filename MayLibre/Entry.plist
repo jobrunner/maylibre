@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>defaults</key>
+	<dict>
+		<key>filterTag</key>
+		<integer>0</integer>
+		<key>sortTag</key>
+		<integer>5</integer>
+	</dict>
+	<key>sort</key>
+	<array>
+		<dict>
+			<key>field</key>
+			<string>authors</string>
+			<key>ascending</key>
+			<true/>
+			<key>tag</key>
+			<integer>1</integer>
+			<key>textkey</key>
+			<string>Author A-Z</string>
+			<key>displayOrder</key>
+			<integer>1</integer>
+			<key>visible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>field</key>
+			<string>title</string>
+			<key>ascending</key>
+			<true/>
+			<key>tag</key>
+			<integer>2</integer>
+			<key>textkey</key>
+			<string>Titel A-Z</string>
+			<key>displayOrder</key>
+			<integer>2</integer>
+			<key>visible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>field</key>
+			<string>authors</string>
+			<key>ascending</key>
+			<true/>
+			<key>tag</key>
+			<integer>3</integer>
+			<key>textkey</key>
+			<string>Autor Z-A</string>
+			<key>displayOrder</key>
+			<integer>3</integer>
+			<key>visible</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>field</key>
+			<string>title</string>
+			<key>ascending</key>
+			<false/>
+			<key>tag</key>
+			<integer>4</integer>
+			<key>textkey</key>
+			<string>Titel Z-A</string>
+			<key>displayOrder</key>
+			<integer>4</integer>
+			<key>visible</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>field</key>
+			<string>creationTime</string>
+			<key>ascending</key>
+			<false/>
+			<key>tag</key>
+			<integer>5</integer>
+			<key>textkey</key>
+			<string>Last added entry on top</string>
+			<key>displayOrder</key>
+			<integer>5</integer>
+			<key>visible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>field</key>
+			<string>creationTime</string>
+			<key>ascending</key>
+			<true/>
+			<key>tag</key>
+			<integer>6</integer>
+			<key>textkey</key>
+			<string>Last added entry down</string>
+			<key>displayOrder</key>
+			<integer>6</integer>
+			<key>visible</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>field</key>
+			<string>updateTime</string>
+			<key>ascending</key>
+			<false/>
+			<key>tag</key>
+			<integer>7</integer>
+			<key>textkey</key>
+			<string>Last modified comes first</string>
+			<key>displayOrder</key>
+			<integer>7</integer>
+			<key>visible</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>field</key>
+			<string>updateTime</string>
+			<key>ascending</key>
+			<false/>
+			<key>tag</key>
+			<integer>8</integer>
+			<key>textkey</key>
+			<string>Last modified entry down</string>
+			<key>displayOrder</key>
+			<integer>8</integer>
+			<key>visible</key>
+			<false/>
+		</dict>
+	</array>
+	<key>filter</key>
+	<array/>
+	<key>action</key>
+	<array>
+		<dict>
+			<key>tag</key>
+			<integer>1</integer>
+			<key>textkey</key>
+			<string>Reset</string>
+			<key>sortTag</key>
+			<integer>5</integer>
+			<key>filterTag</key>
+			<integer>0</integer>
+			<key>displayOrder</key>
+			<integer>1</integer>
+			<key>visible</key>
+			<true/>
+		</dict>
+	</array>
+</dict>
+</plist>
