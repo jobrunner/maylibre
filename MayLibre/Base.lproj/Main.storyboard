@@ -116,7 +116,6 @@
                         </view>
                         <barButtonItem key="rightBarButtonItem" image="sorting-sm" id="k6P-hI-1nq">
                             <connections>
-                                <action selector="sortingBarButton:" destination="nSv-bC-P36" id="3hd-jj-Yaj"/>
                                 <segue destination="PJu-2q-cxv" kind="presentation" identifier="tableViewOptionsSegue" id="Yjf-B7-YUV"/>
                             </connections>
                         </barButtonItem>
@@ -1139,6 +1138,6 @@ Lastname, Surename</string>
         <image name="star-blue" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xXW-3w-yZu"/>
+        <segue reference="pge-nk-mxR"/>
     </inferredMetricsTieBreakers>
 </document>

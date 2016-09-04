@@ -41,8 +41,6 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 - (IBAction)scanBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)markBarButtonSelected:(UIBarButtonItem *)sender;
-- (IBAction)sortingBarButton:(UIBarButtonItem *)sender;
-- (IBAction)searchButton:(UIBarButtonItem *)sender;
 
 @end
 
@@ -606,86 +604,6 @@ sectionForSectionIndexTitle:(NSString *)title
     [self listMarkedEntries:[MayUserDefaults.sharedInstance toogleListMarkedEntries]];
     
     [self.tableView reloadData];
-}
-
-- (IBAction)sortingBarButton:(UIBarButtonItem *)sender {
-
-    return;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
-                                                         bundle: [NSBundle mainBundle]];
-    
-    
-    MayTableViewOptionsController *optionsController =
-    [storyboard instantiateViewControllerWithIdentifier:@"MayTableViewOptionsController"];
-
-    optionsController.entity = @"Entry";
-    optionsController.delegate = self;
-    optionsController.modalPresentationStyle = UIModalPresentationCustom;
-    
-    [self presentViewController:optionsController
-                       animated:YES
-                     completion:nil];
-
-    
-    
-    return;
-    
-    UIAlertController *actionSheet =
-    [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Sorting by...", nil)
-                                        message:nil
-                                 preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *sortByAuthorAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Author", nil)
-                             style:UIAlertActionStyleDefault
-                           handler:^(UIAlertAction * action) {
-                               [self sortBy:@"authors"
-                                  ascending:YES];
-                           }];
-    
-    UIAlertAction *sortByTitleAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Title", nil)
-                             style:UIAlertActionStyleDefault
-                           handler:^(UIAlertAction * action) {
-                               [self sortBy:@"title"
-                                  ascending:YES];
-                           }];
-    
-    UIAlertAction *sortByCreationTimeAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Creation time", nil)
-                             style:UIAlertActionStyleDefault
-                           handler:^(UIAlertAction * action) {
-                               [self sortBy:@"creationTime"
-                                  ascending:NO];
-                           }];
-
-    UIAlertAction *sortByUpdateTimeAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Modification time", nil)
-                             style:UIAlertActionStyleDefault
-                           handler:^(UIAlertAction * action) {
-                               [self sortBy:@"updateTime"
-                                  ascending:NO];
-                           }];
-    
-    UIAlertAction *cancelAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
-                             style:UIAlertActionStyleCancel
-                           handler:nil];
-    
-    [actionSheet addAction:sortByAuthorAction];
-    [actionSheet addAction:sortByTitleAction];
-    [actionSheet addAction:sortByCreationTimeAction];
-    [actionSheet addAction:sortByUpdateTimeAction];
-    [actionSheet addAction:cancelAction];
-    
-    [self presentViewController:actionSheet
-                       animated:YES
-                     completion:nil];
-}
-
-- (IBAction)searchButton:(UIBarButtonItem *)sender {
-
-    [self.searchController.searchBar becomeFirstResponder];
 }
 
 #pragma mark MayEntriesController
