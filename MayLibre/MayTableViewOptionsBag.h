@@ -2,8 +2,6 @@
 
 #import "MayTableViewOptions.h"
 
-//#define kMayPreferenceListMarkedEntries     @"ListMarkedEntries"
-
 @interface MayTableViewOptionsBag : NSObject
 
 + (instancetype)sharedInstance;
@@ -40,32 +38,7 @@
 - (NSDictionary *)actionOptionWithKey:(NSInteger)key
                                 entry:(NSString *)entity;
 
-
 // defaults
 - (NSDictionary *)defaultOptions:(NSString *)entity;
-
-
-
-//- (NSInteger)sortOptionKey:(NSString *)entity;
-//- (NSDictionary *)sortOptionWithKey:(NSInteger)key entry:(NSString *)entity;
-//
-//- (void)setSortOptionKey:(NSInteger)sortOption forEntity:(NSString *)entity;
-
-//- (NSArray *)filterOptions:(NSString *)entity;
-//- (void)setFilterOptionKey:(NSInteger)filterOption forEntity:(NSString *)entity;
-
-//- (NSDictionary *)sortOption:(NSString *)entity;
-
-//- (NSArray *)actionOptions:(NSString *)entity;
-//- (NSDictionary *)defaultOptions:(NSString *)entity;
-//
-//- (NSDictionary *)actionOptionWithKey:(NSInteger)key entry:(NSString *)entity;
-
-//- (void)setListMarkedEntries:(BOOL)marked;
-//- (BOOL)listMarkedEntries;
-//- (BOOL)toogleListMarkedEntries;
-//- (void)setSortField:(NSString *)sortField forEntity:(NSString *)entity ascending:(BOOL)ascending;
-//- (NSString *)sortFieldForEntity:(NSString *)entity;
-//- (BOOL)sortAscendingForEntity:(NSString *)entity;
 
 @end

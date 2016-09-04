@@ -640,87 +640,33 @@ sectionForSectionIndexTitle:(NSString *)title
     
     self.definesPresentationContext = YES;
 
-    
-//    self.tableView.tableHeaderView = _searchController.searchBar;
-// Ich will die searchBar immer in der navigationBar haben!
-
-    //    [self.navigationController.navigationBar addSubview:_searchController.searchBar];
-    
-//    self.navigationItem.titleView = _searchController.searchBar;
-  
-  
-//    _searchController.searchBar.autoresizesSubviews = YES;
-    
-//    self.navigationItem.titleView.frame = CGRectZero;
     _searchController.searchBar.showsCancelButton = NO;
     _searchController.searchBar.placeholder = @"Search...";
-    
-//    UISearchBar.appearance.barTintColor = UIColor.greenColor;
-//    UISearchBar.appearance.translucent = YES;
-//    UISearchBar.appearance.searchFieldBackgroundPositionAdjustment = UIOffsetZero;
-
-//    UISearchBar.appearance.frame = CGRectZero;
-//    [UISearchBar.appearance.layer needsLayout];
     
     UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:_searchController.searchBar];
 
     _searchController.searchBar.layer.borderWidth = 0.0;
     
     UITextField *searchField = [_searchController.searchBar valueForKey:@"_searchField"];
-    
-    
-    
     UILabel *placeholderLabel = [searchField valueForKey:@"_placeholderLabel"];
-    
     placeholderLabel.textAlignment = NSTextAlignmentLeft;
-    
-    placeholderLabel.frame = CGRectMake(0.0, placeholderLabel.frame.origin.y, placeholderLabel.frame.size.width, placeholderLabel.frame.size.height);
-    
+    placeholderLabel.frame = CGRectMake(0.0,
+                                        placeholderLabel.frame.origin.y,
+                                        placeholderLabel.frame.size.width,
+                                        placeholderLabel.frame.size.height);
     placeholderLabel.text = NSLocalizedString(@"Search", nil);
-//    placeholderLabel.backgroundColor = UIColor.redColor;
-    
-//    NSLog(@"%@", placeholderLabel.description);
-    
-    
-    
-    
-    
-//    placeholderLabel.frame.origin.x = 8.0;
-    
-//    searchField.backgroundColor = UIColor.whiteColor;
-    
-//    searchField.leftView = UITextFieldViewModeNever;
-    
-//    searchField.frame = CGRectMake(0, 0, 10, 10);
-//    searchField.borderStyle = UITextBorderStyleRoundedRect;
     searchField.backgroundColor = UIColor.whiteColor;
     searchField.textAlignment = NSTextAlignmentLeft;
-    
-    
-    searchField.layer.borderWidth = 0.0f; // 8.0f;
-//    searchField.layer.cornerRadius = 0.0f; // 10.0f;
-//    searchField.layer.borderColor = [UIColor greenColor].CGColor;
-    
-    
-    
-//    [_searchBarView addSubview:_searchController.searchBar];
-    
+    searchField.layer.borderWidth = 0.0f;
+
     self.navigationItem.leftBarButtonItem = searchBarItem;
-    
     self.navigationItem.titleView.frame = CGRectZero;
     
-    for (UIBarButtonItem *item in self.navigationItem.leftBarButtonItems) {
-        
-        NSLog(@"left button: %@", item.description);
-    }
-    
-    
-    // only a hack. AAAHHHHHH - lösen!
     _searchController.hidesNavigationBarDuringPresentation = NO;
     
     _searchController.searchBar.delegate = self;
 
-//    [_searchController.searchBar sizeToFit];
+    [_searchController.searchBar sizeToFit];
 }
 
 /**

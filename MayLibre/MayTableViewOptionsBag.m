@@ -1,22 +1,6 @@
-//
-//  MayTableViewBag.m
-//  MayLibre
-//
-//  Created by Jo Brunner on 28.08.16.
-//  Copyright © 2016 Mayflower. All rights reserved.
-//
-
 #import "MayTableViewOptionsBag.h"
 
 @interface MayTableViewOptionsBag ()
-
-// hold several options for several entites once
-//@property (nonatomic, strong) NSDictionary *options;
-
-//@property (nonatomic, strong) NSArray *sortOptions;
-//@property (nonatomic, strong) NSArray *filterOptions;
-//@property (nonatomic, strong) NSArray *actionOptions;
-
 
 @end
 
@@ -238,77 +222,5 @@
     
     return [[self optionsFromEntity:entity] objectForKey:@"defaults"];
 }
-
-
-
-//- (NSDictionary *)actionOption:(NSString *)entity {
-//    
-//    NSInteger key           = [self actionOptionKey:entity];
-//    NSPredicate *predicate  = [NSPredicate predicateWithFormat:@"tag = %ld", key];
-//    
-//    return [[[self actionOptions:entity] filteredArrayUsingPredicate:predicate] firstObject];
-//}
-
-
-//#pragma mark Mark functions
-//
-//- (void)setListMarkedEntries:(BOOL)marked {
-//    
-//    [preferences setBool:marked
-//                  forKey:kMayPreferenceListMarkedEntries];
-//}
-//
-//- (BOOL)listMarkedEntries {
-//    
-//    return [preferences boolForKey:kMayPreferenceListMarkedEntries];
-//}
-//
-//- (BOOL)toogleListMarkedEntries {
-//    
-//    BOOL current = self.listMarkedEntries;
-//    
-//    [self setListMarkedEntries:!current];
-//    
-//    return !current;
-//}
-
-//#pragma mark depricated
-
-//- (void)setSortField:(NSString *)sortField
-//           forEntity:(NSString *)entity
-//           ascending:(BOOL)ascending {
-//    
-//    NSString *sortKey = [NSString stringWithFormat:@"%@.%@",
-//                         entity,
-//                         @"field"];
-//    NSString *ascendingKey = [NSString stringWithFormat:@"%@.%@",
-//                              entity,
-//                              @"ascending"];
-//    
-//    [preferences setObject:sortField
-//                    forKey:sortKey];
-//    [preferences setBool:ascending
-//                  forKey:ascendingKey];
-//}
-
-//- (NSString *)sortFieldForEntity:(NSString *)entity {
-//    
-//    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, @"field"];
-//    
-//    NSString *sortField = (NSString *)[preferences objectForKey:key];
-//    
-//    if (sortField == nil) {
-//        sortField = @"authors";
-//    }
-//    
-//    return sortField;
-//}
-
-//- (BOOL)sortAscendingForEntity:(NSString *)entity {
-//    
-//    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, @"ascending"];
-//    
-//    return [preferences boolForKey:key];
-//}
 
 @end

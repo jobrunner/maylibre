@@ -175,8 +175,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSLog(@"didSelectRowAtIndexPath %@", indexPath);
-    
     // sort by section
     if (indexPath.section == 0) {
         MaySortOptionCell *cell = [tableView cellForRowAtIndexPath:indexPath];
