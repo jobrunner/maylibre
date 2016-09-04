@@ -36,7 +36,7 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 @property (nonatomic, strong) UISearchController *searchController;
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *markBarButton;
-@property (weak, nonatomic) IBOutlet UIView *searchBarView;
+@property (nonatomic, weak) IBOutlet UIView *searchBarView;
 
 - (IBAction)scanBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender;
