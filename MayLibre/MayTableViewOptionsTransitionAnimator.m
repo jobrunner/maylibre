@@ -39,13 +39,6 @@
             
                              sourceView.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
                              sourceView.alpha = 0.8;
-                             
-                             // nur mal interessant für'n Sheet...
-//                             destinationView.layer.cornerRadius = 4.5;
-//                             destinationView.layer.shadowOpacity = 0.2;
-//                             destinationView.layer.shadowOffset = CGSizeMake(0.0, 0.0);
-//                             destinationView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-//                             destinationView.layer.shouldRasterize = YES;
         }];
         
         CGFloat offset = 0.1 * (endFrame.origin.x - startFrame.origin.x);
