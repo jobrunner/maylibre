@@ -19,6 +19,10 @@
 #import "MayImageManager.h"
 #import "NSString+MayDisplayExtension.h"
 #import "MayUserDefaults.h"
+//#import "MayTableViewOptionsController.h"
+//#import "MayTableViewOptionsUnwindSegue.h"
+#import "MayTableViewOptionsTransitionAnimator.h"
+#import "MaySearchController.h"
 
 @interface MayEntriesController() {
     
@@ -32,6 +36,7 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 @property (nonatomic, strong) UISearchController *searchController;
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *markBarButton;
+@property (weak, nonatomic) IBOutlet UIView *searchBarView;
 
 - (IBAction)scanBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender;
@@ -98,7 +103,54 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
         
         controller.entry = model;
     }
+    
+    if ([segue.identifier isEqualToString:@"tableViewOptionsSegue"]) {
+        
+        self.definesPresentationContext = YES;
+
+        UINavigationController *navigationController = segue.destinationViewController;
+        
+        navigationController.definesPresentationContext = NO;
+        navigationController.providesPresentationContextTransitionStyle = YES;
+        navigationController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        navigationController.transitioningDelegate = self;
+        
+        MayTableViewOptionsController *controller =
+        [navigationController.viewControllers firstObject];
+        controller.entity = @"Entry";
+        controller.delegate = self;
+    }
 }
+
+//- (void)unwindForSegue:(UIStoryboardSegue *)unwindSegue
+// towardsViewController:(UIViewController *)subsequentViewController {
+//    
+//    NSLog(@"unwindForSegue:towwardsViewController:...");
+//}
+//
+//- (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController
+//                                      fromViewController:(UIViewController *)fromViewController
+//                                              identifier:(NSString *)identifier {
+//
+//    NSLog(@"Unwind in Entries!");
+//    
+////    if ([identifier isEqualToString:@"tableViewOptionsSegue"]) {
+//
+//        // Instantiate a new CustomUnwindSegue
+//        MayTableViewOptionsUnwindSegue *segue =
+//        [[MayTableViewOptionsUnwindSegue alloc] initWithIdentifier:identifier
+//                                                            source:fromViewController
+//                                                       destination:toViewController];
+//        
+//    // Set the target point for the animation to the center of the button in this VC
+////    segue.targetPoint = self.segueButton.center;
+//        return segue;
+////    }
+//
+//    UIStoryboardSegue *segue = [UIStoryboardSegue new];
+//    
+//    return segue;
+//}
 
 #pragma mark UISearchResultsUpdating
 
@@ -116,10 +168,31 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 #pragma mark UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+
+    NSLog(@"cancel clicked");
     
-    [self moveSearchBarToBeUnvisible];
+//    [self moveSearchBarToBeUnvisible];
 }
 
+#pragma mark UISearchControllerDelegate
+
+- (void)didPresentSearchController:(UISearchController *)searchController {
+
+    // hide bar buttons on the right
+    for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
+        item.enabled = NO;
+        item.tintColor = UIColor.clearColor;
+    }
+}
+
+- (void)didDismissSearchController:(UISearchController *)searchController {
+    
+    // show bar buttons on the right
+    for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
+        item.enabled = YES;
+        item.tintColor = nil;
+    }
+}
 
 #pragma mark  UITableViewDelegate
 
@@ -390,6 +463,53 @@ sectionForSectionIndexTitle:(NSString *)title
                              completion:nil];
 }
 
+#pragma mark UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                  presentingController:(UIViewController *)presenting
+                                                                      sourceController:(UIViewController *)source {
+
+    MayTableViewOptionsTransitionAnimator *animator = [MayTableViewOptionsTransitionAnimator new];
+    animator.presenting = YES;
+
+
+    UIView *headerView = [UIView new];
+//    CGFloat screenWidth = UIScreen.mainScreen.bounds.size.width;
+    headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 64.5);
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height - 0.5,
+                                                                headerView.frame.size.width, 0.5)];
+    lineView.backgroundColor = [UIColor grayColor];
+    [headerView addSubview:lineView];
+    
+    
+    [self.navigationController setNavigationBarHidden:YES
+                                             animated:NO];
+    [self.navigationController setToolbarHidden:YES
+                                       animated:YES];
+    
+
+    [self.tableView setTableHeaderView:headerView];
+
+    return animator;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+
+    MayTableViewOptionsTransitionAnimator *animator = [MayTableViewOptionsTransitionAnimator new];
+    animator.presenting = NO;
+
+    
+    [self.tableView setTableHeaderView:nil];
+    [self.navigationController setNavigationBarHidden:NO
+                                             animated:YES];
+    [self.navigationController setToolbarHidden:NO
+                                       animated:YES];
+    
+    return animator;
+}
+
+
 #pragma mark - MAYBarCodeScannerDelegates
 
 - (void)barCodeScannerController:(MayBarCodeScannerController *)controller
@@ -397,6 +517,28 @@ sectionForSectionIndexTitle:(NSString *)title
     
     [self storeEntryWithISBNAsyc:isbn];
 }
+
+#pragma mark MaySortOptionsControllerDelegate
+
+- (void)tableViewOptionsController:(MayTableViewOptionsController *)controller
+               didSelectSortOption:(NSDictionary *)sortOption {
+    
+    NSLog(@"MayEntriesController. Ändere Sortierung %@", sortOption);
+
+    [self sortBy:[sortOption objectForKey:kMayTableViewOptionsBagItemFieldKey]
+       ascending:[sortOption valueForKey:kMayTableViewOptionsBagItemAscendingKey]];
+
+}
+
+- (void)tableViewOptionsController:(MayTableViewOptionsController *)controller
+             didSelectFilterOption:(NSDictionary *)filterOption {
+
+    // apply filter
+        // Filter z.B.: alle Markierten, alle Bücher, alle mit einer bestimmten Kategorie (wie sieht das aus?!)
+    NSLog(@"MayEntriesController. Ändere Filter %@", filterOption);    
+}
+
+
 
 #pragma mark IBActions
 
@@ -467,6 +609,26 @@ sectionForSectionIndexTitle:(NSString *)title
 }
 
 - (IBAction)sortingBarButton:(UIBarButtonItem *)sender {
+
+    return;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main"
+                                                         bundle: [NSBundle mainBundle]];
+    
+    
+    MayTableViewOptionsController *optionsController =
+    [storyboard instantiateViewControllerWithIdentifier:@"MayTableViewOptionsController"];
+
+    optionsController.entity = @"Entry";
+    optionsController.delegate = self;
+    optionsController.modalPresentationStyle = UIModalPresentationCustom;
+    
+    [self presentViewController:optionsController
+                       animated:YES
+                     completion:nil];
+
+    
+    
+    return;
     
     UIAlertController *actionSheet =
     [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Sorting by...", nil)
@@ -548,24 +710,99 @@ sectionForSectionIndexTitle:(NSString *)title
 - (void)configureSearch {
 
     // init search results container
-    _searchResults = [[NSMutableArray alloc] init];
-    
+    _searchResults = [NSMutableArray new];
     
     // setup search controller:
-    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    _searchController = [[MaySearchController alloc] initWithSearchResultsController:nil];
     
-    
+//    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    _searchController.delegate = self;
     _searchController.searchResultsUpdater = self;
     _searchController.dimsBackgroundDuringPresentation = NO;
+    
     self.definesPresentationContext = YES;
-    self.tableView.tableHeaderView = _searchController.searchBar;
+
+    
+//    self.tableView.tableHeaderView = _searchController.searchBar;
+// Ich will die searchBar immer in der navigationBar haben!
+
+    //    [self.navigationController.navigationBar addSubview:_searchController.searchBar];
+    
+//    self.navigationItem.titleView = _searchController.searchBar;
+  
+  
+//    _searchController.searchBar.autoresizesSubviews = YES;
+    
+//    self.navigationItem.titleView.frame = CGRectZero;
+    _searchController.searchBar.showsCancelButton = NO;
+    _searchController.searchBar.placeholder = @"Search...";
+    
+//    UISearchBar.appearance.barTintColor = UIColor.greenColor;
+//    UISearchBar.appearance.translucent = YES;
+//    UISearchBar.appearance.searchFieldBackgroundPositionAdjustment = UIOffsetZero;
+
+//    UISearchBar.appearance.frame = CGRectZero;
+//    [UISearchBar.appearance.layer needsLayout];
+    
+    UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:_searchController.searchBar];
+
+    _searchController.searchBar.layer.borderWidth = 0.0;
+    
+    UITextField *searchField = [_searchController.searchBar valueForKey:@"_searchField"];
+    
+    
+    
+    UILabel *placeholderLabel = [searchField valueForKey:@"_placeholderLabel"];
+    
+    placeholderLabel.textAlignment = NSTextAlignmentLeft;
+    
+    placeholderLabel.frame = CGRectMake(0.0, placeholderLabel.frame.origin.y, placeholderLabel.frame.size.width, placeholderLabel.frame.size.height);
+    
+    placeholderLabel.text = NSLocalizedString(@"Search", nil);
+//    placeholderLabel.backgroundColor = UIColor.redColor;
+    
+//    NSLog(@"%@", placeholderLabel.description);
+    
+    
+    
+    
+    
+//    placeholderLabel.frame.origin.x = 8.0;
+    
+//    searchField.backgroundColor = UIColor.whiteColor;
+    
+//    searchField.leftView = UITextFieldViewModeNever;
+    
+//    searchField.frame = CGRectMake(0, 0, 10, 10);
+//    searchField.borderStyle = UITextBorderStyleRoundedRect;
+    searchField.backgroundColor = UIColor.whiteColor;
+    searchField.textAlignment = NSTextAlignmentLeft;
+    
+    
+    searchField.layer.borderWidth = 0.0f; // 8.0f;
+//    searchField.layer.cornerRadius = 0.0f; // 10.0f;
+//    searchField.layer.borderColor = [UIColor greenColor].CGColor;
+    
+    
+    
+//    [_searchBarView addSubview:_searchController.searchBar];
+    
+    self.navigationItem.leftBarButtonItem = searchBarItem;
+    
+    self.navigationItem.titleView.frame = CGRectZero;
+    
+    for (UIBarButtonItem *item in self.navigationItem.leftBarButtonItems) {
+        
+        NSLog(@"left button: %@", item.description);
+    }
+    
     
     // only a hack. AAAHHHHHH - lösen!
     _searchController.hidesNavigationBarDuringPresentation = NO;
     
     _searchController.searchBar.delegate = self;
 
-    [_searchController.searchBar sizeToFit];
+//    [_searchController.searchBar sizeToFit];
 }
 
 /**

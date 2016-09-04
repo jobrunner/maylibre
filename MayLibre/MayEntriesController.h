@@ -12,15 +12,19 @@
 
 #import "MayBarCodeScannerController.h"
 #import "MGSwipeTableCell.h"
+#import "MayTableViewOptionsController.h"
 
 @interface MayEntriesController : UITableViewController <
     MayBarCodeScannerDelegate,
+    MayTableViewOptionsControllerDelegate,
     UITableViewDelegate,
     UITableViewDataSource,
     UISearchResultsUpdating,
+    UISearchControllerDelegate,
     UISearchBarDelegate,
     NSFetchedResultsControllerDelegate,
     MFMailComposeViewControllerDelegate,
-    MGSwipeTableCellDelegate>
+    MGSwipeTableCellDelegate,
+    UIViewControllerTransitioningDelegate>
 
 @end
