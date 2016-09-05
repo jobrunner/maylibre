@@ -6,30 +6,18 @@
 //  Copyright © 2016 Mayflower. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 #define kMayISBNErrorDomain         @"MayISBNErrorDomain"
 
-typedef enum MayISBNErrorNumber : NSUInteger {
+typedef NS_ENUM(NSUInteger, MayISBNErrorNumber) {
     MayISBNErrorOk = 0,
     MayISBNErrorISBNDetection
-} MayISBNErrorNumber;
-
+};
 
 @interface MayISBN : NSObject
 
 @property (nonatomic, strong) NSNumber *isbnCode;
-
-//@property (nonatomic, strong) NSString *language;
-//@property MayISBNType isbnType;
-//@property NSUInteger prefix;
-//@property NSUInteger groupNumber;
-//@property NSUInteger groupNumberDigits;
-//@property NSUInteger publishingNumber;
-//@property NSUInteger titleNumber;
-//@property NSUInteger titleNumberDigits;
-//@property NSUInteger errorCheckingNumber;
-
 
 + (instancetype)ISBNFromString:(NSString *)isbnString;
 + (instancetype)ISBNFromString:(NSString *)isbnString error:(NSError **)error;
