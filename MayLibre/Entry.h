@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-typedef enum MayEntryCodeType : NSInteger {
+typedef NS_ENUM(NSInteger, MayEntryCodeType) {
     MayEntryCodeTypeUnknown = 0,
     MayEntryCodeTypeISBN = 1,
     MayEntryCodeTypeISSN = 2
-} MayEntryCodeType;
+};
 
 typedef enum MayEntryType : NSInteger {
     MayEntryTypeArticle = 0,
