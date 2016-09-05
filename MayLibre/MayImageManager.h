@@ -21,7 +21,7 @@ typedef void (^MayImageManagerCompletionHandler)(NSURLResponse *response, NSURL 
 
 @property (nonatomic, retain, readonly) NSString *cacheImagePath;
 
-+ (id)sharedManager;
++ (instancetype)sharedManager;
 - (NSURL *)cachedImageURL:(NSString *)imageUrl;
 - (NSString *)cachedImagePath:(NSString *)imageUrl;
 - (void)imageWithUrlString:(NSString *)imageUrl

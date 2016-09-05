@@ -24,7 +24,7 @@
 
 + (instancetype)sharedManager {
 
-    static MayImageManager *sharedManager = nil;
+    static id sharedManager = nil;
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
@@ -33,6 +33,8 @@
     
     return sharedManager;
 }
+
+#pragma mark - Init
 
 - (instancetype)init {
 
@@ -45,6 +47,11 @@
     }
     
     return self;
+}
+
+- (void)dealloc {
+    
+    abort();
 }
 
 - (NSURL *)cachedImageURL:(NSString *)imageUrl {
