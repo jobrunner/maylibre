@@ -2,7 +2,7 @@
 //  Entry+CoreDataProperties.m
 //  MayLibre
 //
-//  Created by Jo Brunner on 05.06.16.
+//  Created by Jo Brunner on 05.09.16.
 //  Copyright © 2016 Mayflower. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -16,8 +16,10 @@
 @dynamic authors;
 @dynamic coverUrl;
 @dynamic creationTime;
+@dynamic exemplars;
 @dynamic isMarked;
 @dynamic language;
+@dynamic notes;
 @dynamic pageCount;
 @dynamic place;
 @dynamic productCode;
@@ -30,8 +32,7 @@
 @dynamic title;
 @dynamic updateTime;
 @dynamic version;
-@dynamic notes;
-@dynamic exemplars;
+@dynamic userFilename;
 @dynamic category;
 
 @end

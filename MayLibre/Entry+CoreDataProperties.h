@@ -2,7 +2,7 @@
 //  Entry+CoreDataProperties.h
 //  MayLibre
 //
-//  Created by Jo Brunner on 05.06.16.
+//  Created by Jo Brunner on 05.09.16.
 //  Copyright © 2016 Mayflower. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -19,8 +19,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *authors;
 @property (nullable, nonatomic, retain) NSString *coverUrl;
 @property (nullable, nonatomic, retain) NSDate *creationTime;
+@property (nullable, nonatomic, retain) NSNumber *exemplars;
 @property (nullable, nonatomic, retain) NSNumber *isMarked;
 @property (nullable, nonatomic, retain) NSString *language;
+@property (nullable, nonatomic, retain) NSString *notes;
 @property (nullable, nonatomic, retain) NSString *pageCount;
 @property (nullable, nonatomic, retain) NSString *place;
 @property (nullable, nonatomic, retain) NSString *productCode;
@@ -33,8 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *title;
 @property (nullable, nonatomic, retain) NSDate *updateTime;
 @property (nullable, nonatomic, retain) NSNumber *version;
-@property (nullable, nonatomic, retain) NSString *notes;
-@property (nullable, nonatomic, retain) NSNumber *exemplars;
+@property (nullable, nonatomic, retain) NSString *userFilename;
 @property (nullable, nonatomic, retain) NSSet<Category *> *category;
 
 @end
