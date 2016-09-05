@@ -54,6 +54,8 @@
     abort();
 }
 
+#pragma mark URL related
+
 - (NSURL *)cachedImageURL:(NSString *)imageUrl {
     
     NSString *path = [self cachedImagePath:imageUrl];
