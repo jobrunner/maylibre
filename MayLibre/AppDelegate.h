@@ -13,6 +13,7 @@
 #define App                 ((AppDelegate *)[UIApplication sharedApplication].delegate)
 
 #define kNotificationEntrySummaryChanged    @"EntrySummaryChanged"
+#define kMayCommonErrorDomain               @"MayLibreGeneralError"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
