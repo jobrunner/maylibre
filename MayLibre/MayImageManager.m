@@ -6,6 +6,7 @@
 //  Copyright © 2016 Mayflower. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "MayImageManager.h"
 #import "AFNetworking.h"
 #import "MayDigest.h"
@@ -174,6 +175,94 @@
                    }];
     
     [downloadTask resume];
+}
+
+#pragma mark User File related
+
+- (NSString *)userFileDirectory {
+    
+    static NSString *userFilePath = nil;
+    
+    if (userFilePath != nil) {
+        
+        return userFilePath;
+    }
+    
+    NSError *error = nil;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:kMayImageManagerImageDirectory];
+
+    // Does directory already exist? No, then create it.
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:path
+                                       withIntermediateDirectories:NO
+                                                        attributes:nil
+                                                             error:&error]) {
+            // Handle error here...
+            NSLog(@"Create directory error: %@", error);
+        }
+    }
+
+    return path;
+}
+
+// create the full file path
+- (NSString *)userFilePath:(NSString *)filename {
+    
+    return [[self userFileDirectory] stringByAppendingPathComponent:filename];
+}
+
+- (void)storeImage:(UIImage *)image
+        completion:(void(^)(NSString *filename,
+                            NSError *error))completion {
+
+    NSError *error = nil;
+    
+    if (image == nil) {
+        NSDictionary * userInfo = @{NSLocalizedDescriptionKey:NSLocalizedString(@"Could not store empty image.", nil)};
+        error                   = [NSError errorWithDomain:kMayImageManagerErrorDomain
+                                                      code:MayImageManagerParameter
+                                                  userInfo:userInfo];
+        return completion(nil, error);
+    }
+    
+    NSData *pngImageData = UIImagePNGRepresentation(image);
+
+    // generate a filename used a sha1 hash over binary data.
+    NSString *sha1Hash = [MayDigest sha1WithBinary:pngImageData];
+    
+    // filename for PNG image with extension but without path
+    NSString *filename = [NSString stringWithFormat:@"%@.png", sha1Hash];
+
+    // save binary data to disc
+    if (YES == [[NSFileManager defaultManager] createFileAtPath:[self userFilePath:filename]
+                                                       contents:pngImageData
+                                                     attributes:nil]) {
+        // store the PNG
+        completion(filename, error);
+    }
+    else {
+        NSDictionary * userInfo = @{NSLocalizedDescriptionKey:NSLocalizedString(@"Could not store image.", nil)};
+        error                   = [NSError errorWithDomain:kMayImageManagerErrorDomain
+                                                      code:MayImageManagerIO
+                                                  userInfo:userInfo];
+    }
+    
+    completion(filename, error);
+}
+
+- (void)removeUserFile:(NSString *)filename
+            completion:(void(^)(NSError *error))completion {
+    
+    NSError *error = nil;
+    
+    NSString *fullname = [self userFilePath:filename];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    [fileManager removeItemAtPath:fullname
+                            error:&error];
+    completion(error);
 }
 
 @end
