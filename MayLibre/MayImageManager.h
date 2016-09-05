@@ -10,6 +10,7 @@
 @import UIKit;
 
 #define kMayImageManagerImagePathPart    @"images"
+#define kMayImageManagerImageDirectory   @"Pictures"
 
 typedef void (^MayImageManagerCompletionHandler)(NSURLResponse *response, NSURL *filePath, NSError *error);
 
