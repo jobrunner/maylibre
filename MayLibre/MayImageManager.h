@@ -9,7 +9,7 @@
 @import Foundation;
 @import UIKit;
 
-#define kImagePathPart  @"images"
+#define kMayImageManagerImagePathPart    @"images"
 
 typedef void (^MayImageManagerCompletionHandler)(NSURLResponse *response, NSURL *filePath, NSError *error);
 

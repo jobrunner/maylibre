@@ -78,7 +78,7 @@
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     
-    NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:kImagePathPart];
+    NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:kMayImageManagerImagePathPart];
     
     // Does directory already exist? No, then create it.
     NSFileManager *fileManager = [NSFileManager defaultManager];
