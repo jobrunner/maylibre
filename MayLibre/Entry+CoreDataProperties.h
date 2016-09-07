@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *exemplars;
 @property (nullable, nonatomic, retain) NSNumber *isMarked;
 @property (nullable, nonatomic, retain) NSString *language;
+@property (nullable, nonatomic, retain) NSString *mainCategory;
 @property (nullable, nonatomic, retain) NSString *notes;
 @property (nullable, nonatomic, retain) NSString *pageCount;
 @property (nullable, nonatomic, retain) NSString *place;

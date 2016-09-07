@@ -14,6 +14,7 @@
         <attribute name="exemplars" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="isMarked" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mainCategory" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pageCount" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,7 +34,7 @@
     <entity name="Place" representedClassName="Place" syncable="YES"/>
     <elements>
         <element name="Category" positionX="-297" positionY="135" width="128" height="118"/>
-        <element name="Entry" positionX="-299" positionY="-1" width="128" height="360"/>
+        <element name="Entry" positionX="-299" positionY="-1" width="128" height="30"/>
         <element name="Place" positionX="-288" positionY="135" width="128" height="45"/>
     </elements>
 </model>

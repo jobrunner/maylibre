@@ -964,6 +964,7 @@ sectionForSectionIndexTitle:(NSString *)title
                          model.language = [volumeInfo objectForKey:@"language"];
                          model.summary = [volumeInfo objectForKey:@"description"];
                          model.place = @"";
+                         model.category = [volumeInfo objectForKey:@"mainCategory"];
                          
                          NSString *imageUrl = [[volumeInfo objectForKey:@"imageLinks"] objectForKey:@"thumbnail"];
                          

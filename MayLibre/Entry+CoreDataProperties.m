@@ -20,6 +20,7 @@
 @dynamic isMarked;
 @dynamic language;
 @dynamic notes;
+@dynamic mainCategory;
 @dynamic pageCount;
 @dynamic place;
 @dynamic productCode;
