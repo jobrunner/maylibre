@@ -928,7 +928,7 @@ sectionForSectionIndexTitle:(NSString *)title
                              completion(error);
                              return;
                          }
-                         
+
                          NSDictionary *volumeInfo = [result objectForKey:@"volumeInfo"];
                          
                          NSArray  *authors = [volumeInfo objectForKey:@"authors"];
@@ -951,7 +951,7 @@ sectionForSectionIndexTitle:(NSString *)title
                          model.pageCount = [[volumeInfo objectForKey:@"pageCount"] stringValue];
                          
                          NSString *printType = [volumeInfo objectForKey:@"printType"];
-                         
+
                          if ([printType isEqualToString:@"BOOK"]) {
                              model.referenceType = @(MayEntryTypeBookSection);
                          }
@@ -969,6 +969,8 @@ sectionForSectionIndexTitle:(NSString *)title
                          NSString *imageUrl = [[volumeInfo objectForKey:@"imageLinks"] objectForKey:@"thumbnail"];
                          
                          model.coverUrl = imageUrl;
+                         
+                         model.userFilename = nil;
                          
                          [managedObjectContext save:&error];
                          

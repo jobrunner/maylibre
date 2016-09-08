@@ -6,6 +6,7 @@
 @interface MayEntryFormController : UITableViewController <
     UITextFieldDelegate,
     UITextViewDelegate,
+    UINavigationControllerDelegate,
     UIImagePickerControllerDelegate> {
     
     NSManagedObjectContext *managedObjectContext;

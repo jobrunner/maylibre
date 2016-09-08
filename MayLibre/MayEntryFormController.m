@@ -25,7 +25,7 @@
                                        animated:NO];
     
     self.tableView.estimatedRowHeight = 44;
-    
+
     self.authorsTextView.delegate = self;
     
     managedObjectContext = ApplicationDelegate.managedObjectContext;
@@ -91,51 +91,32 @@ heightForFooterInSection:(NSInteger)section {
     _placeTextField.text = _entry.place;
     _summaryLabel.text = _entry.summary;
     
-    NSLog(@"Alternative Cover: %@", _entry.userFilename);
+    [self loadCoverImageWithEntry:_entry
+                       completion:^(UIImage *image, NSError *error) {
+                           _bookImage.image = image;
+                       }];
     
-    
-    // wenn userFilename einen Wert hat, soll zunächst ein thumbnail dazu geladen werden.
-    // Wenn das Thumbnail in diesem Cache nicht existiert, soll es erzeugt und geladen werden
-    // Das Original-Foto soll weiterhin im Dokumentenverzeichnis/Pictures liegen und später auf die
-    // iCloude synchronisiert werden. Die Thumbnails nicht. Auch nicht die Bilder aus dem Web (Copyrights
-    // und Speicher etc. - die gehören Google bzw. Amazon).
-    
-    if (_entry.userFilename != nil) {
+}
 
-        // Zum Testen das Original Foto laden und anzeigen
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"Pictures"];
+- (void)loadCoverImageWithEntry:(Entry *)entry
+                     completion:(void(^)(UIImage *image, NSError *error))completion {
+
+    MayImageManager *imageManager = [MayImageManager sharedManager];;
+    
+    if (entry.userFilename != nil) {
         
-        // create the full file path
-        NSString *filePath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", _entry.userFilename]];
-
-        NSData *imageData = [NSData dataWithContentsOfFile:filePath];
-        NSLog(@"File: %@", filePath);
-        UIImage *image = [UIImage imageWithData:imageData];
-        _bookImage.image = image;
+        completion([imageManager imageWithFilename:_entry.userFilename], nil);
         
         return;
-        
-        
-        
-//        if (imageData.length > 0) {
-//            UIImage *image = [UIImage imageWithData:imageData];
-//            _bookImage.image = image;
-//
-//            return;
-//        }
-        
     }
     
-    [[MayImageManager sharedManager] imageWithUrlString:_entry.coverUrl
-                                             completion:^(UIImage *image, NSError *error) {
-                                                 if (error) {
-                                                     NSLog(@"Error while assigning image: %@",
-                                                           error.localizedDescription);
-                                                 }
-                                                 _bookImage.image = image;
-                                             }];
+    [imageManager imageWithUrlString:_entry.coverUrl
+                          completion:^(UIImage *image, NSError *error) {
+                              
+                              completion(image, error);
+                          }];
 }
+
 
 - (void)createModelForEditing {
     
@@ -275,49 +256,6 @@ heightForFooterInSection:(NSInteger)section {
     [self formDidChanged:sender];
 }
 
-- (void)removeCurrentCover {
-    
-    UIAlertController *actionSheet =
-    [UIAlertController alertControllerWithTitle:nil // NSLocalizedString(@"", nil)
-                                        message:nil
-                                 preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *removeCoverAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Remove Cover", nil)
-                             style:UIAlertActionStyleDestructive
-                           handler:^(UIAlertAction * action) {
-                               
-                               [[MayImageManager sharedManager] removeUserFile:_entry.userFilename
-                                                                    completion:^(NSError *error) {
-                                                                    
-                                                                        if (error == nil) {
-                                                                            _entry.userFilename = nil;
-                                                                            [managedObjectContext save:&error];
-                                                                        }
-                                                                        
-                                                                        if (error) {
-                                                                            [App viewController:self
-                                                                                handleUserError:error
-                                                                                          title:nil];
-                                                                        }
-                                                                        
-                                                                    }];
-                           }];
-    
-    UIAlertAction *cancelAction =
-    [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
-                             style:UIAlertActionStyleCancel
-                           handler:nil];
-    
-    [actionSheet addAction:removeCoverAction];
-    [actionSheet addAction:cancelAction];
-    
-    [self presentViewController:actionSheet
-                       animated:YES
-                     completion:nil];
-    
-}
-
 - (void)replaceCurrentCover {
     
     UIAlertController *actionSheet =
@@ -353,7 +291,34 @@ heightForFooterInSection:(NSInteger)section {
                                NSLog(@"Choose from Library, speichern und UI refresh");
                            
                            }];
-    
+
+    UIAlertAction *removeCoverAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Remove Cover", nil)
+                             style:UIAlertActionStyleDestructive
+                           handler:^(UIAlertAction * action) {
+                               
+                               [[MayImageManager sharedManager]
+                                removeUserFile:_entry.userFilename
+                                    completion:^(NSError *error) {
+                                                                        
+//                                        if (error == nil) {
+                                            _entry.userFilename = nil;
+                                            [self formDidChanged:self];
+                                            [self loadCoverImageWithEntry:_entry
+                                                               completion:^(UIImage *image, NSError *error) {
+                                                                   _bookImage.image = image;
+                                                               }];
+//                                        }
+//                                        else {
+//                                        
+//                                            [App viewController:self
+//                                                handleUserError:error
+//                                                          title:nil];
+//                                        }
+
+                                    }];
+                           }];
+
     UIAlertAction *cancelAction =
     [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
                              style:UIAlertActionStyleCancel
@@ -362,6 +327,12 @@ heightForFooterInSection:(NSInteger)section {
     [actionSheet addAction:lastPhotoTakenAction];
     [actionSheet addAction:takePhotoAction];
     [actionSheet addAction:chooseFromLibraryAction];
+    
+    // initial coverUrl cannot be removed. But user cover only
+    if (_entry.userFilename != nil) {
+        [actionSheet addAction:removeCoverAction];
+    }
+    
     [actionSheet addAction:cancelAction];
     
     [self presentViewController:actionSheet
@@ -384,14 +355,14 @@ heightForFooterInSection:(NSInteger)section {
     // ---
     // Cancel
     
-    if (_entry.coverUrl != nil || _entry.userFilename != nil) {
-        
-        // remove photo
-        [self removeCurrentCover];
-    }
-    else {
+//    if (_entry.coverUrl != nil || _entry.userFilename != nil) {
+//        
+//        // remove photo
+//        [self removeCurrentCover];
+//    }
+//    else {
         [self replaceCurrentCover];
-    }
+//    }
 }
 
 - (void)takeCoverFromLibrary {
@@ -400,7 +371,7 @@ heightForFooterInSection:(NSInteger)section {
     
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-
+    
     [self presentViewController:picker
                        animated:YES
                      completion:NULL];
@@ -431,24 +402,30 @@ heightForFooterInSection:(NSInteger)section {
 - (void)imagePickerController:(UIImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
-    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
     
-    [[MayImageManager sharedManager] storeImage:chosenImage
-                                     completion:^(NSString *filename, NSError *error) {
-                                         
-                                         NSLog(@"filename: %@", filename);
-                                         
-                                         if (error == nil) {
-                                             _entry.userFilename = filename;
-                                             [managedObjectContext save:&error];
-                                         }
-                                         if (error) {
-                                             [App viewController:self
-                                                 handleUserError:error
-                                                           title:nil];
-                                         }
-                                         
-                                     }];
+    MayImageManager *imageManager = [MayImageManager sharedManager];
+    
+    [imageManager storeImage:chosenImage
+                  completion:^(NSString *filename, NSError *error) {
+
+                      [self formDidChanged:nil];
+                      [self loadCoverImageWithEntry:_entry
+                                         completion:^(UIImage *image, NSError *error) {
+                                             _bookImage.image = image;
+                                         }];
+                      
+                      if (error == nil) {
+                          _entry.userFilename = filename;
+//                          [managedObjectContext save:&error];
+                      }
+
+                      if (error) {
+                          [App viewController:self
+                              handleUserError:error
+                                        title:nil];
+                      }
+                  }];
 
     [picker dismissViewControllerAnimated:YES
                                completion:NULL];

@@ -1,17 +1,10 @@
-//
-//  MayImageManager.h
-//  MayLibre
-//
-//  Created by Jo Brunner on 01.05.16.
-//  Copyright © 2016 Mayflower. All rights reserved.
-//
-
 @import Foundation;
 @import UIKit;
 
-#define kMayImageManagerImagePathPart    @"images"
-#define kMayImageManagerImageDirectory   @"Pictures"
-#define kMayImageManagerErrorDomain      @"MayLibreImageManagerErrorDomain"
+#define kMayImageManagerCacheDirectoryComponent      @"Pictures"
+#define kMayImageManagerDocumentDirectoryComponent   @"Pictures"
+
+#define kMayImageManagerErrorDomain                  @"MayLibreImageManagerErrorDomain"
 
 typedef NS_ENUM(NSUInteger, MayImageManagerErrorNumber) {
     MayImageManagerErrorOk = 0,
@@ -21,12 +14,14 @@ typedef NS_ENUM(NSUInteger, MayImageManagerErrorNumber) {
 
 typedef void (^MayImageManagerCompletionHandler)(NSURLResponse *response, NSURL *filePath, NSError *error);
 
-@interface MayImageManager : NSObject {
+@interface MayImageManager : NSObject <NSURLSessionTaskDelegate>{
 
-    NSString *cacheImagePath;
+    NSString *_cacheDirectory;
+    NSString *_documentDirectory;
 }
 
-@property (nonatomic, retain, readonly) NSString *cacheImagePath;
+@property (nonatomic, retain, readonly) NSString *cacheDirectory;
+@property (nonatomic, retain, readonly) NSString *documentDirectory;
 
 + (instancetype)sharedManager;
 - (NSURL *)cachedImageURL:(NSString *)imageUrl;
@@ -34,12 +29,18 @@ typedef void (^MayImageManagerCompletionHandler)(NSURLResponse *response, NSURL 
 - (void)imageWithUrlString:(NSString *)imageUrl
                 completion:(void(^)(UIImage *image, NSError *error))completion;
 
-- (NSString *)userFileDirectory;
-- (NSString *)userFilePath:(NSString *)filename;
+// neue Methoden
+
+//- (NSString *)userFileDirectory;
+
+// bekomme ich nun ein großes Original-Bild oder eines aus dem Cache?! Ist von der Benamung nicht gut...
+- (NSString *)userFilenameWithPath:(NSString *)filename;
 - (void)storeImage:(UIImage *)image
         completion:(void(^)(NSString *filename,
                             NSError *error))completion;
 - (void)removeUserFile:(NSString *)filename
             completion:(void(^)(NSError *error))completion;
+
+- (UIImage *)imageWithFilename:(NSString *)filename;
 
 @end

@@ -258,17 +258,21 @@ heightForFooterInSection:(NSInteger)section {
     _markedSwitch.on = _entry.isMarked.boolValue;
     
     NSString *imageUrl = _entry.coverUrl;
+
+    if (_entry.userFilename != nil) {
+        
+        self.coverThumbnail.image = [[MayImageManager sharedManager] imageWithFilename:_entry.userFilename];
+    }
+    else {
     
-    [[MayImageManager sharedManager] imageWithUrlString:imageUrl
-                                             completion:^(UIImage *image, NSError *error) {
-                                                 if (error) {
-                                                     [App viewController:self
-                                                         handleUserError:error
-                                                                   title:nil];
-                                                 }
-                                                 self.coverThumbnail.image = image;
-                                             }];
-    
+        [[MayImageManager sharedManager] imageWithUrlString:imageUrl
+                                                 completion:^(UIImage *image, NSError *error) {
+
+                                                     self.coverThumbnail.image = image;
+                                                 
+                                                 }];
+    }
+
     NSDateFormatter *formatter = NSDateFormatter.new;
     formatter.dateStyle = NSDateFormatterShortStyle;
     formatter.timeStyle = NSDateFormatterNoStyle;

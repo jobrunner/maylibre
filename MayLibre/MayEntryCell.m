@@ -69,17 +69,26 @@
                                        subtitle];
     _authorLabel.text = [[managedObject valueForKey:@"authors"] stringByReplacingOccurrencesOfString:@"\n"
                                                                                               withString:@", "];
+    
     NSString *imageUrl = [managedObject valueForKey:@"coverUrl"];
+    NSString *userFilename = [managedObject valueForKey:@"userFilename"];
     
-    [[MayImageManager sharedManager] imageWithUrlString:imageUrl
-                                             completion:^(UIImage *image, NSError *error) {
-                                                 if (error) {
-                                                     NSLog(@"Error while trying to fetch cover: %@",
-                                                           error.localizedDescription);
-                                                 }
-                                                 self.coverThumbnail.image = image;
-    }];
+    MayImageManager *imageManager = [MayImageManager sharedManager];
+
+    if (userFilename != nil) {
     
+        self.coverThumbnail.image = [imageManager imageWithFilename:userFilename];
+    }
+    else {
+        [imageManager imageWithUrlString:imageUrl
+                              completion:^(UIImage *image, NSError *error) {
+                                  if (error) {
+                                      NSLog(@"Error while trying to fetch cover: %@",
+                                            error.localizedDescription);
+                                  }
+                                  self.coverThumbnail.image = image;
+                              }];
+    }
     self.delegate = delegate;
     
     if ([[managedObject valueForKey:@"isMarked"] boolValue]) {
