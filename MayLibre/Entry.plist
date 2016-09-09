@@ -71,7 +71,7 @@
 			<key>field</key>
 			<string>creationTime</string>
 			<key>ascending</key>
-			<false/>
+			<true/>
 			<key>tag</key>
 			<integer>5</integer>
 			<key>textkey</key>
