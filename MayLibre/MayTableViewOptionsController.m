@@ -167,7 +167,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [(MayActionOptionCell *)cell configureCellWithActionOption:actionOption
                                                             action:^(UIButton *sender) {
                                                                 [self setTableViewDefaults];
-//                                                                [self.tableView reloadData];
+                                                                [self.tableView reloadData];
                                                             }];
     }
 }
@@ -188,9 +188,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                                           entry:self.entity];
         
         NSIndexSet *section = [NSIndexSet indexSetWithIndex:indexPath.section];
-        [self.tableView reloadSections:section
-                      withRowAnimation:UITableViewRowAnimationFade];
-        [tableView reloadData];
+        [tableView reloadSections:section
+                 withRowAnimation:UITableViewRowAnimationFade];
         
         if ([self.delegate respondsToSelector:@selector(tableViewOptionsController:didSelectSortOption:)]) {
             [self.delegate tableViewOptionsController:self

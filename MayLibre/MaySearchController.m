@@ -13,6 +13,7 @@
 
     UISearchBar *_searchBar;
 }
+
 @end
 
 @implementation MaySearchController

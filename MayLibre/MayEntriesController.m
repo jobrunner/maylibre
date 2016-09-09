@@ -19,8 +19,6 @@
 #import "MayImageManager.h"
 #import "NSString+MayDisplayExtension.h"
 #import "MayUserDefaults.h"
-//#import "MayTableViewOptionsController.h"
-//#import "MayTableViewOptionsUnwindSegue.h"
 #import "MayTableViewOptionsTransitionAnimator.h"
 #import "MaySearchController.h"
 
@@ -37,7 +35,6 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *markBarButton;
 @property (nonatomic, weak) IBOutlet UIView *searchBarView;
-
 - (IBAction)scanBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)markBarButtonSelected:(UIBarButtonItem *)sender;
@@ -53,9 +50,16 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     [super viewDidLoad];
 
     managedObjectContext = App.managedObjectContext;
-
+    
+    _searchResults = [NSMutableArray new];
+    
     [self configureSearch];
-    [self moveSearchBarToBeUnvisible];
+    [self hideSearchBarAnimated:YES];
+
+    [self showOptionsBarButton];
+    
+    NSLog(@"contentOffset.y = %f", self.tableView.contentOffset.y);
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -63,21 +67,28 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     [super viewDidAppear:animated];
   
     [self listMarkedEntries:[MayUserDefaults.sharedInstance listMarkedEntries]];
-
+    
     [self.navigationController setToolbarHidden:NO
                                        animated:animated];
+//    if (!_searchController.active) {
+//        NSLog(@"search controller not active, ")
+//        [self hideSearchBarAnimated:NO];
+//    }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue
+                 sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"openScannerSegue"]) {
         
         MayBarCodeScannerController *controller =
         (MayBarCodeScannerController *)segue.destinationViewController;
         controller.delegate = self;
-        // options...
     }
     
     if ([segue.identifier isEqualToString:@"openEntryDetailsSegue"]) {
@@ -120,40 +131,9 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     }
 }
 
-//- (void)unwindForSegue:(UIStoryboardSegue *)unwindSegue
-// towardsViewController:(UIViewController *)subsequentViewController {
-//    
-//    NSLog(@"unwindForSegue:towwardsViewController:...");
-//}
-//
-//- (UIStoryboardSegue *)segueForUnwindingToViewController:(UIViewController *)toViewController
-//                                      fromViewController:(UIViewController *)fromViewController
-//                                              identifier:(NSString *)identifier {
-//
-//    NSLog(@"Unwind in Entries!");
-//    
-////    if ([identifier isEqualToString:@"tableViewOptionsSegue"]) {
-//
-//        // Instantiate a new CustomUnwindSegue
-//        MayTableViewOptionsUnwindSegue *segue =
-//        [[MayTableViewOptionsUnwindSegue alloc] initWithIdentifier:identifier
-//                                                            source:fromViewController
-//                                                       destination:toViewController];
-//        
-//    // Set the target point for the animation to the center of the button in this VC
-////    segue.targetPoint = self.segueButton.center;
-//        return segue;
-////    }
-//
-//    UIStoryboardSegue *segue = [UIStoryboardSegue new];
-//    
-//    return segue;
-//}
-
 #pragma mark UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
     
     NSString *searchString = searchController.searchBar.text;
     
@@ -163,34 +143,42 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     [self.tableView reloadData];
 }
 
-#pragma mark UISearchBarDelegate
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-
-    NSLog(@"cancel clicked");
-    
-//    [self moveSearchBarToBeUnvisible];
-}
+//#pragma mark UISearchBarDelegate
+//
+//- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+//
+//    NSLog(@"cancel clicked");
+//}
 
 #pragma mark UISearchControllerDelegate
 
-- (void)didPresentSearchController:(UISearchController *)searchController {
+//- (void)didPresentSearchController:(UISearchController *)searchController {
+//
+//    if (searchController != _searchController) {
+//        
+//        return;
+//    }
+//    
+//    // hide bar buttons on the right
+//    for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
+//        item.enabled = NO;
+//        item.tintColor = UIColor.clearColor;
+//    }
+//}
 
-    // hide bar buttons on the right
-    for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
-        item.enabled = NO;
-        item.tintColor = UIColor.clearColor;
-    }
-}
-
-- (void)didDismissSearchController:(UISearchController *)searchController {
-    
-    // show bar buttons on the right
-    for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
-        item.enabled = YES;
-        item.tintColor = nil;
-    }
-}
+//- (void)didDismissSearchController:(UISearchController *)searchController {
+//
+//    if (searchController != _searchController) {
+//        
+//        return;
+//    }
+//    
+//    // show bar buttons on the right
+//    for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
+//        item.enabled = YES;
+//        item.tintColor = nil;
+//    }
+//}
 
 #pragma mark  UITableViewDelegate
 
@@ -287,7 +275,6 @@ heightForFooterInSection:(NSInteger)section {
     return [[self.fetchedResultsController sections] count];
 }
 
-
 /**
  * Dosn't support native editing of table view cells.
  */
@@ -342,7 +329,6 @@ sectionForSectionIndexTitle:(NSString *)title
     
     if (index > 0) {
         // The index is offset by one to allow for the extra search icon inserted at the front of the index
-
         return [self.fetchedResultsController sectionForSectionIndexTitle:title
                                                                   atIndex:(index - 1)];
     }
@@ -352,7 +338,7 @@ sectionForSectionIndexTitle:(NSString *)title
         
         [self.tableView scrollRectToVisible:searchBarFrame
                                    animated:NO];
-            
+        
         return NSNotFound;
     }
 }
@@ -433,7 +419,8 @@ sectionForSectionIndexTitle:(NSString *)title
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView reloadRowsAtIndexPaths:@[indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeMove:
@@ -467,28 +454,29 @@ sectionForSectionIndexTitle:(NSString *)title
                                                                   presentingController:(UIViewController *)presenting
                                                                       sourceController:(UIViewController *)source {
 
-    MayTableViewOptionsTransitionAnimator *animator = [MayTableViewOptionsTransitionAnimator new];
+    MayTableViewOptionsTransitionAnimator *animator =
+    [MayTableViewOptionsTransitionAnimator new];
+    
     animator.presenting = YES;
 
-
     UIView *headerView = [UIView new];
-//    CGFloat screenWidth = UIScreen.mainScreen.bounds.size.width;
-    headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 64.5);
+    headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44.5);
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height - 0.5,
                                                                 headerView.frame.size.width, 0.5)];
     lineView.backgroundColor = [UIColor grayColor];
     [headerView addSubview:lineView];
     
-    
     [self.navigationController setNavigationBarHidden:YES
                                              animated:NO];
     [self.navigationController setToolbarHidden:YES
                                        animated:YES];
-    
 
+    // replace search bar in table header view against a
+    // dummy navigation bar that will be shown behind the
+    // TableViewOptions...
     [self.tableView setTableHeaderView:headerView];
-
+    
     return animator;
 }
 
@@ -496,17 +484,18 @@ sectionForSectionIndexTitle:(NSString *)title
 
     MayTableViewOptionsTransitionAnimator *animator = [MayTableViewOptionsTransitionAnimator new];
     animator.presenting = NO;
-
     
     [self.tableView setTableHeaderView:nil];
     [self.navigationController setNavigationBarHidden:NO
                                              animated:YES];
     [self.navigationController setToolbarHidden:NO
                                        animated:YES];
+    // restore search bar in table header view:
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    [self hideSearchBarAnimated:YES];
     
     return animator;
 }
-
 
 #pragma mark - MAYBarCodeScannerDelegates
 
@@ -521,22 +510,16 @@ sectionForSectionIndexTitle:(NSString *)title
 - (void)tableViewOptionsController:(MayTableViewOptionsController *)controller
                didSelectSortOption:(NSDictionary *)sortOption {
     
-    NSLog(@"MayEntriesController. Ändere Sortierung %@", sortOption);
-
     [self sortBy:[sortOption objectForKey:kMayTableViewOptionsBagItemFieldKey]
        ascending:[sortOption valueForKey:kMayTableViewOptionsBagItemAscendingKey]];
-
 }
 
 - (void)tableViewOptionsController:(MayTableViewOptionsController *)controller
              didSelectFilterOption:(NSDictionary *)filterOption {
 
     // apply filter
-        // Filter z.B.: alle Markierten, alle Bücher, alle mit einer bestimmten Kategorie (wie sieht das aus?!)
-    NSLog(@"MayEntriesController. Ändere Filter %@", filterOption);    
+    NSLog(@"MayEntriesController. Ändere Filter %@", filterOption);
 }
-
-
 
 #pragma mark IBActions
 
@@ -627,56 +610,53 @@ sectionForSectionIndexTitle:(NSString *)title
  */
 - (void)configureSearch {
 
-    // init search results container
-    _searchResults = [NSMutableArray new];
-    
-    // setup search controller:
-    _searchController = [[MaySearchController alloc] initWithSearchResultsController:nil];
-    
-//    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    _searchController.delegate = self;
-    _searchController.searchResultsUpdater = self;
-    _searchController.dimsBackgroundDuringPresentation = NO;
-    
     self.definesPresentationContext = YES;
 
-    _searchController.searchBar.showsCancelButton = NO;
-    _searchController.searchBar.placeholder = @"Search...";
+    [UISearchBar appearance].barTintColor = UIColor.whiteColor;
     
-    UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:_searchController.searchBar];
+    _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 
-    _searchController.searchBar.layer.borderWidth = 0.0;
-    
-    UITextField *searchField = [_searchController.searchBar valueForKey:@"_searchField"];
-    UILabel *placeholderLabel = [searchField valueForKey:@"_placeholderLabel"];
-    placeholderLabel.textAlignment = NSTextAlignmentLeft;
-    placeholderLabel.frame = CGRectMake(0.0,
-                                        placeholderLabel.frame.origin.y,
-                                        placeholderLabel.frame.size.width,
-                                        placeholderLabel.frame.size.height);
-    placeholderLabel.text = NSLocalizedString(@"Search", nil);
-    searchField.backgroundColor = UIColor.whiteColor;
-    searchField.textAlignment = NSTextAlignmentLeft;
-    searchField.layer.borderWidth = 0.0f;
-
-    self.navigationItem.leftBarButtonItem = searchBarItem;
-    self.navigationItem.titleView.frame = CGRectZero;
-    
-    _searchController.hidesNavigationBarDuringPresentation = NO;
-    
+    _searchController.searchBar.backgroundColor = [UIColor whiteColor];
+    _searchController.searchBar.translucent = NO;
     _searchController.searchBar.delegate = self;
+    _searchController.searchBar.placeholder = NSLocalizedString(@"Search", nil);
+    
+    _searchController.dimsBackgroundDuringPresentation = NO;
+    _searchController.hidesNavigationBarDuringPresentation = YES;
 
-    [_searchController.searchBar sizeToFit];
+    _searchController.delegate = self;
+    _searchController.searchResultsUpdater = self;
+
+    self.tableView.tableHeaderView = _searchController.searchBar;
 }
 
-/**
- * hides the search bar until user scolls down
- */
-- (void)moveSearchBarToBeUnvisible {
+- (void)hideSearchBarAnimated:(BOOL)animated {
 
-    CGPoint searchBarOffset = CGPointMake(0.0, self.tableView.tableHeaderView.frame.size.height);
+    CGPoint searchBarOffset = CGPointMake(0.0, 44.0 + self.tableView.contentOffset.y);
     [self.tableView setContentOffset:searchBarOffset
-                            animated:YES];
+                            animated:animated];
+}
+
+- (void)showOptionsBarButton {
+    
+    UIBarButtonItem *optionsBarButton =
+    [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sorting-sm"]
+                                     style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(optionsBarButtonTap:)];
+    
+    self.navigationItem.rightBarButtonItem = optionsBarButton;
+}
+
+- (void)hideOptionsBarButton {
+
+    self.navigationItem.rightBarButtonItem = nil;
+}
+
+- (void)optionsBarButtonTap:(UIBarButtonItem *)item {
+    
+    [self performSegueWithIdentifier:@"tableViewOptionsSegue"
+                              sender:self];
 }
 
 /**
@@ -756,6 +736,8 @@ sectionForSectionIndexTitle:(NSString *)title
 
 - (void)refreshFetchedResultsController {
     
+    NSLog(@"refresh fetched results controller");
+    
 //    [NSFetchedResultsController deleteCacheWithName:@"entriesCache"];
     fetchedResultsController = nil;
 }
@@ -768,10 +750,10 @@ sectionForSectionIndexTitle:(NSString *)title
     // Bad Idea to comment out!
     // But for sorting changes, fetchedResultsController cannot be cached the easy way.
     
-//    if (fetchedResultsController != nil) {
-//    
-//        return fetchedResultsController;
-//    }
+    if (fetchedResultsController != nil) {
+    
+        return fetchedResultsController;
+    }
     
     NSFetchRequest *request = [NSFetchRequest new];
     
@@ -800,8 +782,9 @@ sectionForSectionIndexTitle:(NSString *)title
     NSError *error = nil;
     
     if (![fetchedResultsController performFetch:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        [App viewController:self
+            handleUserError:error
+                      title:@"Unresolved error"];
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
@@ -821,13 +804,16 @@ sectionForSectionIndexTitle:(NSString *)title
                               @"authors CONTAINS[cd] %@ || title CONTAINS[cd] %@ || subtitle CONTAINS[cd] %@ || productCode CONTAINS[cd] %@ || publisher CONTAINS[cd] %@ || notes CONTAINS[cd] %@ || summary CONTAINS[cd] %@",
                               searchText, searchText, searchText, searchText, searchText, searchText, searchText];
     
-    NSArray *filteredEntries = [self.fetchedResultsController fetchedObjects];
+    NSArray *entries = [self.fetchedResultsController fetchedObjects];
     
+    [_searchResults removeAllObjects];
+
     if ([searchText isEqualToString:@""] || searchText == nil) {
-        [_searchResults addObjectsFromArray:filteredEntries];
+        [_searchResults addObjectsFromArray:entries];
     }
     else {
-        [_searchResults addObjectsFromArray:[filteredEntries filteredArrayUsingPredicate:predicate]];
+        NSArray *filtered = [entries filteredArrayUsingPredicate:predicate];
+        [_searchResults addObjectsFromArray:filtered];
     }
 }
 
