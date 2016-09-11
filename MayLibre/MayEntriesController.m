@@ -22,6 +22,7 @@
 #import "MayTableViewOptionsTransitionAnimator.h"
 #import "MaySearchController.h"
 
+
 @interface MayEntriesController() {
     
     NSFetchedResultsController *fetchedResultsController;
@@ -35,6 +36,7 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *markBarButton;
 @property (nonatomic, weak) IBOutlet UIView *searchBarView;
+
 - (IBAction)scanBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)markBarButtonSelected:(UIBarButtonItem *)sender;

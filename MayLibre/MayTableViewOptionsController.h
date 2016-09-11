@@ -17,8 +17,10 @@
 
 - (void)tableViewOptionsController:(MayTableViewOptionsController *)controller
                 didSelectSortOption:(NSDictionary *)sortOption;
+
 - (void)tableViewOptionsController:(MayTableViewOptionsController *)controller
              didSelectFilterOption:(NSDictionary *)filterOption;
+
 - (void)tableViewOptionsController:(MayTableViewOptionsController *)controller
              didSelectActionOption:(NSDictionary *)actionOption;
 @end
