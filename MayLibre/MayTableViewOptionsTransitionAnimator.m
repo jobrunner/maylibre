@@ -16,10 +16,17 @@
     CGFloat screenHeight = UIScreen.mainScreen.bounds.size.height;
     
     CGFloat gapWidthPercent = 0.25;
+    CGFloat endFrameWidth = screenWidth * (1.0 - gapWidthPercent);
+    CGFloat x = screenWidth * gapWidthPercent;
     
-    CGRect endFrame = CGRectMake(screenWidth * gapWidthPercent,
+    if (endFrameWidth > 240.0) {
+        endFrameWidth = 240.0;
+        x = screenWidth - endFrameWidth;
+    }
+
+    CGRect endFrame = CGRectMake(x,
                                  0,
-                                 screenWidth * (1.0 - gapWidthPercent),
+                                 endFrameWidth,
                                  screenHeight);
     if (self.presenting) {
         
@@ -30,19 +37,12 @@
         
         CGRect startFrame = endFrame;
         
-        // setting initial position of destination
+        // setting initial position of destination (right out of view)
         startFrame.origin.x += screenWidth;
         destinationView.frame = startFrame;
-        
-        [UIView animateWithDuration:0.3
-                         animations:^{
-            
-                             sourceView.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
-                             sourceView.alpha = 0.8;
-        }];
-        
-        CGFloat offset = 0.1 * (endFrame.origin.x - startFrame.origin.x);
-        
+
+        CGFloat offset = 0.05 * (endFrame.origin.x - startFrame.origin.x);
+
         [UIView animateWithDuration:0.4
                          animations:^{
                              
@@ -59,7 +59,7 @@
                                  destinationView.frame = frame;
                                  
                              } completion:^(BOOL finished) {
-                                 
+                             
                                  [transitionContext completeTransition:YES];
                                  
                              }];
@@ -76,10 +76,7 @@
         
         [UIView animateWithDuration:0.3
                          animations:^{
-                             
-                             // reset background to "active" state
-                             destinationView.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
-                             destinationView.alpha = 1.0;
+
                              sourceView.frame = endFrame;
                              
                          } completion:^(BOOL finished) {
