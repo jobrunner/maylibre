@@ -584,6 +584,7 @@ sectionForSectionIndexTitle:(NSString *)title
 
     [self listMarkedEntries:[MayUserDefaults.sharedInstance toogleListMarkedEntries]];
     
+    [self refreshFetchedResultsController];
     [self.tableView reloadData];
 }
 
