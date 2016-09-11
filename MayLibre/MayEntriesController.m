@@ -35,7 +35,6 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 @property (nonatomic, strong) UISearchController *searchController;
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *markBarButton;
-@property (nonatomic, weak) IBOutlet UIView *searchBarView;
 
 - (IBAction)scanBarButtonSelected:(UIBarButtonItem *)sender;
 - (IBAction)actionBarButtonSelected:(UIBarButtonItem *)sender;
@@ -59,9 +58,6 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     [self hideSearchBarAnimated:YES];
 
     [self showOptionsBarButton];
-    
-    NSLog(@"contentOffset.y = %f", self.tableView.contentOffset.y);
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
