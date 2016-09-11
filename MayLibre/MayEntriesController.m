@@ -82,7 +82,9 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue
                  sender:(id)sender {
-    
+
+    self.definesPresentationContext = YES;
+
     if ([segue.identifier isEqualToString:@"openScannerSegue"]) {
         
         MayBarCodeScannerController *controller =
