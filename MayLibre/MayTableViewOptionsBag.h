@@ -1,28 +1,42 @@
 @import Foundation;
 
-#import "MayTableViewOptions.h"
+extern NSString *const MayTableViewOptionsBagItemKeyKey;
+extern NSString *const MayTableViewOptionsBagItemFieldKey;
+extern NSString *const MayTableViewOptionsBagItemAscendingKey;
+extern NSString *const MayTableViewOptionsBagItemTextKey;
+extern NSString *const MayTableViewOptionsBagItemVisibilityKey;
+extern NSString *const MayTableViewOptionsBagItemDisplayOrderKey;
+
+extern NSString *const MayTableViewOptionsBagItemDefaultSortKey;
+extern NSString *const MayTableViewOptionsBagItemDefaultFilterKey;
+
+extern NSString *const MayTableViewOptionsBagSectionSort;
+extern NSString *const MayTableViewOptionsBagSectionFilter;
+extern NSString *const MayTableViewOptionsBagSectionAction;
+extern NSString *const MayTableViewOptionsBagSectionDefaults;
 
 @interface MayTableViewOptionsBag : NSObject
 
 + (instancetype)sharedInstance;
 - (instancetype)init;
 
+- (NSDictionary *)optionsFromEntity:(NSString *)entity;
+
 - (NSArray *)sortOptions:(NSString *)entity;
+
 - (NSDictionary *)sortOptionWithKey:(NSInteger)key
                               entry:(NSString *)entity;
 
-// @todo: rename setActiveSortOptionKey...
-- (void)setSortOptionKey:(NSInteger)sortOption
-               forEntity:(NSString *)entity;
+- (void)setActiveSortOptionKey:(NSInteger)sortOptionKey
+                     forEntity:(NSString *)entity;
 
-// @todo: rename in activeSortOptionKey
-- (NSInteger)sortOptionKey:(NSString *)entity;
+- (NSInteger)activeSortOptionKey:(NSString *)entity;
 
-// @todo: rename in activeSortOption
-- (NSDictionary *)sortOption:(NSString *)entity;
+- (NSDictionary *)activeSortOption:(NSString *)entity;
 
 // filter
 - (NSArray *)filterOptions:(NSString *)entity;
+
 - (NSDictionary *)filterOptionWithKey:(NSInteger)key
                                 entry:(NSString *)entity;
 
@@ -30,6 +44,7 @@
                  forEntity:(NSString *)entity;
 
 - (NSInteger)filterOptionKey:(NSString *)entity;
+
 - (NSDictionary *)filterOption:(NSString *)entity;
 
 // action

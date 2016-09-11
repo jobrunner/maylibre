@@ -256,7 +256,7 @@ heightForFooterInSection:(NSInteger)section {
     [self formDidChanged:sender];
 }
 
-- (void)replaceCurrentCover {
+- (void)replaceCurrentCover:(UIButton *)sender {
     
     UIAlertController *actionSheet =
     [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Replace Cover", nil)
@@ -334,6 +334,10 @@ heightForFooterInSection:(NSInteger)section {
     }
     
     [actionSheet addAction:cancelAction];
+
+    actionSheet.modalPresentationStyle = UIModalPresentationPopover;
+    actionSheet.popoverPresentationController.sourceView = sender;
+    actionSheet.popoverPresentationController.sourceRect = sender.bounds;
     
     [self presentViewController:actionSheet
                        animated:YES
@@ -343,26 +347,7 @@ heightForFooterInSection:(NSInteger)section {
 
 - (IBAction)changeCoverImage:(UIButton *)sender {
     
-// Wenn noch kein Cover vorhanden ist:
-    // Last Photo Taken
-    // Take Photo
-    // Choose from Library
-    // ---
-    // Cancel
-    
-// Wenn bereits ein Cover vorhanden ist:
-    // Remove Photo
-    // ---
-    // Cancel
-    
-//    if (_entry.coverUrl != nil || _entry.userFilename != nil) {
-//        
-//        // remove photo
-//        [self removeCurrentCover];
-//    }
-//    else {
-        [self replaceCurrentCover];
-//    }
+    [self replaceCurrentCover:sender];
 }
 
 - (void)takeCoverFromLibrary {

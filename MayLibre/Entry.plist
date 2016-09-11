@@ -4,9 +4,9 @@
 <dict>
 	<key>defaults</key>
 	<dict>
-		<key>filterTag</key>
+		<key>filterKey</key>
 		<integer>0</integer>
-		<key>sortTag</key>
+		<key>sortKey</key>
 		<integer>5</integer>
 	</dict>
 	<key>sort</key>
@@ -16,9 +16,9 @@
 			<string>authors</string>
 			<key>ascending</key>
 			<true/>
-			<key>tag</key>
+			<key>key</key>
 			<integer>1</integer>
-			<key>textkey</key>
+			<key>textKey</key>
 			<string>Author A-Z</string>
 			<key>displayOrder</key>
 			<integer>1</integer>
@@ -30,9 +30,9 @@
 			<string>title</string>
 			<key>ascending</key>
 			<true/>
-			<key>tag</key>
+			<key>key</key>
 			<integer>2</integer>
-			<key>textkey</key>
+			<key>textKey</key>
 			<string>Titel A-Z</string>
 			<key>displayOrder</key>
 			<integer>2</integer>
@@ -44,9 +44,9 @@
 			<string>authors</string>
 			<key>ascending</key>
 			<true/>
-			<key>tag</key>
+			<key>key</key>
 			<integer>3</integer>
-			<key>textkey</key>
+			<key>textKey</key>
 			<string>Autor Z-A</string>
 			<key>displayOrder</key>
 			<integer>3</integer>
@@ -58,9 +58,9 @@
 			<string>title</string>
 			<key>ascending</key>
 			<false/>
-			<key>tag</key>
+			<key>key</key>
 			<integer>4</integer>
-			<key>textkey</key>
+			<key>textKey</key>
 			<string>Titel Z-A</string>
 			<key>displayOrder</key>
 			<integer>4</integer>
@@ -71,10 +71,10 @@
 			<key>field</key>
 			<string>creationTime</string>
 			<key>ascending</key>
-			<true/>
-			<key>tag</key>
+			<false/>
+			<key>key</key>
 			<integer>5</integer>
-			<key>textkey</key>
+			<key>textKey</key>
 			<string>Last added entry on top</string>
 			<key>displayOrder</key>
 			<integer>5</integer>
@@ -86,9 +86,9 @@
 			<string>creationTime</string>
 			<key>ascending</key>
 			<true/>
-			<key>tag</key>
+			<key>key</key>
 			<integer>6</integer>
-			<key>textkey</key>
+			<key>textKey</key>
 			<string>Last added entry down</string>
 			<key>displayOrder</key>
 			<integer>6</integer>
@@ -100,9 +100,9 @@
 			<string>updateTime</string>
 			<key>ascending</key>
 			<false/>
-			<key>tag</key>
+			<key>key</key>
 			<integer>7</integer>
-			<key>textkey</key>
+			<key>textKey</key>
 			<string>Last modified comes first</string>
 			<key>displayOrder</key>
 			<integer>7</integer>
@@ -114,9 +114,9 @@
 			<string>updateTime</string>
 			<key>ascending</key>
 			<false/>
-			<key>tag</key>
+			<key>key</key>
 			<integer>8</integer>
-			<key>textkey</key>
+			<key>textKey</key>
 			<string>Last modified entry down</string>
 			<key>displayOrder</key>
 			<integer>8</integer>
@@ -129,13 +129,13 @@
 	<key>action</key>
 	<array>
 		<dict>
-			<key>tag</key>
+			<key>key</key>
 			<integer>1</integer>
-			<key>textkey</key>
+			<key>textKey</key>
 			<string>Reset</string>
-			<key>sortTag</key>
+			<key>sortKey</key>
 			<integer>5</integer>
-			<key>filterTag</key>
+			<key>filterKey</key>
 			<integer>0</integer>
 			<key>displayOrder</key>
 			<integer>1</integer>

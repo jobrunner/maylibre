@@ -1,7 +1,5 @@
 @import UIKit;
 
-#import "MayTableViewOptions.h"
-
 @protocol MayTableViewOptionsControllerDelegate;
 
 @interface MayTableViewOptionsController : UITableViewController <UIViewControllerTransitioningDelegate>

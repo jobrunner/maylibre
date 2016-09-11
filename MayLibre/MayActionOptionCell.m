@@ -1,4 +1,5 @@
 #import "MayActionOptionCell.h"
+#import "MayTableViewOptionsBag.h"
 
 @interface MayActionOptionCell ()
 
@@ -20,9 +21,9 @@
 - (void)configureCellWithActionOption:(NSDictionary *)actionOption
                                action:(void(^)(UIButton *sender))action {
   
-    self.tag = (NSInteger)[actionOption objectForKey:@"tag"];
+    self.tag = (NSInteger)[actionOption objectForKey:MayTableViewOptionsBagItemKeyKey];
 
-    [self.applyActionButton setTitle:NSLocalizedString([actionOption objectForKey:@"textkey"], nil)
+    [self.applyActionButton setTitle:NSLocalizedString([actionOption objectForKey:MayTableViewOptionsBagItemTextKey], nil)
                             forState: UIControlStateNormal];
     
     self.action = action;

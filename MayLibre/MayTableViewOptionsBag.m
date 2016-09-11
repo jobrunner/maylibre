@@ -1,5 +1,20 @@
 #import "MayTableViewOptionsBag.h"
 
+NSString *const MayTableViewOptionsBagItemKeyKey                = @"key";
+NSString *const MayTableViewOptionsBagItemFieldKey              = @"field";
+NSString *const MayTableViewOptionsBagItemAscendingKey          = @"ascending";
+NSString *const MayTableViewOptionsBagItemTextKey               = @"textKey";
+NSString *const MayTableViewOptionsBagItemVisibilityKey         = @"visible";
+NSString *const MayTableViewOptionsBagItemDisplayOrderKey       = @"displayOrder";
+
+NSString *const MayTableViewOptionsBagItemDefaultSortKey        = @"sortKey";
+NSString *const MayTableViewOptionsBagItemDefaultFilterKey      = @"filterKey";
+
+NSString *const MayTableViewOptionsBagSectionSort               = @"sort";
+NSString *const MayTableViewOptionsBagSectionFilter             = @"filter";
+NSString *const MayTableViewOptionsBagSectionAction             = @"action";
+NSString *const MayTableViewOptionsBagSectionDefaults           = @"defaults";
+
 @interface MayTableViewOptionsBag ()
 
 @end
@@ -8,6 +23,7 @@
     
     NSUserDefaults *preferences;
     NSMutableDictionary *options;
+    NSBundle *sourceBundle;
 }
 
 #pragma mark - Singleton
@@ -31,8 +47,9 @@
     if (self = [super init]) {
 
         // internal access to standard user default settings
-        preferences = [NSUserDefaults standardUserDefaults];
-        options     = [NSMutableDictionary new];
+        preferences  = [NSUserDefaults standardUserDefaults];
+        options      = [NSMutableDictionary new];
+        sourceBundle = [NSBundle mainBundle];
     }
     
     return self;
@@ -45,6 +62,9 @@
 
 #pragma mark Option Handling
 
+/** 
+ * Loads the determined options structure from a <entity>.plist in the main bundle
+ */
 - (NSDictionary *)optionsFromEntity:(NSString *)entity {
 
     NSDictionary *dict = [options objectForKey:entity];
@@ -54,8 +74,8 @@
         return dict;
     }
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:entity
-                                                     ofType: @"plist"];
+    NSString *path = [sourceBundle pathForResource:entity
+                                            ofType: @"plist"];
     if (path == nil) {
         NSLog(@"MayTableViewOptionsController: '%@.plist' not found", entity);
         
@@ -65,30 +85,33 @@
     dict = [NSDictionary dictionaryWithContentsOfFile:path];
     
     NSPredicate *predicate;
-    predicate = [NSPredicate predicateWithFormat:@"visible = YES"];
+    predicate = [NSPredicate predicateWithFormat:@"%K = YES", MayTableViewOptionsBagItemVisibilityKey];
     
     NSSortDescriptor *sortDescriptor;
-    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"displayOrder"
-                                                         ascending:YES];
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:MayTableViewOptionsBagItemDisplayOrderKey
+                                                 ascending:YES];
     
-    NSArray *sortOptions    = [self extractOptions:(NSArray *)[dict objectForKey:@"sort"]
-                                         predicate:predicate
-                                    sortDescriptor:sortDescriptor];
+    NSArray *sortOptions;
+    sortOptions = [self extractOptions:(NSArray *)[dict objectForKey:MayTableViewOptionsBagSectionSort]
+                             predicate:predicate
+                        sortDescriptor:sortDescriptor];
 
-    NSArray *filterOptions  = [self extractOptions:(NSArray *)[dict objectForKey:@"filter"]
-                                         predicate:predicate
-                                    sortDescriptor:sortDescriptor];
+    NSArray *filterOptions;
+    filterOptions = [self extractOptions:(NSArray *)[dict objectForKey:MayTableViewOptionsBagSectionFilter]
+                               predicate:predicate
+                          sortDescriptor:sortDescriptor];
 
-    NSArray *actionOptions  = [self extractOptions:(NSArray *)[dict objectForKey:@"action"]
-                                         predicate:predicate
-                                    sortDescriptor:sortDescriptor];
+    NSArray *actionOptions;
+    actionOptions = [self extractOptions:(NSArray *)[dict objectForKey:MayTableViewOptionsBagSectionAction]
+                               predicate:predicate
+                          sortDescriptor:sortDescriptor];
     
     NSDictionary *defaults  = (NSDictionary *)[dict objectForKey:@"defaults"];
     
-    NSDictionary *entityOptions = @{@"sort":sortOptions,
-                                   @"filter":filterOptions,
-                                   @"action":actionOptions,
-                                   @"defaults":defaults};
+    NSDictionary *entityOptions = @{MayTableViewOptionsBagSectionSort:sortOptions,
+                                    MayTableViewOptionsBagSectionFilter:filterOptions,
+                                    MayTableViewOptionsBagSectionAction:actionOptions,
+                                    MayTableViewOptionsBagSectionDefaults:defaults};
     
     [options setObject:entityOptions
                 forKey:entity];
@@ -111,47 +134,48 @@
 
 - (NSArray *)sortOptions:(NSString *)entity {
     
-    return [[self optionsFromEntity:entity] objectForKey:@"sort"];
+    return [[self optionsFromEntity:entity] objectForKey:MayTableViewOptionsBagSectionSort];
 }
 
 - (NSDictionary *)sortOptionWithKey:(NSInteger)key
                               entry:(NSString *)entity {
     
-    NSPredicate *predicate  = [NSPredicate predicateWithFormat:@"tag = %ld", key];
-    
+    NSPredicate *predicate  = [NSPredicate predicateWithFormat:@"%K = %ld", MayTableViewOptionsBagItemKeyKey, key];
+
     return [[[self sortOptions:entity] filteredArrayUsingPredicate:predicate] firstObject];
 }
 
-// @todo: rename setActiveSortOptionKey...
-- (void)setSortOptionKey:(NSInteger)sortOption
-               forEntity:(NSString *)entity {
+
+- (void)setActiveSortOptionKey:(NSInteger)sortOptionKey
+                     forEntity:(NSString *)entity {
     
-    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, @"sort"];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, MayTableViewOptionsBagSectionSort];
     
-    [preferences setInteger:sortOption
+    [preferences setInteger:sortOptionKey
                      forKey:key];
 }
 
-// @todo: rename in activeSortOptionKey
-- (NSInteger)sortOptionKey:(NSString *)entity {
-    
-    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, @"sort"];
+- (NSInteger)activeSortOptionKey:(NSString *)entity {
+
+    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, MayTableViewOptionsBagSectionSort];
     
     NSInteger sortOption = [preferences integerForKey:key];
     
     if (sortOption == 0) {
-        NSDictionary *defaults = [[self defaultOptions:entity] objectForKey:@"defaults"];
-        sortOption = (NSInteger)[defaults objectForKey:@"sortTag"];
+        NSDictionary *defaults = [self defaultOptions:entity];
+
+        sortOption = [[defaults objectForKey:MayTableViewOptionsBagItemDefaultSortKey] integerValue];
     }
     
     return sortOption;
 }
 
-// @todo: rename in activeSortOption
-- (NSDictionary *)sortOption:(NSString *)entity {
+- (NSDictionary *)activeSortOption:(NSString *)entity {
+
+    NSInteger key = [self activeSortOptionKey:entity];
     
-    NSInteger key           = [self sortOptionKey:entity];
-    NSPredicate *predicate  = [NSPredicate predicateWithFormat:@"tag = %ld", key];
+    NSPredicate *predicate;
+    predicate = [NSPredicate predicateWithFormat:@"%K = %ld", MayTableViewOptionsBagItemKeyKey, key];
     
     return [[[self sortOptions:entity] filteredArrayUsingPredicate:predicate] firstObject];
 }
@@ -163,7 +187,8 @@
     return [[self optionsFromEntity:entity] objectForKey:@"filter"];
 }
 
-- (NSDictionary *)filterOptionWithKey:(NSInteger)key entry:(NSString *)entity {
+- (NSDictionary *)filterOptionWithKey:(NSInteger)key
+                                entry:(NSString *)entity {
     
     NSPredicate *predicate  = [NSPredicate predicateWithFormat:@"tag = %ld", key];
     
@@ -173,7 +198,7 @@
 - (void)setFilterOptionKey:(NSInteger)filterOption
                  forEntity:(NSString *)entity {
     
-    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, kMayTableViewOptionsBagSectionFilter];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, MayTableViewOptionsBagSectionFilter];
     
     [preferences setInteger:filterOption
                      forKey:key];
@@ -181,13 +206,13 @@
 
 - (NSInteger)filterOptionKey:(NSString *)entity {
     
-    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, kMayTableViewOptionsBagSectionFilter];
+    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, MayTableViewOptionsBagSectionFilter];
     
     NSInteger filterOption = [preferences integerForKey:key];
     
     if (filterOption == 0) {
-        NSDictionary *defaults = [[self defaultOptions:entity] objectForKey:kMayTableViewOptionsBagSectionDefaults];
-        filterOption = [[defaults objectForKey:kMayTableViewOptionsBagSectionFilterDefaultId] integerValue];
+        NSDictionary *defaults = [[self defaultOptions:entity] objectForKey:MayTableViewOptionsBagSectionDefaults];
+        filterOption = [[defaults objectForKey:MayTableViewOptionsBagItemDefaultFilterKey] integerValue];
     }
     
     return filterOption;
@@ -195,8 +220,10 @@
 
 - (NSDictionary *)filterOption:(NSString *)entity {
     
-    NSInteger key           = [self filterOptionKey:entity];
-    NSPredicate *predicate  = [NSPredicate predicateWithFormat:@"%@ = %ld", kMayTableViewOptionsBagItemIdKey, key];
+    NSInteger key = [self filterOptionKey:entity];
+
+    NSPredicate *predicate;
+    predicate = [NSPredicate predicateWithFormat:@"%K = %ld", MayTableViewOptionsBagItemKeyKey, key];
     
     return [[[self filterOptions:entity] filteredArrayUsingPredicate:predicate] firstObject];
 }
@@ -204,14 +231,15 @@
 #pragma mark Action Functions
 
 - (NSArray *)actionOptions:(NSString *)entity {
-    
-    return [[self optionsFromEntity:entity] objectForKey:@"action"];
+
+    return [[self optionsFromEntity:entity] objectForKey:MayTableViewOptionsBagSectionAction];
 }
 
 - (NSDictionary *)actionOptionWithKey:(NSInteger)key
                                 entry:(NSString *)entity {
     
-    NSPredicate *predicate  = [NSPredicate predicateWithFormat:@"%@ = %ld", kMayTableViewOptionsBagItemIdKey, key];
+    NSPredicate *predicate;
+    predicate = [NSPredicate predicateWithFormat:@"%K = %ld", MayTableViewOptionsBagItemKeyKey, key];
     
     return [[[self actionOptions:entity] filteredArrayUsingPredicate:predicate] firstObject];
 }
@@ -219,8 +247,8 @@
 #pragma mark Default functions
 
 - (NSDictionary *)defaultOptions:(NSString *)entity {
-    
-    return [[self optionsFromEntity:entity] objectForKey:@"defaults"];
+
+    return [[self optionsFromEntity:entity] objectForKey:MayTableViewOptionsBagSectionDefaults];
 }
 
 @end

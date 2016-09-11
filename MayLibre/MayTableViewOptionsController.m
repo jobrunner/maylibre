@@ -141,10 +141,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     // Sort options section cells
     if (indexPath.section == 0) {
         NSDictionary *sortOption = [[optionBag sortOptions:self.entity] objectAtIndex:indexPath.row];
-        NSInteger activeSortOptionKey = [optionBag sortOptionKey:self.entity];
+        NSInteger activeSortOptionKey = [optionBag activeSortOptionKey:self.entity];
 
         BOOL selected =
-        (activeSortOptionKey == [[sortOption objectForKey:kMayTableViewOptionsBagItemIdKey] integerValue]);
+        (activeSortOptionKey == [[sortOption objectForKey:MayTableViewOptionsBagItemKeyKey] integerValue]);
 
         [(MaySortOptionCell *)cell configureCellWithSortOption:sortOption
                                                    atIndexPath:indexPath
@@ -172,6 +172,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+/**
+ * Looks for an implementation of delegate methode tableViewOptionsController:didSelectSortOption: and updates the view. The delegate method tableViewOptionsController:didSelectSortOption: is responsible for handling the options state calling setActiveSortOptionKey:forEntity:. If tableViewOptionsController:didSelectSortOption: is not implemented MayTableViewController persistes the active options state in the options bag.
+ */
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -181,20 +184,24 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         
         NSInteger selectedKey = cell.tag;
         
-        [optionBag setSortOptionKey:selectedKey
-                          forEntity:self.entity];
-        
         NSDictionary *sortOption = [optionBag sortOptionWithKey:selectedKey
                                                           entry:self.entity];
         
-        NSIndexSet *section = [NSIndexSet indexSetWithIndex:indexPath.section];
-        [tableView reloadSections:section
-                 withRowAnimation:UITableViewRowAnimationFade];
-        
         if ([self.delegate respondsToSelector:@selector(tableViewOptionsController:didSelectSortOption:)]) {
+            
+            NSLog(@"delegate sortOption from MayTableViewOptionscontroller:\n %@", sortOption);
+            
             [self.delegate tableViewOptionsController:self
                                   didSelectSortOption:sortOption];
         }
+        else {
+            [optionBag setActiveSortOptionKey:selectedKey
+                                    forEntity:self.entity];
+        }
+
+        NSIndexSet *section = [NSIndexSet indexSetWithIndex:indexPath.section];
+        [tableView reloadSections:section
+                 withRowAnimation:UITableViewRowAnimationFade];
     }
     
     // filter section
@@ -280,18 +287,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)setTableViewDefaults {
     
     NSDictionary *defaults = [optionBag defaultOptions:self.entity];
-    NSInteger sortKey = [[defaults objectForKey:kMayTableViewOptionsBagSectionSortDefaultId] integerValue];
-    NSInteger filterKey = [[defaults objectForKey:kMayTableViewOptionsBagSectionFilterDefaultId] integerValue];
+    NSInteger sortKey = [[defaults objectForKey:MayTableViewOptionsBagItemDefaultSortKey] integerValue];
+    NSInteger filterKey = [[defaults objectForKey:MayTableViewOptionsBagItemDefaultFilterKey] integerValue];
     
-    // wenn sich etwas verändert, dann
-    // set bag
-    // refresh
-    // delegate aufrufen
-    
-    if ([optionBag sortOptionKey:self.entity] != sortKey) {
+    if ([optionBag activeSortOptionKey:self.entity] != sortKey) {
         
-        [optionBag setSortOptionKey:sortKey
-                          forEntity:self.entity];
+        [optionBag setActiveSortOptionKey:sortKey
+                                forEntity:self.entity];
         
         NSDictionary *sortOption = [optionBag sortOptionWithKey:sortKey
                                                           entry:self.entity];

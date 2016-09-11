@@ -58,41 +58,41 @@
     return !current;
 }
 
-- (void)setSortField:(NSString *)sortField
-           forEntity:(NSString *)entity
-           ascending:(BOOL)ascending {
-    
-    NSString *sortKey = [NSString stringWithFormat:@"%@.%@",
-                         entity,
-                         @"field"];
-    NSString *ascendingKey = [NSString stringWithFormat:@"%@.%@",
-                              entity,
-                              @"ascending"];
-    
-    [preferences setObject:sortField
-                     forKey:sortKey];
-    [preferences setBool:ascending
-                  forKey:ascendingKey];
-}
+//- (void)setSortField:(NSString *)sortField
+//           forEntity:(NSString *)entity
+//           ascending:(BOOL)ascending {
+//    
+//    NSString *sortKey = [NSString stringWithFormat:@"%@.%@",
+//                         entity,
+//                         @"field"];
+//    NSString *ascendingKey = [NSString stringWithFormat:@"%@.%@",
+//                              entity,
+//                              @"ascending"];
+//    
+//    [preferences setObject:sortField
+//                     forKey:sortKey];
+//    [preferences setBool:ascending
+//                  forKey:ascendingKey];
+//}
 
-- (NSString *)sortFieldForEntity:(NSString *)entity {
+//- (NSString *)sortFieldForEntity:(NSString *)entity {
+//
+//    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, @"field"];
+//
+//    NSString *sortField = (NSString *)[preferences objectForKey:key];
+//    
+//    if (sortField == nil) {
+//        sortField = @"authors";
+//    }
+//    
+//    return sortField;
+//}
 
-    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, @"field"];
-
-    NSString *sortField = (NSString *)[preferences objectForKey:key];
-    
-    if (sortField == nil) {
-        sortField = @"authors";
-    }
-    
-    return sortField;
-}
-
-- (BOOL)sortAscendingForEntity:(NSString *)entity {
-    
-    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, @"ascending"];
-
-    return [preferences boolForKey:key];
-}
+//- (BOOL)sortAscendingForEntity:(NSString *)entity {
+//    
+//    NSString *key = [NSString stringWithFormat:@"%@.%@", entity, @"ascending"];
+//
+//    return [preferences boolForKey:key];
+//}
 
 @end

@@ -1,5 +1,5 @@
 #import "MaySortOptionCell.h"
-#import "MayTableViewOptions.h"
+#import "MayTableViewOptionsBag.h"
 
 @interface MaySortOptionCell ()
 
@@ -26,8 +26,8 @@
                         atIndexPath:(NSIndexPath *)indexPath
                            selected:(BOOL)selected {
     
-    self.label.text = NSLocalizedString([sortOption valueForKey:kMayTableViewOptionsBagItemTextKey], nil);
-    self.tag = [[sortOption objectForKey:kMayTableViewOptionsBagItemIdKey] integerValue];
+    self.label.text = NSLocalizedString([sortOption valueForKey:MayTableViewOptionsBagItemTextKey], nil);
+    self.tag = [[sortOption objectForKey:MayTableViewOptionsBagItemKeyKey] integerValue];
     
     if (selected) {
         self.label.textColor = [self tintColor];

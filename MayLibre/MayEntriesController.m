@@ -20,6 +20,7 @@
 #import "NSString+MayDisplayExtension.h"
 #import "MayUserDefaults.h"
 #import "MayTableViewOptionsTransitionAnimator.h"
+#import "MayTableViewOptionsBag.h"
 #import "MaySearchController.h"
 
 
@@ -113,7 +114,7 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     
     if ([segue.identifier isEqualToString:@"tableViewOptionsSegue"]) {
         
-        self.definesPresentationContext = YES;
+        self.definesPresentationContext = NO;
 
         UINavigationController *navigationController = segue.destinationViewController;
         
@@ -141,42 +142,27 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     [self.tableView reloadData];
 }
 
-//#pragma mark UISearchBarDelegate
-//
-//- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-//
-//    NSLog(@"cancel clicked");
-//}
-
 #pragma mark UISearchControllerDelegate
 
-//- (void)didPresentSearchController:(UISearchController *)searchController {
-//
-//    if (searchController != _searchController) {
-//        
-//        return;
-//    }
-//    
-//    // hide bar buttons on the right
-//    for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
-//        item.enabled = NO;
-//        item.tintColor = UIColor.clearColor;
-//    }
-//}
+- (void)didPresentSearchController:(UISearchController *)searchController {
 
-//- (void)didDismissSearchController:(UISearchController *)searchController {
-//
-//    if (searchController != _searchController) {
-//        
-//        return;
-//    }
-//    
-//    // show bar buttons on the right
-//    for (UIBarButtonItem *item in self.navigationItem.rightBarButtonItems) {
-//        item.enabled = YES;
-//        item.tintColor = nil;
-//    }
-//}
+    if (searchController != _searchController) {
+        
+        return;
+    }
+    
+    // show search history?
+}
+
+- (void)didDismissSearchController:(UISearchController *)searchController {
+
+    if (searchController != _searchController) {
+        
+        return;
+    }
+
+    // hide search history?
+}
 
 #pragma mark  UITableViewDelegate
 
@@ -452,46 +438,21 @@ sectionForSectionIndexTitle:(NSString *)title
                                                                   presentingController:(UIViewController *)presenting
                                                                       sourceController:(UIViewController *)source {
 
-    MayTableViewOptionsTransitionAnimator *animator =
-    [MayTableViewOptionsTransitionAnimator new];
+    MayTableViewOptionsTransitionAnimator *animator;
     
+    animator = [MayTableViewOptionsTransitionAnimator new];
     animator.presenting = YES;
-
-    UIView *headerView = [UIView new];
-    headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44.5);
-    
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height - 0.5,
-                                                                headerView.frame.size.width, 0.5)];
-    lineView.backgroundColor = [UIColor grayColor];
-    [headerView addSubview:lineView];
-    
-    [self.navigationController setNavigationBarHidden:YES
-                                             animated:NO];
-    [self.navigationController setToolbarHidden:YES
-                                       animated:YES];
-
-    // replace search bar in table header view against a
-    // dummy navigation bar that will be shown behind the
-    // TableViewOptions...
-    [self.tableView setTableHeaderView:headerView];
     
     return animator;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
 
-    MayTableViewOptionsTransitionAnimator *animator = [MayTableViewOptionsTransitionAnimator new];
+    MayTableViewOptionsTransitionAnimator *animator;
+    
+    animator = [MayTableViewOptionsTransitionAnimator new];
     animator.presenting = NO;
-    
-    [self.tableView setTableHeaderView:nil];
-    [self.navigationController setNavigationBarHidden:NO
-                                             animated:YES];
-    [self.navigationController setToolbarHidden:NO
-                                       animated:YES];
-    // restore search bar in table header view:
-    self.tableView.tableHeaderView = self.searchController.searchBar;
-    [self hideSearchBarAnimated:YES];
-    
+
     return animator;
 }
 
@@ -507,9 +468,15 @@ sectionForSectionIndexTitle:(NSString *)title
 
 - (void)tableViewOptionsController:(MayTableViewOptionsController *)controller
                didSelectSortOption:(NSDictionary *)sortOption {
+
+    NSInteger optionKey = [[sortOption objectForKey:MayTableViewOptionsBagItemKeyKey] integerValue];
     
-    [self sortBy:[sortOption objectForKey:kMayTableViewOptionsBagItemFieldKey]
-       ascending:[sortOption valueForKey:kMayTableViewOptionsBagItemAscendingKey]];
+    [[MayTableViewOptionsBag sharedInstance] setActiveSortOptionKey:optionKey
+                                                          forEntity:@"Entry"];
+    NSLog(@"sort option: %@", sortOption);
+    
+    [self refreshFetchedResultsController];
+    [self.tableView reloadData];
 }
 
 - (void)tableViewOptionsController:(MayTableViewOptionsController *)controller
@@ -575,6 +542,9 @@ sectionForSectionIndexTitle:(NSString *)title
 //    [actionSheet addAction:settingsAction];
     [actionSheet addAction:cancelAction];
     
+    actionSheet.modalPresentationStyle = UIModalPresentationPopover;
+    actionSheet.popoverPresentationController.barButtonItem = sender;
+    
     [self presentViewController:actionSheet
                        animated:YES
                      completion:nil];
@@ -589,20 +559,6 @@ sectionForSectionIndexTitle:(NSString *)title
 }
 
 #pragma mark MayEntriesController
-
-/**
- *
- */
-- (void)sortBy:(NSString *)sortField
-     ascending:(BOOL)ascending {
-    
-    [[MayUserDefaults sharedInstance] setSortField:sortField
-                                         forEntity:@"entry"
-                                         ascending:ascending];
-    
-    [self refreshFetchedResultsController];
-    [self.tableView reloadData];
-}
 
 /**
  * Configures search bar and search controller
@@ -725,8 +681,13 @@ sectionForSectionIndexTitle:(NSString *)title
  */
 - (NSArray *)sortDescriptors {
     
-    NSString *sortField = [[MayUserDefaults sharedInstance] sortFieldForEntity:@"entry"];
-    BOOL ascending = [[MayUserDefaults sharedInstance] sortAscendingForEntity:@"entry"];
+//    NSString *sortField = [[MayUserDefaults sharedInstance] sortFieldForEntity:@"entry"];
+//    BOOL ascending = [[MayUserDefaults sharedInstance] sortAscendingForEntity:@"entry"];
+    
+    NSDictionary *sortOption = [[MayTableViewOptionsBag sharedInstance] activeSortOption:@"Entry"];
+    
+    NSString *sortField = [sortOption objectForKey:MayTableViewOptionsBagItemFieldKey];
+    BOOL ascending = [[sortOption objectForKey:MayTableViewOptionsBagItemAscendingKey] boolValue];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortField
                                                                    ascending:ascending];
