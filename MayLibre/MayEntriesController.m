@@ -25,15 +25,15 @@
 
 
 @interface MayEntriesController() {
-    
-    NSFetchedResultsController *fetchedResultsController;
+
     NSManagedObjectContext *managedObjectContext;
 }
 
 typedef void (^MayActionCompletionHandler)(NSError *error);
 
-@property (nonatomic, strong) NSMutableArray *searchResults;
 @property (nonatomic, strong) UISearchController *searchController;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController *searchFetchedResultsController;
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *markBarButton;
 
@@ -52,8 +52,6 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
     [super viewDidLoad];
 
     managedObjectContext = App.managedObjectContext;
-    
-    _searchResults = [NSMutableArray new];
     
     [self configureSearch];
     [self hideSearchBarAnimated:YES];
@@ -98,7 +96,7 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
         (MayEntryDetailsController *)segue.destinationViewController;
         
         MayEntryCell *cell = sender;
-        Entry *model = [self.fetchedResultsController objectAtIndexPath:cell.indexPath];
+        Entry *model = [self.fetchedResultsControllerForContext objectAtIndexPath:cell.indexPath];
         
         controller.entry = model;
     }
@@ -109,7 +107,7 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
         (MayEntryFormController *)segue.destinationViewController;
         
         MayEntryCell *cell = sender;
-        Entry *model = [self.fetchedResultsController objectAtIndexPath:cell.indexPath];
+        Entry *model = [self.fetchedResultsControllerForContext objectAtIndexPath:cell.indexPath];
         
         controller.entry = model;
     }
@@ -136,11 +134,7 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     
-    NSString *searchString = searchController.searchBar.text;
-    
-    [self filterContentForSearchText:searchString
-                               scope:nil];
-    
+    [self resetFetchedResultsControllerForContext];
     [self.tableView reloadData];
 }
 
@@ -148,22 +142,12 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
 
-    if (searchController != _searchController) {
-        
-        return;
-    }
-    
-    // show search history?
+    [self resetFetchedResultsController];
 }
 
 - (void)didDismissSearchController:(UISearchController *)searchController {
 
-    if (searchController != _searchController) {
-        
-        return;
-    }
-
-    // hide search history?
+    [self resetSearchFetchedResultsController];
 }
 
 #pragma mark  UITableViewDelegate
@@ -172,14 +156,10 @@ typedef void (^MayActionCompletionHandler)(NSError *error);
   willDisplayCell:(MayEntryCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    Entry *model;
-    if (_searchController.active) {
-        model = [self.searchResults objectAtIndex:indexPath.row];
-    }
-    else {
-        model = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    }
-    
+    Entry *model = [self.fetchedResultsControllerForContext objectAtIndexPath:indexPath];
+
+//    NSManagedObject *model = [self.fetchedResultsControllerForContext objectAtIndexPath:indexPath];
+
     [cell configureWithModel:model
                  atIndexPath:indexPath
                 withDelegate:self];
@@ -195,8 +175,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    MayEntryCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     [self performSegueWithIdentifier:@"openEntryDetailsSegue"
                               sender:cell];
@@ -225,12 +205,7 @@ heightForFooterInSection:(NSInteger)section {
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
     
-    if (self.searchController.active) {
-        
-        return [self.searchResults count];
-    }
-    
-    return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+    return [self.fetchedResultsControllerForContext.sections objectAtIndex:section].numberOfObjects;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -247,18 +222,13 @@ heightForFooterInSection:(NSInteger)section {
         
         cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     }
-    
+
     return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    if (self.searchController.active) {
-        
-        return 1;
-    }
-    
-    return [[self.fetchedResultsController sections] count];
+    return self.fetchedResultsControllerForContext.sections.count;
 }
 
 /**
@@ -304,30 +274,30 @@ canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
 //    return index;
 //}
 
-- (NSInteger)tableView:(UITableView *)tableView
-sectionForSectionIndexTitle:(NSString *)title
-               atIndex:(NSInteger)index {
-    
-    if (self.searchController.active) {
-        
-        return 0;
-    }
-    
-    if (index > 0) {
-        // The index is offset by one to allow for the extra search icon inserted at the front of the index
-        return [self.fetchedResultsController sectionForSectionIndexTitle:title
-                                                                  atIndex:(index - 1)];
-    }
-    else {
-        // The first entry in the index is for the search icon so we return section not found and force the table to scroll to the top.
-        CGRect searchBarFrame = self.searchController.searchBar.frame;
-        
-        [self.tableView scrollRectToVisible:searchBarFrame
-                                   animated:NO];
-        
-        return NSNotFound;
-    }
-}
+//- (NSInteger)tableView:(UITableView *)tableView
+//sectionForSectionIndexTitle:(NSString *)title
+//               atIndex:(NSInteger)index {
+//    
+//    if (self.searchController.active) {
+//        
+//        return 0;
+//    }
+//    
+//    if (index > 0) {
+//        // The index is offset by one to allow for the extra search icon inserted at the front of the index
+//        return [self.fetchedResultsController sectionForSectionIndexTitle:title
+//                                                                  atIndex:(index - 1)];
+//    }
+//    else {
+//        // The first entry in the index is for the search icon so we return section not found and force the table to scroll to the top.
+//        CGRect searchBarFrame = self.searchController.searchBar.frame;
+//        
+//        [self.tableView scrollRectToVisible:searchBarFrame
+//                                   animated:NO];
+//        
+//        return NSNotFound;
+//    }
+//}
 
 #pragma mark MGSwipeTableCellDelegates
 
@@ -350,7 +320,7 @@ sectionForSectionIndexTitle:(NSString *)title
     
     if (direction == MGSwipeDirectionRightToLeft && index == 2) {
         // Send an email with sample data
-        [self sendMail:[self.fetchedResultsController objectAtIndexPath:cell.indexPath]];
+        [self sendMail:[self.fetchedResultsControllerForContext objectAtIndexPath:cell.indexPath]];
     }
     
     return YES;
@@ -359,15 +329,20 @@ sectionForSectionIndexTitle:(NSString *)title
 #pragma mark NSFetchedResultsControllerDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    
+
     [self.tableView beginUpdates];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    
+    [self.tableView endUpdates];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller
   didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex
      forChangeType:(NSFetchedResultsChangeType)type {
-    
+
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
@@ -390,38 +365,31 @@ sectionForSectionIndexTitle:(NSString *)title
        atIndexPath:(NSIndexPath *)indexPath
      forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
-    
-    UITableView *tableView = self.tableView;
-    
+
     switch(type) {
         case NSFetchedResultsChangeInsert:
-                [tableView insertRowsAtIndexPaths:@[newIndexPath]
-                                 withRowAnimation:UITableViewRowAnimationFade];
+                [self.tableView insertRowsAtIndexPaths:@[newIndexPath]
+                                      withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:@[indexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath]
+                                  withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [tableView reloadRowsAtIndexPaths:@[indexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath]
+                                  withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:@[indexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath]
+                                  withRowAnimation:UITableViewRowAnimationFade];
             
-            [tableView insertRowsAtIndexPaths:@[newIndexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertRowsAtIndexPaths:@[newIndexPath]
+                                  withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    
-    [self.tableView endUpdates];
 }
 
 #pragma mark MFMailComposeViewControllerDelegates
@@ -475,9 +443,7 @@ sectionForSectionIndexTitle:(NSString *)title
     
     [[MayTableViewOptionsBag sharedInstance] setActiveSortOptionKey:optionKey
                                                           forEntity:@"Entry"];
-    NSLog(@"sort option: %@", sortOption);
-    
-    [self refreshFetchedResultsController];
+    [self resetFetchedResultsControllerForContext];
     [self.tableView reloadData];
 }
 
@@ -556,7 +522,8 @@ sectionForSectionIndexTitle:(NSString *)title
 
     [self listMarkedEntries:[MayUserDefaults.sharedInstance toogleListMarkedEntries]];
     
-    [self refreshFetchedResultsController];
+    [self resetFetchedResultsControllerForContext];
+    
     [self.tableView reloadData];
 }
 
@@ -623,14 +590,19 @@ sectionForSectionIndexTitle:(NSString *)title
     
     void (^action)() = ^{
         
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        NSManagedObjectContext *context = [self.fetchedResultsControllerForContext managedObjectContext];
+
         NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+
+        [context deleteObject:[self.fetchedResultsControllerForContext objectAtIndexPath:indexPath]];
         
         NSError *error = nil;
         
         if (![context save:&error]) {
-            NSLog(@"Unresolved error %@, %@", error, [error localizedDescription]);
+
+            [App viewController:self
+                handleUserError:error
+                          title:nil];
         }
     };
     
@@ -661,9 +633,10 @@ sectionForSectionIndexTitle:(NSString *)title
     
     // Mark sample
     NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+
+    NSManagedObjectContext *context = [self.fetchedResultsControllerForContext managedObjectContext];
     
-    Entry *entry = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    Entry *entry = [self.fetchedResultsControllerForContext objectAtIndexPath:indexPath];
     
     // toogle isMarked flag
     entry.isMarked = ([entry.isMarked boolValue]) ? @NO : @YES;
@@ -696,40 +669,118 @@ sectionForSectionIndexTitle:(NSString *)title
     return @[sortDescriptor];
 }
 
-- (void)refreshFetchedResultsController {
+/**
+ * Destroys fetchedResultsController for renewing
+ */
+- (void)resetFetchedResultsController {
     
-    NSLog(@"refresh fetched results controller");
-    
-//    [NSFetchedResultsController deleteCacheWithName:@"entriesCache"];
-    fetchedResultsController = nil;
+    _fetchedResultsController.delegate = nil;
+    _fetchedResultsController = nil;
 }
 
 /**
- * Handles the fetchedResultsController used as source with tabel view
+ * Destroys searchFetchedResultsController for renewing
+ */
+- (void)resetSearchFetchedResultsController {
+    
+    _searchFetchedResultsController.delegate = nil;
+    _searchFetchedResultsController = nil;
+}
+
+/**
+ * Destroys the active NSFetchedResultsController for renewing
+ */
+- (void)resetFetchedResultsControllerForContext {
+    
+    if (self.searchController.active) {
+
+        [self resetSearchFetchedResultsController];
+    }
+    else {
+    
+        [self resetFetchedResultsController];
+    }
+}
+
+/**
+ * Returns a fetchedResultsController for current context (table view or search view)
+ */
+- (NSFetchedResultsController *)fetchedResultsControllerForContext {
+    
+    if (self.searchController.active) {
+        
+        return self.searchFetchedResultsController;
+    }
+    
+    return self.fetchedResultsController;
+}
+
+/**
+ * Overrides fetchedResultsController getter
  */
 - (NSFetchedResultsController *)fetchedResultsController {
     
-    // Bad Idea to comment out!
-    // But for sorting changes, fetchedResultsController cannot be cached the easy way.
-    
-    if (fetchedResultsController != nil) {
-    
-        return fetchedResultsController;
+    if (_fetchedResultsController != nil) {
+        
+        return _fetchedResultsController;
     }
+
+    _fetchedResultsController = [self newFetchedResultsControllerWithSearch:nil];
     
-    NSFetchRequest *request = [NSFetchRequest new];
+    return _fetchedResultsController;
+}
+
+/**
+ * Overrides searchResultsController getter
+ */
+- (NSFetchedResultsController *)searchFetchedResultsController {
+
+    if (_searchFetchedResultsController != nil) {
+        
+        return _searchFetchedResultsController;
+    }
+
+    NSString *searchText = self.searchController.searchBar.text;
+    
+    _searchFetchedResultsController = [self newFetchedResultsControllerWithSearch:searchText];
+    
+    return _searchFetchedResultsController;
+}
+
+/**
+ * Create a fetched result controller upon search and/or other predicates
+ */
+- (NSFetchedResultsController *)newFetchedResultsControllerWithSearch:(NSString *)searchText {
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Entry"
                                               inManagedObjectContext:managedObjectContext];
-    [request setEntity:entity];
-    
+
+    NSMutableArray *predicates = [NSMutableArray new];
+
     if ([[MayUserDefaults sharedInstance] listMarkedEntries]) {
-        NSPredicate *predicate;
-        predicate = [NSPredicate predicateWithFormat:@"isMarked = YES"];
-        [request setPredicate:predicate];
+
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isMarked = YES"];
+        [predicates addObject:predicate];
+    }
+
+    if (searchText.length > 0) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"authors CONTAINS[cd] %@ || title CONTAINS[cd] %@ || subtitle CONTAINS[cd] %@ || productCode CONTAINS[cd] %@ || publisher CONTAINS[cd] %@ || notes CONTAINS[cd] %@ || summary CONTAINS[cd] %@",
+                                  searchText, searchText, searchText, searchText, searchText, searchText, searchText];
+        [predicates addObject:predicate];
     }
     
-    [request setSortDescriptors:self.sortDescriptors];
+    NSPredicate *predicate = nil;
+    
+    if (predicates.count > 0) {
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];
+    }
+    
+    NSFetchRequest *request = NSFetchRequest.new;
+    request.entity = entity;
+    request.predicate = predicate;
+    request.fetchBatchSize = 20;
+    request.sortDescriptors = self.sortDescriptors;
     
     NSFetchedResultsController *resultsController;
     
@@ -739,44 +790,17 @@ sectionForSectionIndexTitle:(NSString *)title
                                                                        cacheName:nil];
     resultsController.delegate = self;
     
-    fetchedResultsController = resultsController;
-    
     NSError *error = nil;
     
-    if (![fetchedResultsController performFetch:&error]) {
+    if (![resultsController performFetch:&error]) {
         [App viewController:self
             handleUserError:error
                       title:@"Unresolved error"];
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    
-    return fetchedResultsController;
-}
-
-/**
- * Handles content search and fills search results data structure.
- */
-- (void)filterContentForSearchText:(NSString*)searchText
-                             scope:(NSString*)scope {
-    
-    [_searchResults removeAllObjects];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"authors CONTAINS[cd] %@ || title CONTAINS[cd] %@ || subtitle CONTAINS[cd] %@ || productCode CONTAINS[cd] %@ || publisher CONTAINS[cd] %@ || notes CONTAINS[cd] %@ || summary CONTAINS[cd] %@",
-                              searchText, searchText, searchText, searchText, searchText, searchText, searchText];
-    
-    NSArray *entries = [self.fetchedResultsController fetchedObjects];
-    
-    [_searchResults removeAllObjects];
-
-    if ([searchText isEqualToString:@""] || searchText == nil) {
-        [_searchResults addObjectsFromArray:entries];
-    }
-    else {
-        NSArray *filtered = [entries filteredArrayUsingPredicate:predicate];
-        [_searchResults addObjectsFromArray:filtered];
-    }
+  
+    return resultsController;
 }
 
 /**

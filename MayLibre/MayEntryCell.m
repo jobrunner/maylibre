@@ -26,6 +26,8 @@
 
 - (void)awakeFromNib {
     
+    [super awakeFromNib];
+    
     //configure right swipe buttons
     self.rightButtons = @[[MGSwipeButton buttonWithTitle:@"" // Delete, index = 1
                                                     icon:[UIImage imageNamed:@"trash"]
