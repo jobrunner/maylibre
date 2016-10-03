@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,25 +15,22 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchIcons" translatesAutoresizingMaskIntoConstraints="NO" id="KT4-Hg-aQB">
-                                <rect key="frame" x="250" y="276" width="100" height="49"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="HoN-Ac-EI0"/>
                                     <constraint firstAttribute="width" constant="100" id="ubw-UW-NcV"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQ8-tt-noc">
-                                <rect key="frame" x="0.0" y="85" width="600" height="0.5"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="bm7-h0-gdg"/>
                                 </constraints>
                             </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s94-DC-RVv">
-                                <rect key="frame" x="552" y="50" width="28" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="28" id="28v-E5-BM7"/>
                                     <constraint firstAttribute="height" constant="20" id="WXO-0z-aMK"/>
@@ -43,24 +41,22 @@
                                 <state key="disabled" image="sorting-sm"/>
                             </button>
                             <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sorting-sm" translatesAutoresizingMaskIntoConstraints="NO" id="8qh-Oi-Aca">
-                                <rect key="frame" x="552" y="50" width="28" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="7g9-jU-no9"/>
                                     <constraint firstAttribute="width" constant="28" id="QQ4-dO-wC2"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(c) 2016 by Mayflower GmbH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7M-US-UP7">
-                                <rect key="frame" x="212" y="339" width="176" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="F5b-5u-joZ"/>
                                     <constraint firstAttribute="width" constant="176" id="iZk-EB-lSB"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="KT4-Hg-aQB" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="0K3-Jy-rQX"/>
                             <constraint firstItem="HQ8-tt-noc" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="65" id="0bP-Ae-9Tk"/>
@@ -93,7 +89,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchIcons" width="100" height="49"/>
-        <image name="sorting-sm" width="28" height="20"/>
+        <image name="LaunchIcons" width="100" height="48"/>
+        <image name="sorting-sm" width="28" height="19"/>
     </resources>
 </document>
