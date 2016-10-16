@@ -11,6 +11,7 @@
 #import "MayEntryFormController.h"
 #import "MayImageManager.h"
 #import "Entry.h"
+#import "Store.h"
 
 @interface MayEntryDetailsController ()
 
@@ -48,7 +49,6 @@
                                        animated:NO];
     [self.navigationController setNavigationBarHidden:NO
                                              animated:NO];
-    managedObjectContext = App.managedObjectContext;
     
     _notesTextView.delegate = self;
     
@@ -152,12 +152,11 @@ heightForFooterInSection:(NSInteger)section {
 
     void (^action)() = ^{
 
-        [managedObjectContext deleteObject:_entry];
+        [App.store deleteObject:_entry];
 
         NSError *error = nil;
-        [managedObjectContext save:&error];
         
-        if (error) {
+        if (![App.store save:&error]) {
             [App viewController:self
                 handleUserError:error
                           title:nil];
@@ -288,9 +287,7 @@ heightForFooterInSection:(NSInteger)section {
 
     NSError *error = nil;
     
-    [managedObjectContext save:&error];
-    
-    if (error) {
+    if (![App.store save:&error]) {
         [App viewController:self
             handleUserError:error
                       title:nil];

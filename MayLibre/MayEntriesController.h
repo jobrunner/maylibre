@@ -13,6 +13,7 @@
 #import "MayBarCodeScannerController.h"
 #import "MGSwipeTableCell.h"
 #import "MayTableViewOptionsController.h"
+#import "FetchedResultsControllerDataSource.h"
 
 @interface MayEntriesController : UITableViewController <
     MayBarCodeScannerDelegate,
@@ -25,6 +26,8 @@
     NSFetchedResultsControllerDelegate,
     MFMailComposeViewControllerDelegate,
     MGSwipeTableCellDelegate,
-    UIViewControllerTransitioningDelegate>
+    UIViewControllerTransitioningDelegate,
+    FetchedResultsControllerDataSourceDelegate
+>
 
 @end
