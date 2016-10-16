@@ -431,6 +431,7 @@
 					249C62871CCA31B2005F77C1 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = L79BTFY6FV;
+						ProvisioningStyle = Automatic;
 					};
 					249C62A31CCA31B2005F77C1 = {
 						CreatedOnToolsVersion = 7.3;
@@ -699,6 +700,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = L79BTFY6FV;
 				INFOPLIST_FILE = MayLibre/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -717,6 +720,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = L79BTFY6FV;
 				INFOPLIST_FILE = MayLibre/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
