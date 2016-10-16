@@ -11,10 +11,7 @@
 
 @interface MayEntryDetailsController : UITableViewController <
     UITextFieldDelegate,
-    UITextViewDelegate> {
-    
-    NSManagedObjectContext *managedObjectContext;
-}
+    UITextViewDelegate>
 
 @property (nonatomic, strong) Entry *entry;
 

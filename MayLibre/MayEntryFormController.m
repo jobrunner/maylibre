@@ -13,6 +13,7 @@
 #import "MayEntrySummaryFormCell.h"
 #import "MayUserDefaults.h"
 #import "MayDigest.h"
+#import "Store.h"
 
 @implementation MayEntryFormController
 
@@ -27,8 +28,6 @@
     self.tableView.estimatedRowHeight = 44;
 
     self.authorsTextView.delegate = self;
-    
-    managedObjectContext = ApplicationDelegate.managedObjectContext;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(changeSummary:)
@@ -121,7 +120,7 @@ heightForFooterInSection:(NSInteger)section {
 - (void)createModelForEditing {
     
     _entry = [NSEntityDescription insertNewObjectForEntityForName:@"Entry"
-                                           inManagedObjectContext:managedObjectContext];
+                                           inManagedObjectContext:App.store.managedObjectContext];
     self.navigationItem.title = @"";
     self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Create", nil);
     self.navigationItem.rightBarButtonItem.enabled = false;
@@ -152,9 +151,7 @@ heightForFooterInSection:(NSInteger)section {
     
     NSError *error = nil;
     
-    [managedObjectContext save:&error];
-    
-    if (error) {
+    if (![App.store save:&error]) {
         [App viewController:self
             handleUserError:error
                       title:nil];
@@ -163,7 +160,7 @@ heightForFooterInSection:(NSInteger)section {
 
 - (void)undoForm {
     
-    [managedObjectContext rollback];
+    [App.store.managedObjectContext rollback];
 }
 
 - (void)changeSummary:(NSNotification *)notification {

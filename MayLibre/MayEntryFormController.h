@@ -7,10 +7,7 @@
     UITextFieldDelegate,
     UITextViewDelegate,
     UINavigationControllerDelegate,
-    UIImagePickerControllerDelegate> {
-    
-    NSManagedObjectContext *managedObjectContext;
-}
+    UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) MayISBN *isbn;
 @property (nonatomic, strong) Entry *entry;
