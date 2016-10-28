@@ -63,6 +63,16 @@
     [super viewDidAppear:animated];
 
     [self updateViewContent];
+
+    // Hack
+    // Special handling: Summary field can be visible or unvisible.
+    // Animates insertion or removing of summary:
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1
+                                                inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath]
+                          withRowAnimation:UITableViewRowAnimationAutomatic];
+    // apply changes
+    [self.tableView reloadData];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue
@@ -86,8 +96,15 @@
  */
 - (CGFloat)tableView:(UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    // hide empty description cell
+    if ((indexPath.section == 0) &&
+        (indexPath.row == 1) &&
+        (_summaryLabel.text.length == 0)) {
+     
+        return 0.0;
+    }
     
-    // NSLog(@"Section %ld Row %ld", (long)[indexPath section], (long)[indexPath row]);
     return UITableViewAutomaticDimension;
 }
 
