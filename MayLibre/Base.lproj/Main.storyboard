@@ -409,7 +409,7 @@
                                             <frame key="frameInset" width="375" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7Dk-uu-DSq">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Es wird immer weier gehen, " textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7Dk-uu-DSq">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="1vm-4W-pCi"/>
                                                     </constraints>
@@ -454,24 +454,23 @@
                                                     <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOR-ut-49z">
+                                                <label opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOR-ut-49z">
                                                     <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="28" id="IfE-ca-HRD"/>
+                                                        <constraint firstAttribute="height" constant="16" id="IfE-ca-HRD"/>
                                                     </constraints>
                                                     <string key="text">Es wird immer weiter gehn, Musik als Träger von Ideen. Und wem das noch zu kurz ist, der denke daran, dass auch lange Beschreibungen nicht darüber hinwegtäuschen können, dass man mit vielen Worten möglichst wenig aussagen kann. Im Allgemeinen ist es zwar einfacher - denkt man - etwas wie in Buch in ausreichendem Masse zu würdigen, aber die Kernaussage ist das, was oft Schwierigkeiten in der Formulierung verursacht. Einfach deswegen, weil unsere Sprache vielfach nicht dafür geeignet erscheint, komplexe Zusammenhänge einfach auszudrücken. Denn unsere Sprache ist nicht unbedingt auf Zirkularität ausgelegt, die Kreise beschreiben kann.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="rOR-ut-49z" firstAttribute="trailing" secondItem="Tud-4Q-z3n" secondAttribute="trailingMargin" id="KuV-MH-Qon"/>
-                                                <constraint firstItem="rOR-ut-49z" firstAttribute="bottom" secondItem="Tud-4Q-z3n" secondAttribute="bottomMargin" id="Smx-Eo-RaY"/>
-                                                <constraint firstItem="6iq-Bk-Snb" firstAttribute="leading" secondItem="Tud-4Q-z3n" secondAttribute="leadingMargin" constant="7" id="WRD-2g-Jvk"/>
-                                                <constraint firstItem="rOR-ut-49z" firstAttribute="top" secondItem="6iq-Bk-Snb" secondAttribute="bottom" id="gsS-j6-4kc"/>
-                                                <constraint firstItem="rOR-ut-49z" firstAttribute="leading" secondItem="Tud-4Q-z3n" secondAttribute="leadingMargin" constant="7" id="hEy-hx-2S9"/>
-                                                <constraint firstItem="6iq-Bk-Snb" firstAttribute="trailing" secondItem="Tud-4Q-z3n" secondAttribute="trailingMargin" constant="-291" id="m0p-6u-YQP"/>
-                                                <constraint firstItem="6iq-Bk-Snb" firstAttribute="top" secondItem="Tud-4Q-z3n" secondAttribute="topMargin" id="mwy-A4-Ddd"/>
+                                                <constraint firstItem="rOR-ut-49z" firstAttribute="leading" secondItem="Tud-4Q-z3n" secondAttribute="leading" constant="15" id="6kb-XQ-Rel"/>
+                                                <constraint firstItem="rOR-ut-49z" firstAttribute="top" secondItem="6iq-Bk-Snb" secondAttribute="bottom" constant="7" id="AjK-Vl-H5q"/>
+                                                <constraint firstItem="6iq-Bk-Snb" firstAttribute="leading" secondItem="Tud-4Q-z3n" secondAttribute="leadingMargin" constant="7" id="EOm-G0-sUG"/>
+                                                <constraint firstAttribute="trailing" secondItem="rOR-ut-49z" secondAttribute="trailing" constant="8" id="FcW-zI-LpV"/>
+                                                <constraint firstAttribute="bottom" secondItem="rOR-ut-49z" secondAttribute="bottom" constant="12" id="Inl-I5-Fld"/>
+                                                <constraint firstItem="6iq-Bk-Snb" firstAttribute="top" secondItem="Tud-4Q-z3n" secondAttribute="topMargin" id="yhb-aH-bGD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -592,7 +591,7 @@
                         <sections>
                             <tableViewSection id="j3c-Lg-ySP">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CellBookDetails" rowHeight="175" id="6Zb-BH-N2M">
+                                    <tableViewCell clipsSubviews="YES" tag="1" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CellBookDetails" rowHeight="175" id="6Zb-BH-N2M">
                                         <rect key="frame" x="0.0" y="99" width="375" height="175"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" tableViewCell="6Zb-BH-N2M" id="KDb-6F-ctk">
@@ -792,7 +791,7 @@ Lastname, Surename</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CellNotes" rowHeight="48" id="fgL-7m-sul" userLabel="Summary">
+                                    <tableViewCell clipsSubviews="YES" tag="2" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CellNotes" rowHeight="48" id="fgL-7m-sul" userLabel="Summary">
                                         <rect key="frame" x="0.0" y="274" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fgL-7m-sul" id="VAU-ak-Apt">
@@ -828,7 +827,7 @@ Lastname, Surename</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CellNotes" rowHeight="177" id="R1U-ri-Cof">
+                                    <tableViewCell clipsSubviews="YES" tag="3" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CellNotes" rowHeight="177" id="R1U-ri-Cof">
                                         <rect key="frame" x="0.0" y="322" width="375" height="177"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R1U-ri-Cof" id="qSM-pl-D4Z">
@@ -864,7 +863,7 @@ Lastname, Surename</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="CellMarkBook" id="zdU-2S-ToT">
+                                    <tableViewCell clipsSubviews="YES" tag="4" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="CellMarkBook" id="zdU-2S-ToT">
                                         <rect key="frame" x="0.0" y="499" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zdU-2S-ToT" id="X7c-BX-mxj">
@@ -914,16 +913,16 @@ Lastname, Surename</string>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="K2E-vK-OJU"/>
                                                     <exclude reference="cBV-At-Sg3"/>
                                                     <exclude reference="k3o-wU-DNP"/>
                                                     <exclude reference="o6f-ie-rfm"/>
+                                                    <exclude reference="K2E-vK-OJU"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CellExportBook" rowHeight="44" id="RHW-Ug-A49">
+                                    <tableViewCell clipsSubviews="YES" tag="5" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CellExportBook" rowHeight="44" id="RHW-Ug-A49">
                                         <rect key="frame" x="0.0" y="543" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RHW-Ug-A49" id="43D-gE-LL1">
@@ -956,7 +955,7 @@ Lastname, Surename</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CellDeleteBook" id="81l-uH-jtd">
+                                    <tableViewCell clipsSubviews="YES" tag="6" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CellDeleteBook" id="81l-uH-jtd">
                                         <rect key="frame" x="0.0" y="587" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="81l-uH-jtd" id="stc-uT-o7b">
@@ -1084,6 +1083,6 @@ Lastname, Surename</string>
         <image name="star-blue" width="26" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xXW-3w-yZu"/>
+        <segue reference="pge-nk-mxR"/>
     </inferredMetricsTieBreakers>
 </document>
