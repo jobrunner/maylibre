@@ -11,7 +11,9 @@
 
 @interface MayEntryDetailsController : UITableViewController <
     UITextFieldDelegate,
-    UITextViewDelegate>
+    UITextViewDelegate,
+    UIViewControllerTransitioningDelegate
+>
 
 @property (nonatomic, strong) Entry *entry;
 
