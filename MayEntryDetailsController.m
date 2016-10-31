@@ -12,6 +12,8 @@
 #import "MayImageManager.h"
 #import "Entry.h"
 #import "Store.h"
+#import "TGRImageViewController.h"
+#import "TGRImageZoomAnimationController.h"
 
 @interface MayEntryDetailsController ()
 
@@ -55,6 +57,11 @@
     self.tableView.estimatedRowHeight = 44;
     self.tableView.rowHeight = 44;
 
+    UITapGestureRecognizer *coverZoomRecognizer =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(showImageZoom)];
+    [self.coverThumbnail addGestureRecognizer:coverZoomRecognizer];
+    
     [self updateViewContent];
 }
 
@@ -309,6 +316,39 @@ heightForFooterInSection:(NSInteger)section {
             handleUserError:error
                       title:nil];
     }
+    
+}
+
+- (void)showImageZoom {
+    
+    TGRImageViewController *viewController =
+    [[TGRImageViewController alloc] initWithImage:self.coverThumbnail.image];
+    
+    viewController.transitioningDelegate = self;
+    
+    [self presentViewController:viewController
+                       animated:YES
+                     completion:nil];
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    
+    if ([presented isKindOfClass:TGRImageViewController.class]) {
+        
+        return [[TGRImageZoomAnimationController alloc] initWithReferenceImageView:self.coverThumbnail];
+    }
+    
+    return nil;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    
+    if ([dismissed isKindOfClass:TGRImageViewController.class]) {
+        
+        return [[TGRImageZoomAnimationController alloc] initWithReferenceImageView:self.coverThumbnail];
+    }
+    
+    return nil;
 }
 
 @end
