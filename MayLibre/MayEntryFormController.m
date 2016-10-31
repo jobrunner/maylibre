@@ -14,6 +14,8 @@
 #import "MayUserDefaults.h"
 #import "MayDigest.h"
 #import "Store.h"
+#import "MayImagePickerController.h"
+#import "MayImageCropperController.h"
 
 @implementation MayEntryFormController
 
@@ -33,6 +35,12 @@
                                              selector:@selector(changeSummary:)
                                                  name:kNotificationEntrySummaryChanged
                                                object:nil];
+    
+    UITapGestureRecognizer *coverImageTap =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(handleCoverTap:)];
+    [self.bookImage addGestureRecognizer:coverImageTap];
+    
     if (_entry == nil) {
         [self createModelForEditing];
     }
@@ -196,6 +204,11 @@ heightForFooterInSection:(NSInteger)section {
                              completion:nil];
 }
 
+- (void)handleCoverTap:(UITapGestureRecognizer *)recognizer {
+    
+    [self changeCoverImage:_changeCoverButton];
+}
+
 #pragma mark UITextViewDelegates
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -255,6 +268,8 @@ heightForFooterInSection:(NSInteger)section {
 
 - (void)replaceCurrentCover:(UIButton *)sender {
     
+    __weak typeof(self)weakSelf = self;
+    
     UIAlertController *actionSheet =
     [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Replace Cover", nil)
                                         message:nil
@@ -265,8 +280,7 @@ heightForFooterInSection:(NSInteger)section {
                              style:UIAlertActionStyleDefault
                            handler:^(UIAlertAction * action) {
 
-                               NSLog(@"Last Photo Taken aus Gallary holen, speichern und UI refresh");
-                               
+                               [weakSelf takeCoverFromLastTakenLibraryImage];
                            }];
     
     UIAlertAction *takePhotoAction =
@@ -274,8 +288,7 @@ heightForFooterInSection:(NSInteger)section {
                              style:UIAlertActionStyleDefault
                            handler:^(UIAlertAction * action) {
 
-                               NSLog(@"Take Photo, speichern und UI refresh");
-
+                               [weakSelf takeCoverFromCamera];
                            }];
     
     UIAlertAction *chooseFromLibraryAction =
@@ -283,37 +296,15 @@ heightForFooterInSection:(NSInteger)section {
                              style:UIAlertActionStyleDefault
                            handler:^(UIAlertAction * action) {
 
-                               [self takeCoverFromLibrary];
-                               
-                               NSLog(@"Choose from Library, speichern und UI refresh");
-                           
+                               [weakSelf takeCoverFromLibrary];
                            }];
 
     UIAlertAction *removeCoverAction =
     [UIAlertAction actionWithTitle:NSLocalizedString(@"Remove Cover", nil)
                              style:UIAlertActionStyleDestructive
                            handler:^(UIAlertAction * action) {
-                               
-                               [[MayImageManager sharedManager]
-                                removeUserFile:_entry.userFilename
-                                    completion:^(NSError *error) {
-                                                                        
-//                                        if (error == nil) {
-                                            _entry.userFilename = nil;
-                                            [self formDidChanged:self];
-                                            [self loadCoverImageWithEntry:_entry
-                                                               completion:^(UIImage *image, NSError *error) {
-                                                                   _bookImage.image = image;
-                                                               }];
-//                                        }
-//                                        else {
-//                                        
-//                                            [App viewController:self
-//                                                handleUserError:error
-//                                                          title:nil];
-//                                        }
 
-                                    }];
+                               [weakSelf removeCoverImage];
                            }];
 
     UIAlertAction *cancelAction =
@@ -343,80 +334,124 @@ heightForFooterInSection:(NSInteger)section {
 }
 
 - (IBAction)changeCoverImage:(UIButton *)sender {
-    
+ 
     [self replaceCurrentCover:sender];
 }
 
 - (void)takeCoverFromLibrary {
-    
-    UIImagePickerController *picker = [UIImagePickerController new];
+
+    MayImagePickerController *picker = [MayImagePickerController new];
     
     picker.delegate = self;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.sourceType = SourceTypeLibrary;
     
     [self presentViewController:picker
-                       animated:YES
-                     completion:NULL];
+                       animated:NO
+                     completion:nil];
 }
 
-- (void)takePhoto {
-    
-    UIImagePickerController *picker = [UIImagePickerController new];
+- (void)takeCoverFromLastTakenLibraryImage {
 
+    [MayImagePickerController lastTakenImageFromLibrary:^(UIImage *image, NSDictionary *dict) {
+    
+        MayImageCropperController *picker =
+        [[MayImageCropperController alloc] initWithOriginalImage:image];
+    
+        picker.delegate = self;
+        picker.modalPresentationStyle = UIModalPresentationPopover;
+    
+        [self presentViewController:picker
+                           animated:YES
+                         completion:nil];
+        }];
+}
+
+- (void)takeCoverFromCamera {
+
+    MayImagePickerController *picker = [MayImagePickerController new];
+    
     picker.delegate = self;
-
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        picker.allowsEditing = YES;
-        picker.showsCameraControls = YES;
-    }
-    else {
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    }
-
+    picker.sourceType = SourceTypeCamera;
+    
     [self presentViewController:picker
-                       animated:YES
-                     completion:NULL];
+                       animated:NO
+                     completion:nil];
 }
 
-#pragma mark - UIImagePickerController Delegates -
-
-- (void)imagePickerController:(UIImagePickerController *)picker
-didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void)removeCoverImage {
     
-    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
-    
-    MayImageManager *imageManager = [MayImageManager sharedManager];
-    
-    [imageManager storeImage:chosenImage
-                  completion:^(NSString *filename, NSError *error) {
-
-                      [self formDidChanged:nil];
-                      [self loadCoverImageWithEntry:_entry
-                                         completion:^(UIImage *image, NSError *error) {
-                                             _bookImage.image = image;
+    [[MayImageManager sharedManager] removeUserFile:_entry.userFilename
+                                         completion:^(NSError *error) {
+         
+                                             _entry.userFilename = nil;
+                                             [self formDidChanged:self];
+                                             [self loadCoverImageWithEntry:_entry
+                                                                completion:^(UIImage *image, NSError *error) {
+                                                                    
+                                                                    _bookImage.image = image;
+                                                                }];
                                          }];
-                      
-                      if (error == nil) {
-                          _entry.userFilename = filename;
-//                          [managedObjectContext save:&error];
-                      }
-
-                      if (error) {
-                          [App viewController:self
-                              handleUserError:error
-                                        title:nil];
-                      }
-                  }];
-
-    [picker dismissViewControllerAnimated:YES
-                               completion:NULL];
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+#pragma mark - MayImagePickerDelegate
+
+- (void)imagePicker:(MayImagePickerController *)controller
+     didSelectImage:(UIImage *)image {
     
-    [picker dismissViewControllerAnimated:YES
-                               completion:NULL];
+    [controller dismissViewControllerAnimated:YES
+                                   completion:NULL];
+    MayImageCropperController *picker =
+    [[MayImageCropperController alloc] initWithOriginalImage:image];
+    
+    picker.delegate = self;
+    
+    [self presentViewController:picker
+                       animated:NO
+                     completion:nil];
+}
+
+- (void)imagePickerDidCancel:(MayImagePickerController *)controller {
+    
+    [controller dismissViewControllerAnimated:YES
+                                   completion:NULL];
+}
+
+#pragma mark - MayImageCropperDelegate
+
+- (void)imageCropper:(MayImageCropperController *)controller
+     didCaptureImage:(UIImage *)image {
+    
+    //    __weak typeof(self)weakSelf = self;
+    
+    [controller dismissViewControllerAnimated:YES
+                                   completion:^() {
+                                       MayImageManager *imageManager = [MayImageManager sharedManager];
+                                       [imageManager storeImage:image
+                                                     completion:^(NSString *filename, NSError *error) {
+                                                         
+                                                         [self formDidChanged:nil];
+                                                         [self loadCoverImageWithEntry:_entry
+                                                                            completion:^(UIImage *image, NSError *error) {
+                                                                                
+                                                                                _bookImage.image = image;
+                                                                            }];
+                                                         
+                                                         if (error == nil) {
+                                                             _entry.userFilename = filename;
+                                                         }
+                                                         else {
+                                                             [App viewController:self
+                                                                 handleUserError:error
+                                                                           title:nil];
+                                                         }
+                                                     }];
+                                   }];
+}
+
+- (void)imageCropperDidCancel:(MayImageCropperController *)controller {
+    
+    [controller dismissViewControllerAnimated:YES
+                                   completion:NULL];
 }
 
 #pragma mark - Segues
