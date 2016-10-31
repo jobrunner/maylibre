@@ -19,6 +19,8 @@
 		247A9F721CD2CA47007A0D78 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 247A9F701CD2CA47007A0D78 /* Category.m */; };
 		247A9F751CD4C278007A0D78 /* HomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 247A9F741CD4C278007A0D78 /* HomeController.m */; };
 		247A9F781CD57ACB007A0D78 /* MayImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 247A9F771CD57ACB007A0D78 /* MayImageManager.m */; };
+		248000761DC6D6C900114F9F /* MayImageCropperController.m in Sources */ = {isa = PBXBuildFile; fileRef = 248000721DC6D6C900114F9F /* MayImageCropperController.m */; };
+		248000771DC6D6C900114F9F /* MayImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 248000731DC6D6C900114F9F /* MayImagePickerController.m */; };
 		248774F81D71B718008FCA2E /* Entry.plist in Resources */ = {isa = PBXBuildFile; fileRef = 248774F71D71B718008FCA2E /* Entry.plist */; };
 		248774FE1D71DB0E008FCA2E /* MaySortOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 248774FC1D71DB0E008FCA2E /* MaySortOptionCell.m */; };
 		248774FF1D71DB0E008FCA2E /* MaySortOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248774FD1D71DB0E008FCA2E /* MaySortOptionCell.xib */; };
@@ -98,6 +100,10 @@
 		247A9F741CD4C278007A0D78 /* HomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeController.m; sourceTree = "<group>"; };
 		247A9F761CD57ACB007A0D78 /* MayImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayImageManager.h; sourceTree = "<group>"; };
 		247A9F771CD57ACB007A0D78 /* MayImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayImageManager.m; sourceTree = "<group>"; };
+		248000721DC6D6C900114F9F /* MayImageCropperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayImageCropperController.m; sourceTree = "<group>"; };
+		248000731DC6D6C900114F9F /* MayImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayImagePickerController.m; sourceTree = "<group>"; };
+		248000741DC6D6C900114F9F /* MayImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayImagePickerController.h; sourceTree = "<group>"; };
+		248000751DC6D6C900114F9F /* MayImageCropperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayImageCropperController.h; sourceTree = "<group>"; };
 		248774F71D71B718008FCA2E /* Entry.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entry.plist; sourceTree = "<group>"; };
 		248774FB1D71DB0E008FCA2E /* MaySortOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaySortOptionCell.h; sourceTree = "<group>"; };
 		248774FC1D71DB0E008FCA2E /* MaySortOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaySortOptionCell.m; sourceTree = "<group>"; };
@@ -322,6 +328,10 @@
 				24D02F4E1CFEF8F700C8110A /* MayEntrySummaryFormCell.m */,
 				249C62C31CCA3D8A005F77C1 /* MayBarCodeScannerController.h */,
 				249C62C41CCA3D8A005F77C1 /* MayBarCodeScannerController.m */,
+				248000751DC6D6C900114F9F /* MayImageCropperController.h */,
+				248000721DC6D6C900114F9F /* MayImageCropperController.m */,
+				248000741DC6D6C900114F9F /* MayImagePickerController.h */,
+				248000731DC6D6C900114F9F /* MayImagePickerController.m */,
 				2469A60A1CD02CA300079F58 /* MayISBNGoogleResolver.h */,
 				2469A60B1CD02CA300079F58 /* MayISBNGoogleResolver.m */,
 				247A9F6A1CD1F2BF007A0D78 /* MayDigest.h */,
@@ -540,6 +550,7 @@
 				248ED2611CCA8E2800D57EF9 /* MayISBN.m in Sources */,
 				24D02F581D0038B500C8110A /* MayEntryDetailsController.m in Sources */,
 				249C62901CCA31B2005F77C1 /* AppDelegate.m in Sources */,
+				248000771DC6D6C900114F9F /* MayImagePickerController.m in Sources */,
 				249C62C61CCA3D8A005F77C1 /* MayBarCodeScannerController.m in Sources */,
 				2469A6121CD0495100079F58 /* Entry.m in Sources */,
 				248775081D71E7AB008FCA2E /* MayActionOptionCell.m in Sources */,
@@ -548,6 +559,7 @@
 				24D02F521CFF237C00C8110A /* MayEntrySummaryFormController.m in Sources */,
 				2469A6091CD00DC200079F58 /* MayEntryFormController.m in Sources */,
 				249C62BD1CCA3ACE005F77C1 /* MayEntriesController.m in Sources */,
+				248000761DC6D6C900114F9F /* MayImageCropperController.m in Sources */,
 				24AD236B1D7B6AA200A48C64 /* MaySearchBar.m in Sources */,
 				24C8BCDC1DA776F90076F6DE /* FetchedResultsControllerDataSource.m in Sources */,
 				24AD23601D7B491000A48C64 /* MayTableViewOptionsTransitionAnimator.m in Sources */,
