@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="15G1004" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Category" representedClassName="Category" syncable="YES">
+        <attribute name="creationTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updateTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="entry" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entry" inverseName="category" inverseEntity="Entry" syncable="YES"/>
+    </entity>
+    <entity name="Entry" representedClassName="Entry" syncable="YES">
+        <attribute name="authors" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="coverUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creationTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="edition" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="exemplars" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isMarked" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mainCategory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pageCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productCodeType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="publisher" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publishing" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="referenceType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updateTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="userFilename" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="category" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="entry" inverseEntity="Category" syncable="YES"/>
+    </entity>
+    <entity name="Place" representedClassName="Place" syncable="YES"/>
+    <elements>
+        <element name="Category" positionX="-297" positionY="135" width="128" height="118"/>
+        <element name="Entry" positionX="-299" positionY="-1" width="128" height="390"/>
+        <element name="Place" positionX="-288" positionY="135" width="128" height="45"/>
+    </elements>
+</model>

@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *subtitleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *yearTextField;
+@property (weak, nonatomic) IBOutlet UITextField *editionTextField;
 @property (weak, nonatomic) IBOutlet UITextField *publisherTextField;
 @property (weak, nonatomic) IBOutlet UITextField *pagesTextField;
 @property (weak, nonatomic) IBOutlet UITextField *isbnTextField;
@@ -36,6 +37,8 @@
 - (IBAction)titleTextFieldChanged:(UITextField *)sender;
 - (IBAction)subtitleTextFieldChanged:(UITextField *)sender;
 - (IBAction)yearTextFieldChanged:(UITextField *)sender;
+- (IBAction)editionTextFieldChanged:(UITextField *)sender;
+
 - (IBAction)publisherTextFieldChanged:(UITextField *)sender;
 - (IBAction)pagesTextFieldChanged:(UITextField *)sender;
 - (IBAction)isbnTextFieldChanged:(UITextField *)sender;

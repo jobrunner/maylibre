@@ -1,4 +1,13 @@
+//
+//  Entry+CoreDataClass.m
+//  MayLibre
+//
+//  Created by Jo Brunner on 12.12.16.
+//  Copyright © 2016 Mayflower. All rights reserved.
+//
+
 #import "Entry.h"
+#import "Category.h"
 
 @implementation Entry
 
