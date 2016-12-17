@@ -41,6 +41,7 @@
 @dynamic section;
 @dynamic secondaryAuthor;
 @dynamic secondaryTitle;
+@dynamic mediumType;
 @dynamic category;
 
 @end

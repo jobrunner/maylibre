@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *section;
 @property (nullable, nonatomic, copy) NSString *secondaryAuthor;
 @property (nullable, nonatomic, copy) NSString *secondaryTitle;
+@property (nullable, nonatomic, copy) NSNumber *mediumType;
 @property (nullable, nonatomic, retain) NSSet<Category *> *category;
 
 @end

@@ -17,6 +17,12 @@ typedef NS_ENUM(NSInteger, MayEntryCodeType) {
     MayEntryCodeTypeISSN = 2
 };
 
+typedef NS_ENUM(NSInteger, MayEntryMediumType) {
+    MayEntryMediumTypeUnknown = 0,
+    MayEntryMediumTypeBook = 1,
+    MayEntryMediumTypeEBook = 2
+};
+
 typedef enum MayEntryType : NSInteger {
     MayEntryTypeArticle = 0,
     MayEntryTypeBook = 1,
