@@ -37,6 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *userFilename;
 @property (nullable, nonatomic, copy) NSNumber *version;
 @property (nullable, nonatomic, copy) NSString *edition;
+@property (nullable, nonatomic, copy) NSNumber *isNew;
+@property (nullable, nonatomic, copy) NSString *volume;
+@property (nullable, nonatomic, copy) NSString *section;
+@property (nullable, nonatomic, copy) NSString *secondaryAuthor;
+@property (nullable, nonatomic, copy) NSString *secondaryTitle;
 @property (nullable, nonatomic, retain) NSSet<Category *> *category;
 
 @end

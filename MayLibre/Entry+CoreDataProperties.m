@@ -36,6 +36,11 @@
 @dynamic userFilename;
 @dynamic version;
 @dynamic edition;
+@dynamic isNew;
+@dynamic volume;
+@dynamic section;
+@dynamic secondaryAuthor;
+@dynamic secondaryTitle;
 @dynamic category;
 
 @end
