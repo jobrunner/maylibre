@@ -42,6 +42,7 @@
 @dynamic secondaryAuthor;
 @dynamic secondaryTitle;
 @dynamic mediumType;
+@dynamic signature;
 @dynamic category;
 
 @end
