@@ -355,10 +355,13 @@ heightForFooterInSection:(NSInteger)section {
                                [self addISBNManualy];
                            }];
     
-//    UIAlertAction *settingsAction =
-//    [UIAlertAction actionWithTitle:NSLocalizedString(@"Settings", nil)
-//                             style:UIAlertActionStyleDefault
-//                           handler:nil];
+    UIAlertAction *settingsAction =
+    [UIAlertAction actionWithTitle:NSLocalizedString(@"Settings", nil)
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction *action) {
+                                [[UIApplication sharedApplication]
+                                 openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                           }];
 
     UIAlertAction *cancelAction =
     [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
@@ -368,7 +371,7 @@ heightForFooterInSection:(NSInteger)section {
     [actionSheet addAction:addEntryAction];
     [actionSheet addAction:addEntryWithISBNAction];
     [actionSheet addAction:exportAction];
-//    [actionSheet addAction:settingsAction];
+    [actionSheet addAction:settingsAction];
     [actionSheet addAction:cancelAction];
     
     actionSheet.modalPresentationStyle = UIModalPresentationPopover;
