@@ -92,6 +92,7 @@ heightForFooterInSection:(NSInteger)section {
     _titleTextField.text = _entry.title;
     _subtitleTextField.text = _entry.subtitle;
     _yearTextField.text = _entry.publishing;
+    _editionTextField.text = _entry.edition;
     _publisherTextField.text = _entry.publisher;
     _pagesTextField.text = _entry.pageCount;
     _isbnTextField.text = _entry.productCode;
@@ -137,6 +138,7 @@ heightForFooterInSection:(NSInteger)section {
     _titleTextField.text = _entry.title;
     _subtitleTextField.text = _entry.subtitle;
     _yearTextField.text = _entry.publishing;
+    _editionTextField.text = _entry.edition;
     _publisherTextField.text = _entry.publisher;
     _pagesTextField.text = _entry.pageCount;
     _isbnTextField.text = _entry.productCode;
@@ -150,6 +152,7 @@ heightForFooterInSection:(NSInteger)section {
     _entry.title = _titleTextField.text;
     _entry.subtitle = _subtitleTextField.text;
     _entry.publishing = _yearTextField.text;
+    _entry.edition = _editionTextField.text;
     _entry.place = _placeTextField.text;
     _entry.pageCount = _pagesTextField.text;
     _entry.productCode = _isbnTextField.text;
@@ -243,6 +246,11 @@ heightForFooterInSection:(NSInteger)section {
 
 - (IBAction)yearTextFieldChanged:(UITextField *)sender {
     
+    [self formDidChanged:sender];
+}
+
+- (IBAction)editionTextFieldChanged:(UITextField *)sender {
+
     [self formDidChanged:sender];
 }
 

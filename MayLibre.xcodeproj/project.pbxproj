@@ -12,7 +12,6 @@
 		2469A6091CD00DC200079F58 /* MayEntryFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A6081CD00DC200079F58 /* MayEntryFormController.m */; };
 		2469A60C1CD02CA300079F58 /* MayISBNGoogleResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A60B1CD02CA300079F58 /* MayISBNGoogleResolver.m */; };
 		2469A6111CD0495100079F58 /* Entry+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A60E1CD0495100079F58 /* Entry+CoreDataProperties.m */; };
-		2469A6121CD0495100079F58 /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A6101CD0495100079F58 /* Entry.m */; };
 		247116C21D83FCD30085A086 /* MayTableViewOptionsBagTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 247116C11D83FCD30085A086 /* MayTableViewOptionsBagTests.m */; };
 		247A9F6C1CD1F2BF007A0D78 /* MayDigest.m in Sources */ = {isa = PBXBuildFile; fileRef = 247A9F6B1CD1F2BF007A0D78 /* MayDigest.m */; };
 		247A9F711CD2CA47007A0D78 /* Category+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 247A9F6E1CD2CA47007A0D78 /* Category+CoreDataProperties.m */; };
@@ -52,6 +51,8 @@
 		24AD23601D7B491000A48C64 /* MayTableViewOptionsTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 24AD235E1D7B491000A48C64 /* MayTableViewOptionsTransitionAnimator.m */; };
 		24AD23681D7B6A7000A48C64 /* MaySearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24AD23671D7B6A7000A48C64 /* MaySearchController.m */; };
 		24AD236B1D7B6AA200A48C64 /* MaySearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 24AD236A1D7B6AA200A48C64 /* MaySearchBar.m */; };
+		24C59F421E0603CD00635097 /* Someone+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C59F3F1E0603CD00635097 /* Someone+CoreDataClass.m */; };
+		24C59F431E0603CD00635097 /* Someone+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C59F411E0603CD00635097 /* Someone+CoreDataProperties.m */; };
 		24C8BCDC1DA776F90076F6DE /* FetchedResultsControllerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C8BCDA1DA776F90076F6DE /* FetchedResultsControllerDataSource.m */; };
 		24D02F4C1CFC5FA200C8110A /* NSString+MayDisplayExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4B1CFC5FA200C8110A /* NSString+MayDisplayExtension.m */; };
 		24D02F4F1CFEF8F700C8110A /* MayEntrySummaryFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4E1CFEF8F700C8110A /* MayEntrySummaryFormCell.m */; };
@@ -60,6 +61,7 @@
 		24D02F581D0038B500C8110A /* MayEntryDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F571D0038B500C8110A /* MayEntryDetailsController.m */; };
 		24D02F5D1D03A26300C8110A /* Place+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F5A1D03A26300C8110A /* Place+CoreDataProperties.m */; };
 		24D02F5E1D03A26300C8110A /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F5C1D03A26300C8110A /* Place.m */; };
+		24DFC5151DFECA10008562CB /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DFC5141DFECA10008562CB /* Entry.m */; };
 		24E58BCF1DA2C339003F64AA /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E58BCE1DA2C339003F64AA /* CoreDataStack.m */; };
 		24E58BD21DA38DD5003F64AA /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E58BD01DA38DD5003F64AA /* Store.m */; };
 		E8005C911A93F5FFE210CB92 /* libPods-MayLibre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41663C847506F0ED3EF32752 /* libPods-MayLibre.a */; };
@@ -86,8 +88,6 @@
 		2469A60B1CD02CA300079F58 /* MayISBNGoogleResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBNGoogleResolver.m; sourceTree = "<group>"; };
 		2469A60D1CD0495100079F58 /* Entry+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Entry+CoreDataProperties.h"; sourceTree = "<group>"; };
 		2469A60E1CD0495100079F58 /* Entry+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Entry+CoreDataProperties.m"; sourceTree = "<group>"; };
-		2469A60F1CD0495100079F58 /* Entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
-		2469A6101CD0495100079F58 /* Entry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entry.m; sourceTree = "<group>"; };
 		247116BE1D80685D0085A086 /* MayLibre-alpha- 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MayLibre-alpha- 2.xcdatamodel"; sourceTree = "<group>"; };
 		247116C11D83FCD30085A086 /* MayTableViewOptionsBagTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayTableViewOptionsBagTests.m; sourceTree = "<group>"; };
 		247A9F6A1CD1F2BF007A0D78 /* MayDigest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayDigest.h; sourceTree = "<group>"; };
@@ -154,6 +154,10 @@
 		24AD23691D7B6AA200A48C64 /* MaySearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaySearchBar.h; sourceTree = "<group>"; };
 		24AD236A1D7B6AA200A48C64 /* MaySearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaySearchBar.m; sourceTree = "<group>"; };
 		24AD236C1D7CD7E300A48C64 /* MayLibre-alpha-1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MayLibre-alpha-1.xcdatamodel"; sourceTree = "<group>"; };
+		24C59F3E1E0603CD00635097 /* Someone+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Someone+CoreDataClass.h"; sourceTree = "<group>"; };
+		24C59F3F1E0603CD00635097 /* Someone+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Someone+CoreDataClass.m"; sourceTree = "<group>"; };
+		24C59F401E0603CD00635097 /* Someone+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Someone+CoreDataProperties.h"; sourceTree = "<group>"; };
+		24C59F411E0603CD00635097 /* Someone+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Someone+CoreDataProperties.m"; sourceTree = "<group>"; };
 		24C8BCDA1DA776F90076F6DE /* FetchedResultsControllerDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedResultsControllerDataSource.m; sourceTree = "<group>"; };
 		24C8BCDB1DA776F90076F6DE /* FetchedResultsControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedResultsControllerDataSource.h; sourceTree = "<group>"; };
 		24D02F4A1CFC5FA200C8110A /* NSString+MayDisplayExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MayDisplayExtension.h"; sourceTree = "<group>"; };
@@ -170,6 +174,9 @@
 		24D02F5A1D03A26300C8110A /* Place+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Place+CoreDataProperties.m"; sourceTree = "<group>"; };
 		24D02F5B1D03A26300C8110A /* Place.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.h; sourceTree = "<group>"; };
 		24D02F5C1D03A26300C8110A /* Place.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.m; sourceTree = "<group>"; };
+		24DFC5121DFEC8ED008562CB /* MayLibre-alpha-3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MayLibre-alpha-3.xcdatamodel"; sourceTree = "<group>"; };
+		24DFC5131DFECA10008562CB /* Entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
+		24DFC5141DFECA10008562CB /* Entry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entry.m; sourceTree = "<group>"; };
 		24E58BC51DA1821F003F64AA /* MayLibreTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MayLibreTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		24E58BCD1DA2C339003F64AA /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
 		24E58BCE1DA2C339003F64AA /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
@@ -263,6 +270,10 @@
 		2469A5F31CCFF58C00079F58 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				24C59F3E1E0603CD00635097 /* Someone+CoreDataClass.h */,
+				24C59F3F1E0603CD00635097 /* Someone+CoreDataClass.m */,
+				24C59F401E0603CD00635097 /* Someone+CoreDataProperties.h */,
+				24C59F411E0603CD00635097 /* Someone+CoreDataProperties.m */,
 				24D02F591D03A26300C8110A /* Place+CoreDataProperties.h */,
 				24D02F5A1D03A26300C8110A /* Place+CoreDataProperties.m */,
 				24D02F5B1D03A26300C8110A /* Place.h */,
@@ -272,10 +283,10 @@
 				247A9F6E1CD2CA47007A0D78 /* Category+CoreDataProperties.m */,
 				247A9F6F1CD2CA47007A0D78 /* Category.h */,
 				247A9F701CD2CA47007A0D78 /* Category.m */,
+				24DFC5131DFECA10008562CB /* Entry.h */,
+				24DFC5141DFECA10008562CB /* Entry.m */,
 				2469A60D1CD0495100079F58 /* Entry+CoreDataProperties.h */,
 				2469A60E1CD0495100079F58 /* Entry+CoreDataProperties.m */,
-				2469A60F1CD0495100079F58 /* Entry.h */,
-				2469A6101CD0495100079F58 /* Entry.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -539,11 +550,13 @@
 				24D02F4C1CFC5FA200C8110A /* NSString+MayDisplayExtension.m in Sources */,
 				247A9F781CD57ACB007A0D78 /* MayImageManager.m in Sources */,
 				248775031D71DF65008FCA2E /* MayFilterOptionCell.m in Sources */,
+				24DFC5151DFECA10008562CB /* Entry.m in Sources */,
 				247A9F721CD2CA47007A0D78 /* Category.m in Sources */,
 				2487752F1D73091D008FCA2E /* MayTableViewOptionsBag.m in Sources */,
 				248ED2691CCD02D000D57EF9 /* MayISBNFormatter.m in Sources */,
 				24D02F5D1D03A26300C8110A /* Place+CoreDataProperties.m in Sources */,
 				2469A60C1CD02CA300079F58 /* MayISBNGoogleResolver.m in Sources */,
+				24C59F421E0603CD00635097 /* Someone+CoreDataClass.m in Sources */,
 				2401354E1D706100002DC339 /* MayTableViewOptionsController.m in Sources */,
 				24E58BD21DA38DD5003F64AA /* Store.m in Sources */,
 				24AD23681D7B6A7000A48C64 /* MaySearchController.m in Sources */,
@@ -552,13 +565,13 @@
 				249C62901CCA31B2005F77C1 /* AppDelegate.m in Sources */,
 				248000771DC6D6C900114F9F /* MayImagePickerController.m in Sources */,
 				249C62C61CCA3D8A005F77C1 /* MayBarCodeScannerController.m in Sources */,
-				2469A6121CD0495100079F58 /* Entry.m in Sources */,
 				248775081D71E7AB008FCA2E /* MayActionOptionCell.m in Sources */,
 				24D02F551CFFB75B00C8110A /* MayUserDefaults.m in Sources */,
 				249C62991CCA31B2005F77C1 /* MayLibre.xcdatamodeld in Sources */,
 				24D02F521CFF237C00C8110A /* MayEntrySummaryFormController.m in Sources */,
 				2469A6091CD00DC200079F58 /* MayEntryFormController.m in Sources */,
 				249C62BD1CCA3ACE005F77C1 /* MayEntriesController.m in Sources */,
+				24C59F431E0603CD00635097 /* Someone+CoreDataProperties.m in Sources */,
 				248000761DC6D6C900114F9F /* MayImageCropperController.m in Sources */,
 				24AD236B1D7B6AA200A48C64 /* MaySearchBar.m in Sources */,
 				24C8BCDC1DA776F90076F6DE /* FetchedResultsControllerDataSource.m in Sources */,
@@ -811,11 +824,12 @@
 		249C62971CCA31B2005F77C1 /* MayLibre.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				24DFC5121DFEC8ED008562CB /* MayLibre-alpha-3.xcdatamodel */,
 				247116BE1D80685D0085A086 /* MayLibre-alpha- 2.xcdatamodel */,
 				24AD236C1D7CD7E300A48C64 /* MayLibre-alpha-1.xcdatamodel */,
 				249C62981CCA31B2005F77C1 /* MayLibre.xcdatamodel */,
 			);
-			currentVersion = 247116BE1D80685D0085A086 /* MayLibre-alpha- 2.xcdatamodel */;
+			currentVersion = 24DFC5121DFEC8ED008562CB /* MayLibre-alpha-3.xcdatamodel */;
 			path = MayLibre.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -1,18 +1,26 @@
 //
-//  Product.h
+//  Entry+CoreDataClass.h
 //  MayLibre
 //
-//  Created by Jo Brunner on 27.04.16.
+//  Created by Jo Brunner on 12.12.16.
 //  Copyright © 2016 Mayflower. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Category;
+
 typedef NS_ENUM(NSInteger, MayEntryCodeType) {
     MayEntryCodeTypeUnknown = 0,
     MayEntryCodeTypeISBN = 1,
     MayEntryCodeTypeISSN = 2
+};
+
+typedef NS_ENUM(NSInteger, MayEntryMediumType) {
+    MayEntryMediumTypeUnknown = 0,
+    MayEntryMediumTypeBook = 1,
+    MayEntryMediumTypeEBook = 2
 };
 
 typedef enum MayEntryType : NSInteger {
@@ -24,9 +32,8 @@ typedef enum MayEntryType : NSInteger {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Entry : NSManagedObject
 
-// Insert code here to declare functionality of your managed object subclass
+@interface Entry : NSManagedObject
 
 @end
 

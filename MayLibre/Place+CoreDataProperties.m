@@ -13,5 +13,16 @@
 
 @implementation Place (CoreDataProperties)
 
++ (NSFetchRequest<Place *> *)fetchRequest {
+    return [[NSFetchRequest alloc] initWithEntityName:@"Place"];
+}
+
+@dynamic name;
+@dynamic latitude;
+@dynamic longitude;
+@dynamic radius;
+@dynamic creationTime;
+@dynamic updateTime;
+@dynamic version;
 
 @end
