@@ -54,6 +54,7 @@
 		24C59F421E0603CD00635097 /* Someone+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C59F3F1E0603CD00635097 /* Someone+CoreDataClass.m */; };
 		24C59F431E0603CD00635097 /* Someone+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C59F411E0603CD00635097 /* Someone+CoreDataProperties.m */; };
 		24C59F461E06CAA200635097 /* MayEntryDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C59F451E06CAA200635097 /* MayEntryDetailsController.m */; };
+		24C59F4B1E06F0C300635097 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 24C59F4A1E06F0C300635097 /* Settings.bundle */; };
 		24C8BCDC1DA776F90076F6DE /* FetchedResultsControllerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C8BCDA1DA776F90076F6DE /* FetchedResultsControllerDataSource.m */; };
 		24D02F4C1CFC5FA200C8110A /* NSString+MayDisplayExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4B1CFC5FA200C8110A /* NSString+MayDisplayExtension.m */; };
 		24D02F4F1CFEF8F700C8110A /* MayEntrySummaryFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4E1CFEF8F700C8110A /* MayEntrySummaryFormCell.m */; };
@@ -160,6 +161,7 @@
 		24C59F411E0603CD00635097 /* Someone+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Someone+CoreDataProperties.m"; sourceTree = "<group>"; };
 		24C59F441E06CAA200635097 /* MayEntryDetailsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayEntryDetailsController.h; sourceTree = "<group>"; };
 		24C59F451E06CAA200635097 /* MayEntryDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayEntryDetailsController.m; sourceTree = "<group>"; };
+		24C59F4A1E06F0C300635097 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		24C8BCDA1DA776F90076F6DE /* FetchedResultsControllerDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedResultsControllerDataSource.m; sourceTree = "<group>"; };
 		24C8BCDB1DA776F90076F6DE /* FetchedResultsControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedResultsControllerDataSource.h; sourceTree = "<group>"; };
 		24D02F4A1CFC5FA200C8110A /* NSString+MayDisplayExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MayDisplayExtension.h"; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				248ED26D1CCEADD200D57EF9 /* export_rangemessage.xml */,
 				249C629F1CCA31B2005F77C1 /* Info.plist */,
 				249C628C1CCA31B2005F77C1 /* main.m */,
+				24C59F4A1E06F0C300635097 /* Settings.bundle */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 			files = (
 				248ED26E1CCEADD200D57EF9 /* export_rangemessage.xml in Resources */,
 				248774FF1D71DB0E008FCA2E /* MaySortOptionCell.xib in Resources */,
+				24C59F4B1E06F0C300635097 /* Settings.bundle in Resources */,
 				249C62C21CCA3B01005F77C1 /* MayEntryCell.xib in Resources */,
 				249C629E1CCA31B2005F77C1 /* LaunchScreen.storyboard in Resources */,
 				248774F81D71B718008FCA2E /* Entry.plist in Resources */,
