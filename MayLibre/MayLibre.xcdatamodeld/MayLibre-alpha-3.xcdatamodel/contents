@@ -38,15 +38,31 @@
         <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="volume" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="category" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Category" inverseName="entry" inverseEntity="Category" syncable="YES"/>
+        <relationship name="lender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Someone" inverseName="lenders" inverseEntity="Someone" syncable="YES"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Someone" inverseName="owners" inverseEntity="Someone" syncable="YES"/>
     </entity>
-    <entity name="Place" representedClassName="Place" syncable="YES"/>
-    <entity name="Someone" syncable="YES">
+    <entity name="Place" representedClassName="Place" syncable="YES">
+        <attribute name="creationTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="radius" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="updateTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="Someone" representedClassName="Someone" syncable="YES">
+        <attribute name="creationTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updateTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="lenders" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entry" inverseName="lender" inverseEntity="Entry" syncable="YES"/>
+        <relationship name="owners" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entry" inverseName="owner" inverseEntity="Entry" syncable="YES"/>
+        <relationship name="place" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Place" syncable="YES"/>
     </entity>
     <elements>
         <element name="Category" positionX="-297" positionY="135" width="128" height="118"/>
-        <element name="Entry" positionX="-299" positionY="-1" width="128" height="495"/>
-        <element name="Place" positionX="-288" positionY="135" width="128" height="45"/>
-        <element name="Someone" positionX="-297" positionY="153" width="128" height="60"/>
+        <element name="Entry" positionX="-299" positionY="-1" width="128" height="525"/>
+        <element name="Place" positionX="-288" positionY="135" width="128" height="150"/>
+        <element name="Someone" positionX="-297" positionY="153" width="128" height="150"/>
     </elements>
 </model>

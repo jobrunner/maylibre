@@ -1,14 +1,14 @@
 //
-//  Place.m
+//  Someone+CoreDataClass.m
 //  MayLibre
 //
-//  Created by Jo Brunner on 05.06.16.
+//  Created by Jo Brunner on 18.12.16.
 //  Copyright © 2016 Mayflower. All rights reserved.
 //
 
-#import "Place.h"
-
-@implementation Place
+#import "Someone+CoreDataClass.h"
+#import "Entry.h"
+@implementation Someone
 
 - (void)awakeFromInsert {
     

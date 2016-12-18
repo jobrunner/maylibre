@@ -51,6 +51,8 @@
 		24AD23601D7B491000A48C64 /* MayTableViewOptionsTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 24AD235E1D7B491000A48C64 /* MayTableViewOptionsTransitionAnimator.m */; };
 		24AD23681D7B6A7000A48C64 /* MaySearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24AD23671D7B6A7000A48C64 /* MaySearchController.m */; };
 		24AD236B1D7B6AA200A48C64 /* MaySearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 24AD236A1D7B6AA200A48C64 /* MaySearchBar.m */; };
+		24C59F421E0603CD00635097 /* Someone+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C59F3F1E0603CD00635097 /* Someone+CoreDataClass.m */; };
+		24C59F431E0603CD00635097 /* Someone+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C59F411E0603CD00635097 /* Someone+CoreDataProperties.m */; };
 		24C8BCDC1DA776F90076F6DE /* FetchedResultsControllerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C8BCDA1DA776F90076F6DE /* FetchedResultsControllerDataSource.m */; };
 		24D02F4C1CFC5FA200C8110A /* NSString+MayDisplayExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4B1CFC5FA200C8110A /* NSString+MayDisplayExtension.m */; };
 		24D02F4F1CFEF8F700C8110A /* MayEntrySummaryFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4E1CFEF8F700C8110A /* MayEntrySummaryFormCell.m */; };
@@ -152,6 +154,10 @@
 		24AD23691D7B6AA200A48C64 /* MaySearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaySearchBar.h; sourceTree = "<group>"; };
 		24AD236A1D7B6AA200A48C64 /* MaySearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaySearchBar.m; sourceTree = "<group>"; };
 		24AD236C1D7CD7E300A48C64 /* MayLibre-alpha-1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MayLibre-alpha-1.xcdatamodel"; sourceTree = "<group>"; };
+		24C59F3E1E0603CD00635097 /* Someone+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Someone+CoreDataClass.h"; sourceTree = "<group>"; };
+		24C59F3F1E0603CD00635097 /* Someone+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Someone+CoreDataClass.m"; sourceTree = "<group>"; };
+		24C59F401E0603CD00635097 /* Someone+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Someone+CoreDataProperties.h"; sourceTree = "<group>"; };
+		24C59F411E0603CD00635097 /* Someone+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Someone+CoreDataProperties.m"; sourceTree = "<group>"; };
 		24C8BCDA1DA776F90076F6DE /* FetchedResultsControllerDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedResultsControllerDataSource.m; sourceTree = "<group>"; };
 		24C8BCDB1DA776F90076F6DE /* FetchedResultsControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedResultsControllerDataSource.h; sourceTree = "<group>"; };
 		24D02F4A1CFC5FA200C8110A /* NSString+MayDisplayExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MayDisplayExtension.h"; sourceTree = "<group>"; };
@@ -264,6 +270,10 @@
 		2469A5F31CCFF58C00079F58 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				24C59F3E1E0603CD00635097 /* Someone+CoreDataClass.h */,
+				24C59F3F1E0603CD00635097 /* Someone+CoreDataClass.m */,
+				24C59F401E0603CD00635097 /* Someone+CoreDataProperties.h */,
+				24C59F411E0603CD00635097 /* Someone+CoreDataProperties.m */,
 				24D02F591D03A26300C8110A /* Place+CoreDataProperties.h */,
 				24D02F5A1D03A26300C8110A /* Place+CoreDataProperties.m */,
 				24D02F5B1D03A26300C8110A /* Place.h */,
@@ -546,6 +556,7 @@
 				248ED2691CCD02D000D57EF9 /* MayISBNFormatter.m in Sources */,
 				24D02F5D1D03A26300C8110A /* Place+CoreDataProperties.m in Sources */,
 				2469A60C1CD02CA300079F58 /* MayISBNGoogleResolver.m in Sources */,
+				24C59F421E0603CD00635097 /* Someone+CoreDataClass.m in Sources */,
 				2401354E1D706100002DC339 /* MayTableViewOptionsController.m in Sources */,
 				24E58BD21DA38DD5003F64AA /* Store.m in Sources */,
 				24AD23681D7B6A7000A48C64 /* MaySearchController.m in Sources */,
@@ -560,6 +571,7 @@
 				24D02F521CFF237C00C8110A /* MayEntrySummaryFormController.m in Sources */,
 				2469A6091CD00DC200079F58 /* MayEntryFormController.m in Sources */,
 				249C62BD1CCA3ACE005F77C1 /* MayEntriesController.m in Sources */,
+				24C59F431E0603CD00635097 /* Someone+CoreDataProperties.m in Sources */,
 				248000761DC6D6C900114F9F /* MayImageCropperController.m in Sources */,
 				24AD236B1D7B6AA200A48C64 /* MaySearchBar.m in Sources */,
 				24C8BCDC1DA776F90076F6DE /* FetchedResultsControllerDataSource.m in Sources */,
