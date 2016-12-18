@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSFetchRequest<Someone *> *)fetchRequest;
 
 @property (nullable, nonatomic, copy) NSString *name;
+@property (nullable, nonatomic, copy) NSString *userId;
 @property (nullable, nonatomic, copy) NSNumber *version;
 @property (nullable, nonatomic, copy) NSDate *creationTime;
 @property (nullable, nonatomic, copy) NSDate *updateTime;

@@ -15,6 +15,7 @@
 }
 
 @dynamic name;
+@dynamic userId;
 @dynamic version;
 @dynamic creationTime;
 @dynamic updateTime;
