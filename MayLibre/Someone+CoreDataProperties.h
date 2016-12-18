@@ -8,6 +8,8 @@
 
 #import "Someone+CoreDataClass.h"
 
+@class Entry;
+@class Place;
 
 NS_ASSUME_NONNULL_BEGIN
 

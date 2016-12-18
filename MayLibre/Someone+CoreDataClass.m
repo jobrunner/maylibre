@@ -8,6 +8,7 @@
 
 #import "Someone+CoreDataClass.h"
 #import "Entry.h"
+
 @implementation Someone
 
 - (void)awakeFromInsert {
