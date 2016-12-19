@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1ED73AD8C592D9A906A14803 /* Pods-MayLibre-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B57663B181AD1384253C3B6 /* Pods-MayLibre-metadata.plist */; };
 		2401354E1D706100002DC339 /* MayTableViewOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2401354D1D706100002DC339 /* MayTableViewOptionsController.m */; };
 		2425E1311CE01BB300EEECB7 /* MayAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2425E1301CE01BB300EEECB7 /* MayAuthor.m */; };
 		2469A6091CD00DC200079F58 /* MayEntryFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2469A6081CD00DC200079F58 /* MayEntryFormController.m */; };
@@ -54,6 +55,7 @@
 		24C59F421E0603CD00635097 /* Someone+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C59F3F1E0603CD00635097 /* Someone+CoreDataClass.m */; };
 		24C59F431E0603CD00635097 /* Someone+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C59F411E0603CD00635097 /* Someone+CoreDataProperties.m */; };
 		24C59F461E06CAA200635097 /* MayEntryDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C59F451E06CAA200635097 /* MayEntryDetailsController.m */; };
+		24C59F4B1E06F0C300635097 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 24C59F4A1E06F0C300635097 /* Settings.bundle */; };
 		24C8BCDC1DA776F90076F6DE /* FetchedResultsControllerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 24C8BCDA1DA776F90076F6DE /* FetchedResultsControllerDataSource.m */; };
 		24D02F4C1CFC5FA200C8110A /* NSString+MayDisplayExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4B1CFC5FA200C8110A /* NSString+MayDisplayExtension.m */; };
 		24D02F4F1CFEF8F700C8110A /* MayEntrySummaryFormCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F4E1CFEF8F700C8110A /* MayEntrySummaryFormCell.m */; };
@@ -64,7 +66,9 @@
 		24DFC5151DFECA10008562CB /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DFC5141DFECA10008562CB /* Entry.m */; };
 		24E58BCF1DA2C339003F64AA /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E58BCE1DA2C339003F64AA /* CoreDataStack.m */; };
 		24E58BD21DA38DD5003F64AA /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E58BD01DA38DD5003F64AA /* Store.m */; };
-		E8005C911A93F5FFE210CB92 /* libPods-MayLibre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41663C847506F0ED3EF32752 /* libPods-MayLibre.a */; };
+		537DE48D1DE707C9C4141F62 /* libPods-MayLibre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14A5C155D9B39054042E10E8 /* libPods-MayLibre.a */; };
+		EDCA7A24972D3AB921B8E551 /* libPods-MayLibreTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 318D8C355100E026227BF64F /* libPods-MayLibreTests.a */; };
+		F92B2DF16BD823E702745151 /* Pods-MayLibre-settings-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5515E9C645415E6920D16DC /* Pods-MayLibre-settings-metadata.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +82,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0828FE82DA205F70AE18FC1A /* Pods-MayLibreTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MayLibreTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MayLibreTests/Pods-MayLibreTests.release.xcconfig"; sourceTree = "<group>"; };
+		14A5C155D9B39054042E10E8 /* libPods-MayLibre.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MayLibre.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2401354C1D706100002DC339 /* MayTableViewOptionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayTableViewOptionsController.h; sourceTree = "<group>"; };
 		2401354D1D706100002DC339 /* MayTableViewOptionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayTableViewOptionsController.m; sourceTree = "<group>"; };
 		2425E12F1CE01BB300EEECB7 /* MayAuthor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayAuthor.h; sourceTree = "<group>"; };
@@ -160,6 +166,7 @@
 		24C59F411E0603CD00635097 /* Someone+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Someone+CoreDataProperties.m"; sourceTree = "<group>"; };
 		24C59F441E06CAA200635097 /* MayEntryDetailsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayEntryDetailsController.h; sourceTree = "<group>"; };
 		24C59F451E06CAA200635097 /* MayEntryDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayEntryDetailsController.m; sourceTree = "<group>"; };
+		24C59F4A1E06F0C300635097 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		24C8BCDA1DA776F90076F6DE /* FetchedResultsControllerDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedResultsControllerDataSource.m; sourceTree = "<group>"; };
 		24C8BCDB1DA776F90076F6DE /* FetchedResultsControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedResultsControllerDataSource.h; sourceTree = "<group>"; };
 		24D02F4A1CFC5FA200C8110A /* NSString+MayDisplayExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MayDisplayExtension.h"; sourceTree = "<group>"; };
@@ -182,9 +189,12 @@
 		24E58BCE1DA2C339003F64AA /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
 		24E58BD01DA38DD5003F64AA /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		24E58BD11DA38DD5003F64AA /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
-		41663C847506F0ED3EF32752 /* libPods-MayLibre.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MayLibre.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9B543CBCED83E2B0FE1B8EE6 /* Pods-MayLibre.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MayLibre.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MayLibre/Pods-MayLibre.debug.xcconfig"; sourceTree = "<group>"; };
-		F12BEF5084F253CEB438BD3E /* Pods-MayLibre.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MayLibre.release.xcconfig"; path = "Pods/Target Support Files/Pods-MayLibre/Pods-MayLibre.release.xcconfig"; sourceTree = "<group>"; };
+		318D8C355100E026227BF64F /* libPods-MayLibreTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MayLibreTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42F4FB984F2EC3706A919E68 /* Pods-MayLibreTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MayLibreTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MayLibreTests/Pods-MayLibreTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5B57663B181AD1384253C3B6 /* Pods-MayLibre-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-MayLibre-metadata.plist"; path = "Pods/Pods-MayLibre-metadata.plist"; sourceTree = "<group>"; };
+		A679D81E5F1819611EEAF0BA /* Pods-MayLibre.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MayLibre.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MayLibre/Pods-MayLibre.debug.xcconfig"; sourceTree = "<group>"; };
+		D5515E9C645415E6920D16DC /* Pods-MayLibre-settings-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-MayLibre-settings-metadata.plist"; path = "MayLibre/Settings.bundle/Pods-MayLibre-settings-metadata.plist"; sourceTree = "<group>"; };
+		F5CAC6D1C6BA4EA5D98F8E95 /* Pods-MayLibre.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MayLibre.release.xcconfig"; path = "Pods/Target Support Files/Pods-MayLibre/Pods-MayLibre.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,7 +206,7 @@
 				249C62B81CCA3338005F77C1 /* UIKit.framework in Frameworks */,
 				249C62B61CCA3319005F77C1 /* AVFoundation.framework in Frameworks */,
 				249C62B41CCA3312005F77C1 /* CoreGraphics.framework in Frameworks */,
-				E8005C911A93F5FFE210CB92 /* libPods-MayLibre.a in Frameworks */,
+				537DE48D1DE707C9C4141F62 /* libPods-MayLibre.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +214,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDCA7A24972D3AB921B8E551 /* libPods-MayLibreTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +228,8 @@
 				249C62B71CCA3338005F77C1 /* UIKit.framework */,
 				249C62B51CCA3319005F77C1 /* AVFoundation.framework */,
 				249C62B31CCA3312005F77C1 /* CoreGraphics.framework */,
-				41663C847506F0ED3EF32752 /* libPods-MayLibre.a */,
+				14A5C155D9B39054042E10E8 /* libPods-MayLibre.a */,
+				318D8C355100E026227BF64F /* libPods-MayLibreTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -297,9 +309,9 @@
 				249C628A1CCA31B2005F77C1 /* MayLibre */,
 				249C62A71CCA31B2005F77C1 /* MayLibreTests */,
 				249C62891CCA31B2005F77C1 /* Products */,
-				3791821ED3755D7FB0C7F0E6 /* Pods */,
 				10A999DC49B3E5EDC3557A16 /* Frameworks */,
 				24E58BC51DA1821F003F64AA /* MayLibreTests-Bridging-Header.h */,
+				66298B0EFCDF829EA994BB75 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -376,6 +388,7 @@
 				248ED26D1CCEADD200D57EF9 /* export_rangemessage.xml */,
 				249C629F1CCA31B2005F77C1 /* Info.plist */,
 				249C628C1CCA31B2005F77C1 /* main.m */,
+				24C59F4A1E06F0C300635097 /* Settings.bundle */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -391,11 +404,15 @@
 			path = MayLibreTests;
 			sourceTree = "<group>";
 		};
-		3791821ED3755D7FB0C7F0E6 /* Pods */ = {
+		66298B0EFCDF829EA994BB75 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9B543CBCED83E2B0FE1B8EE6 /* Pods-MayLibre.debug.xcconfig */,
-				F12BEF5084F253CEB438BD3E /* Pods-MayLibre.release.xcconfig */,
+				A679D81E5F1819611EEAF0BA /* Pods-MayLibre.debug.xcconfig */,
+				F5CAC6D1C6BA4EA5D98F8E95 /* Pods-MayLibre.release.xcconfig */,
+				42F4FB984F2EC3706A919E68 /* Pods-MayLibreTests.debug.xcconfig */,
+				0828FE82DA205F70AE18FC1A /* Pods-MayLibreTests.release.xcconfig */,
+				5B57663B181AD1384253C3B6 /* Pods-MayLibre-metadata.plist */,
+				D5515E9C645415E6920D16DC /* Pods-MayLibre-settings-metadata.plist */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -407,11 +424,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 249C62AD1CCA31B2005F77C1 /* Build configuration list for PBXNativeTarget "MayLibre" */;
 			buildPhases = (
-				FA10F2156E29769613FA6276 /* Check Pods Manifest.lock */,
+				264EC084361D71E96DD7F350 /* [CP] Check Pods Manifest.lock */,
 				249C62841CCA31B2005F77C1 /* Sources */,
 				249C62851CCA31B2005F77C1 /* Frameworks */,
 				249C62861CCA31B2005F77C1 /* Resources */,
-				76872E429367F4FBC36749B1 /* Copy Pods Resources */,
+				B2BFA7705829ECB1FEFF8AF0 /* [CP] Embed Pods Frameworks */,
+				F1C3308E8460D9B2566CD36C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -426,9 +444,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 249C62B01CCA31B2005F77C1 /* Build configuration list for PBXNativeTarget "MayLibreTests" */;
 			buildPhases = (
+				A185C77561F7076E149DBDD3 /* [CP] Check Pods Manifest.lock */,
 				249C62A01CCA31B2005F77C1 /* Sources */,
 				249C62A11CCA31B2005F77C1 /* Frameworks */,
 				249C62A21CCA31B2005F77C1 /* Resources */,
+				15D68164A45B997980891627 /* [CP] Embed Pods Frameworks */,
+				6331341CAE50C5832C05F263 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -487,6 +508,7 @@
 			files = (
 				248ED26E1CCEADD200D57EF9 /* export_rangemessage.xml in Resources */,
 				248774FF1D71DB0E008FCA2E /* MaySortOptionCell.xib in Resources */,
+				24C59F4B1E06F0C300635097 /* Settings.bundle in Resources */,
 				249C62C21CCA3B01005F77C1 /* MayEntryCell.xib in Resources */,
 				249C629E1CCA31B2005F77C1 /* LaunchScreen.storyboard in Resources */,
 				248774F81D71B718008FCA2E /* Entry.plist in Resources */,
@@ -494,6 +516,8 @@
 				248775041D71DF65008FCA2E /* MayFilterOptionCell.xib in Resources */,
 				249C62961CCA31B2005F77C1 /* Main.storyboard in Resources */,
 				248775091D71E7AB008FCA2E /* MayActionOptionCell.xib in Resources */,
+				1ED73AD8C592D9A906A14803 /* Pods-MayLibre-metadata.plist in Resources */,
+				F92B2DF16BD823E702745151 /* Pods-MayLibre-settings-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,34 +531,94 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		76872E429367F4FBC36749B1 /* Copy Pods Resources */ = {
+		15D68164A45B997980891627 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MayLibreTests/Pods-MayLibreTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		264EC084361D71E96DD7F350 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6331341CAE50C5832C05F263 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MayLibreTests/Pods-MayLibreTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A185C77561F7076E149DBDD3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B2BFA7705829ECB1FEFF8AF0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MayLibre/Pods-MayLibre-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F1C3308E8460D9B2566CD36C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MayLibre/Pods-MayLibre-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FA10F2156E29769613FA6276 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -720,7 +804,7 @@
 		};
 		249C62AE1CCA31B2005F77C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B543CBCED83E2B0FE1B8EE6 /* Pods-MayLibre.debug.xcconfig */;
+			baseConfigurationReference = A679D81E5F1819611EEAF0BA /* Pods-MayLibre.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -740,7 +824,7 @@
 		};
 		249C62AF1CCA31B2005F77C1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F12BEF5084F253CEB438BD3E /* Pods-MayLibre.release.xcconfig */;
+			baseConfigurationReference = F5CAC6D1C6BA4EA5D98F8E95 /* Pods-MayLibre.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -759,6 +843,7 @@
 		};
 		249C62B11CCA31B2005F77C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 42F4FB984F2EC3706A919E68 /* Pods-MayLibreTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
@@ -775,6 +860,7 @@
 		};
 		249C62B21CCA31B2005F77C1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0828FE82DA205F70AE18FC1A /* Pods-MayLibreTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
