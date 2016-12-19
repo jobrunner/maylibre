@@ -1,0 +1,120 @@
+
+/* Class = "UILabel"; text = "Year:"; ObjectID = "0ZV-lD-wWF"; */
+"0ZV-lD-wWF.text" = "Jahr:";
+
+/* Class = "UILabel"; text = "Place"; ObjectID = "2So-e7-7UK"; */
+"2So-e7-7UK.text" = "Ort";
+
+/* Class = "UINavigationItem"; title = "Summary"; ObjectID = "2St-Hd-7ZJ"; */
+"2St-Hd-7ZJ.title" = "Beschreibung";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "; ObjectID = "3PU-ai-Z6i"; */
+"3PU-ai-Z6i.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "6iq-Bk-Snb"; */
+"6iq-Bk-Snb.text" = "Beschreibung";
+
+/* Class = "UITextField"; text = "Es wird immer weier gehen, "; ObjectID = "7Dk-uu-DSq"; */
+"7Dk-uu-DSq.text" = "Es wird immer weier gehen, ";
+
+/* Class = "UILabel"; text = "Publisher"; ObjectID = "BbV-nm-IQM"; */
+"BbV-nm-IQM.text" = "Verlag";
+
+/* Class = "UILabel"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"; ObjectID = "Byp-8s-rOc"; */
+"Byp-8s-rOc.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam";
+
+/* Class = "UILabel"; text = "Edition"; ObjectID = "Eoi-4R-Ujv"; */
+"Eoi-4R-Ujv.text" = "Auflage";
+
+/* Class = "UILabel"; text = "ISBN:"; ObjectID = "FD0-aq-BZp"; */
+"FD0-aq-BZp.text" = "ISBN:";
+
+/* Class = "UILabel"; text = "ISBN:"; ObjectID = "Fdx-dH-cRb"; */
+"Fdx-dH-cRb.text" = "ISBN:";
+
+/* Class = "UILabel"; text = "Pages"; ObjectID = "Hsp-dH-Df5"; */
+"Hsp-dH-Df5.text" = "Seiten";
+
+/* Class = "UILabel"; text = "Place"; ObjectID = "I8i-Kd-RYw"; */
+"I8i-Kd-RYw.text" = "Ort";
+
+/* Class = "UILabel"; text = "Pages"; ObjectID = "JI5-EU-LJ5"; */
+"JI5-EU-LJ5.text" = "Seiten";
+
+/* Class = "UILabel"; text = "12.04.2016"; ObjectID = "KCf-5t-ykH"; */
+"KCf-5t-ykH.text" = "12.04.2016";
+
+/* Class = "UILabel"; text = "Year"; ObjectID = "Lam-HF-k8f"; */
+"Lam-HF-k8f.text" = "Erscheinungsjahr";
+
+/* Class = "UILabel"; text = "Personal Notes"; ObjectID = "O9G-a8-84D"; */
+"O9G-a8-84D.text" = "Eigene Notizen";
+
+/* Class = "UILabel"; text = "Place:"; ObjectID = "Qxq-0h-5rd"; */
+"Qxq-0h-5rd.text" = "Ort:";
+
+/* Class = "UILabel"; text = "12.04.2016"; ObjectID = "Ss0-bP-KGc"; */
+"Ss0-bP-KGc.text" = "12.04.2016";
+
+/* Class = "UIButton"; normalTitle = "Export"; ObjectID = "XNm-mW-ct6"; */
+"XNm-mW-ct6.normalTitle" = "Exportieren";
+
+/* Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "YVK-EG-xS2"; */
+"YVK-EG-xS2.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
+/* Class = "UILabel"; text = "Publisher"; ObjectID = "Yr8-iE-Byb"; */
+"Yr8-iE-Byb.text" = "Verlag";
+
+/* Class = "UITextView"; text = "Luhmann, Niklas"; ObjectID = "acD-NO-cL6"; */
+"acD-NO-cL6.text" = "Luhmann, Niklas";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "bJv-dh-mTa"; */
+"bJv-dh-mTa.text" = "Untertitel";
+
+/* Class = "UILabel"; text = "Authors / Editors"; ObjectID = "cMt-5w-YKB"; */
+"cMt-5w-YKB.text" = "Autoren / Herausgeber";
+
+/* Class = "UILabel"; text = "Year / Date of publishing"; ObjectID = "iyq-U1-7t2"; */
+"iyq-U1-7t2.text" = "Erscheinungsjahr";
+
+/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "jcU-ld-QPc"; */
+"jcU-ld-QPc.title" = "Done";
+
+/* Class = "UILabel"; text = "Add to Favorits"; ObjectID = "jph-te-W16"; */
+"jph-te-W16.text" = "Zu Favoriten hinzufügen";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "lj4-c2-h9W"; */
+"lj4-c2-h9W.text" = "Titel";
+
+/* Class = "UILabel"; text = "Updated:"; ObjectID = "nEW-b7-d60"; */
+"nEW-b7-d60.text" = "Aktualisiert:";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "nx0-kH-PaX"; */
+"nx0-kH-PaX.text" = "Description";
+
+/* Class = "UILabel"; text = "Pages:"; ObjectID = "q7S-Uo-Rxz"; */
+"q7S-Uo-Rxz.text" = "Seiten:";
+
+/* Class = "UILabel"; text = "Es wird immer weiter gehn, Musik als Träger von Ideen. Und wem das noch zu kurz ist, der denke daran, dass auch lange Beschreibungen nicht darüber hinwegtäuschen können, dass man mit vielen Worten möglichst wenig aussagen kann. Im Allgemeinen ist es zwar einfacher - denkt man - etwas wie in Buch in ausreichendem Masse zu würdigen, aber die Kernaussage ist das, was oft Schwierigkeiten in der Formulierung verursacht. Einfach deswegen, weil unsere Sprache vielfach nicht dafür geeignet erscheint, komplexe Zusammenhänge einfach auszudrücken. Denn unsere Sprache ist nicht unbedingt auf Zirkularität ausgelegt, die Kreise beschreiben kann."; ObjectID = "rOR-ut-49z"; */
+"rOR-ut-49z.text" = "Es wird immer weiter gehn, Musik als Träger von Ideen. Und wem das noch zu kurz ist, der denke daran, dass auch lange Beschreibungen nicht darüber hinwegtäuschen können, dass man mit vielen Worten möglichst wenig aussagen kann. Im Allgemeinen ist es zwar einfacher - denkt man - etwas wie in Buch in ausreichendem Masse zu würdigen, aber die Kernaussage ist das, was oft Schwierigkeiten in der Formulierung verursacht. Einfach deswegen, weil unsere Sprache vielfach nicht dafür geeignet erscheint, komplexe Zusammenhänge einfach auszudrücken. Denn unsere Sprache ist nicht unbedingt auf Zirkularität ausgelegt, die Kreise beschreiben kann.";
+
+/* Class = "UIButton"; normalTitle = "Change"; ObjectID = "tHf-wP-R4s"; */
+"tHf-wP-R4s.normalTitle" = "Ändern";
+
+/* Class = "UILabel"; text = "Lastname, Surename\nLastname, Surename"; ObjectID = "uBN-sO-HO8"; */
+"uBN-sO-HO8.text" = "Lastname, Surename\nLastname, Surename";
+
+/* Class = "UILabel"; text = "Created:"; ObjectID = "uBe-Zs-kOZ"; */
+"uBe-Zs-kOZ.text" = "Erstellt:";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "uee-LC-HAe"; */
+"uee-LC-HAe.text" = "Titel";
+
+/* Class = "UILabel"; text = "ISBN"; ObjectID = "xNG-np-QmH"; */
+"xNG-np-QmH.text" = "ISBN";
+
+/* Class = "UIButton"; normalTitle = "Delete entry"; ObjectID = "yNc-Lt-0cJ"; */
+"yNc-Lt-0cJ.normalTitle" = "Eintrag löschen";
+
+/* Class = "UILabel"; text = "Publisher:"; ObjectID = "yjt-Ad-DzU"; */
+"yjt-Ad-DzU.text" = "Verlag:";
