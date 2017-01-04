@@ -52,7 +52,8 @@
 
                          } completion:^(BOOL finished) {
 
-                             [UIView animateWithDuration:0.25 animations:^{
+                             [UIView animateWithDuration:0.25
+                                              animations:^{
 
                                  CGRect frame = destinationView.frame;
                                  frame.origin.x = endFrame.origin.x;
