@@ -162,6 +162,7 @@
 
 - (void)startScanning {
     
+    self.highlightView.frame = CGRectZero;
     [_session startRunning];
 
     if ([self.delegate respondsToSelector:@selector(barCodeScannerControllerDidStartScanning:)]) {
