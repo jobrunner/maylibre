@@ -96,8 +96,18 @@
                                           queue:dispatch_get_main_queue()];
     [_session addOutput:_metadataOutput];
 
-    _metadataOutput.metadataObjectTypes = _metadataOutput.availableMetadataObjectTypes;
-
+    if ([_metadataOutput.availableMetadataObjectTypes containsObject:AVMetadataObjectTypeEAN13Code]) {
+        _metadataOutput.metadataObjectTypes = @[AVMetadataObjectTypeEAN13Code];
+    }
+    else {
+        NSDictionary * userInfo
+        = @{NSLocalizedDescriptionKey:NSLocalizedString(@"Your iOS version dosn't support EAN13 codes.", nil)};
+        
+        *error = [NSError errorWithDomain:kMayBarCodeScannerErrorDomain
+                                     code:MayBarCodeScannerBarCodeType
+                                 userInfo:userInfo];
+    }
+    
     [self initPreviewLayer];
 }
 
