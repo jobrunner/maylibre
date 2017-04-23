@@ -8,6 +8,19 @@
 @import UIKit;
 #import "MayISBN.h"
 
+#define kMayBarCodeScannerErrorDomain                  @"MayLibreBarCodeScannerErrorDomain"
+
+typedef NS_ENUM(NSUInteger, MayBarCodeScannerErrorNumber) {
+    MayBarCodeScannerErrorOk = 0,
+    MayBarCodeScannerBarCodeType
+};
+
+typedef NS_ENUM(NSInteger, MayBarCodeScannerSetupResult) {
+    MayBarCodeScannerSetupResultSuccess,
+    MayBarCodeScannerSetupResultCameraNotAuthorized,
+    MayBarCodeScannerSetupResultSessionConfigurationFailed
+};
+
 @protocol MayBarCodeScannerDelegate;
 
 @interface MayBarCodeScannerController : UIViewController
