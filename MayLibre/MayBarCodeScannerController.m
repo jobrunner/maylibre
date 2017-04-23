@@ -24,6 +24,8 @@
 @property (nonatomic, strong) UIView *consoleView;
 @property (nonatomic, strong) UIButton *cancelButton;
 
+- (IBAction)tapGestureRecognizer:(UITapGestureRecognizer *)sender;
+
 @end
 
 @implementation MayBarCodeScannerController
@@ -281,4 +283,6 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
                              completion:nil];
 }
 
+- (IBAction)tapGestureRecognizer:(UITapGestureRecognizer *)sender {
+}
 @end
