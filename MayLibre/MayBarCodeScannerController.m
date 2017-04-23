@@ -62,20 +62,14 @@
 
 - (void)initScanner:(NSError **)error {
     
-    _highlightView = [UIView new];
-    _highlightView.autoresizingMask =
-    UIViewAutoresizingFlexibleTopMargin |
-    UIViewAutoresizingFlexibleLeftMargin |
-    UIViewAutoresizingFlexibleRightMargin |
-    UIViewAutoresizingFlexibleBottomMargin;
     
-    _highlightView.layer.borderColor = [UIColor greenColor].CGColor;
-    _highlightView.layer.borderWidth = 3;
-    
-    [self.view addSubview:_highlightView];
-    
+    // create a capture session
     _session = [AVCaptureSession new];
+    
+    // create an video capture device
     _device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
+    // create an input capture device from the video capture device
     _deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:_device
                                                          error:error];
     if (_deviceInput == nil) {
@@ -83,39 +77,58 @@
         return;
     }
 
+    // assign created inputed device to the av session
     [_session addInput:_deviceInput];
+
+    // configure session with metadata output
     _metadataOutput = [AVCaptureMetadataOutput new];
-    
     [_metadataOutput setMetadataObjectsDelegate:self
                                           queue:dispatch_get_main_queue()];
     [_session addOutput:_metadataOutput];
 
     _metadataOutput.metadataObjectTypes = _metadataOutput.availableMetadataObjectTypes;
 
-    _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
-    _previewLayer.frame = self.view.bounds;
-    _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    [self initPreviewLayer];
+}
+
+- (void)initPreviewLayer {
     
-    [self.view.layer addSublayer:_previewLayer];
-
-    _consoleView = UIView.new;
-    _consoleView.translatesAutoresizingMaskIntoConstraints = NO;
-    _consoleView.backgroundColor = UIColor.blackColor;
-    _consoleView.alpha = 0.5;
-
-    _cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _cancelButton.contentMode = UIViewContentModeScaleAspectFit;
-    [_cancelButton setTitle:NSLocalizedString(@"Cancel", nil)
-                   forState:UIControlStateNormal];
-    [_cancelButton setTitleColor:UIColor.whiteColor
-                        forState:UIControlStateNormal];
-    [_cancelButton addTarget:self
-                      action:@selector(didCancelTouchUpInside:)
+    self.highlightView = [UIView new];
+    self.highlightView.autoresizingMask =
+    UIViewAutoresizingFlexibleTopMargin |
+    UIViewAutoresizingFlexibleLeftMargin |
+    UIViewAutoresizingFlexibleRightMargin |
+    UIViewAutoresizingFlexibleBottomMargin;
+    
+    self.highlightView.layer.borderColor = [UIColor greenColor].CGColor;
+    self.highlightView.layer.borderWidth = 3;
+    
+    [self.view addSubview:self.highlightView];
+    
+    self.previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
+    self.previewLayer.frame = self.view.bounds;
+    self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    
+    [self.view.layer addSublayer:self.previewLayer];
+    
+    self.consoleView = UIView.new;
+    self.consoleView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.consoleView.backgroundColor = UIColor.blackColor;
+    self.consoleView.alpha = 0.5;
+    
+    self.cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.cancelButton.contentMode = UIViewContentModeScaleAspectFit;
+    [self.cancelButton setTitle:NSLocalizedString(@"Cancel", nil)
+                       forState:UIControlStateNormal];
+    [self.cancelButton setTitleColor:UIColor.whiteColor
+                            forState:UIControlStateNormal];
+    [self.cancelButton addTarget:self
+                          action:@selector(didCancelTouchUpInside:)
             forControlEvents:UIControlEventTouchUpInside];
-    [_consoleView addSubview:_cancelButton];
-    [self.view addSubview:_consoleView];
-    [self.view bringSubviewToFront:_highlightView];
+    [self.consoleView addSubview:self.cancelButton];
+    [self.view addSubview:self.consoleView];
+    [self.view bringSubviewToFront:self.highlightView];
     
     // Autolayout
     NSDictionary *viewsDictionary = @{@"consoleView":self.consoleView,
@@ -132,9 +145,9 @@
                                metrics:nil
                                views:viewsDictionary]];
     
-    [_cancelButton.heightAnchor constraintEqualToConstant:44.0].active = YES;
-    [_cancelButton.centerXAnchor constraintEqualToAnchor:_consoleView.centerXAnchor].active = YES;
-    [_cancelButton.centerYAnchor constraintEqualToAnchor:_consoleView.centerYAnchor].active = YES;
+    [self.cancelButton.heightAnchor constraintEqualToConstant:44.0].active = YES;
+    [self.cancelButton.centerXAnchor constraintEqualToAnchor:self.consoleView.centerXAnchor].active = YES;
+    [self.cancelButton.centerYAnchor constraintEqualToAnchor:self.consoleView.centerYAnchor].active = YES;
 }
 
 - (void)startScanning {
