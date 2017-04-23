@@ -64,12 +64,20 @@
 
 - (void)initScanner:(NSError **)error {
     
-    
     // create a capture session
     _session = [AVCaptureSession new];
     
     // create an video capture device
     _device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+
+    // restrict default auto focus to near scanning.
+    // User can tap a focus point to remove this behaviour and can focus by tap until scene changes.
+    if (_device.autoFocusRangeRestrictionSupported) {
+        if ([_device lockForConfiguration:nil]) {
+            _device.autoFocusRangeRestriction = AVCaptureAutoFocusRangeRestrictionNear;
+            [_device unlockForConfiguration];
+        }
+    }
     
     // create an input capture device from the video capture device
     _deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:_device
