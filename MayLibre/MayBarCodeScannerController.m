@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UIView *highlightView;
 @property (nonatomic, strong) UIView *consoleView;
 @property (nonatomic, strong) UIButton *cancelButton;
+@property (nonatomic, strong) id subjectAreaDidChangeObserver;
 
 - (IBAction)tapGestureRecognizer:(UITapGestureRecognizer *)sender;
 
@@ -302,6 +303,82 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
                              completion:nil];
 }
 
-- (IBAction)tapGestureRecognizer:(UITapGestureRecognizer *)sender {
+- (IBAction)tapGestureRecognizer:(UITapGestureRecognizer *)recognizer {
+
+    CGPoint layerPoint = [recognizer locationInView:recognizer.view];
+    CGPoint devicePoint = [self.previewLayer captureDevicePointOfInterestForPoint:layerPoint];
+    
+    [self focusWithMode:AVCaptureFocusModeAutoFocus
+         andRestriction:AVCaptureAutoFocusRangeRestrictionNone
+         exposeWithMode:AVCaptureExposureModeAutoExpose
+          atDevicePoint:devicePoint
+      subjectAreaChange:YES];
+    
 }
+
+- (void)focusWithMode:(AVCaptureFocusMode)focusMode
+       andRestriction:(AVCaptureAutoFocusRangeRestriction)restriction
+       exposeWithMode:(AVCaptureExposureMode)exposureMode
+        atDevicePoint:(CGPoint)point
+    subjectAreaChange:(BOOL)monitorSubjectAreaChange {
+    
+    if ([self.device lockForConfiguration:nil] ) {
+        
+        if (self.device.autoFocusRangeRestrictionSupported) {
+            self.device.autoFocusRangeRestriction = restriction;
+        }
+        
+        if (self.device.isFocusPointOfInterestSupported
+            && [self.device isFocusModeSupported:focusMode]) {
+                
+            self.device.focusPointOfInterest = point;
+            self.device.focusMode = focusMode;
+        }
+            
+        if (self.device.isExposurePointOfInterestSupported
+            && [self.device isExposureModeSupported:exposureMode]) {
+                
+            self.device.exposurePointOfInterest = point;
+            self.device.exposureMode = exposureMode;
+        }
+            
+        self.device.subjectAreaChangeMonitoringEnabled = monitorSubjectAreaChange;
+        
+        if (monitorSubjectAreaChange) {
+
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+            
+            void (^subjectAreaDidChangeBlock)(NSNotification *) = ^(NSNotification *notification) {
+                
+                if (self.device.focusMode == AVCaptureFocusModeLocked){
+
+                    [self resetFocus];
+                }
+            };
+            
+            self.subjectAreaDidChangeObserver
+            = [notificationCenter addObserverForName:AVCaptureDeviceSubjectAreaDidChangeNotification
+                                              object:nil
+                                               queue:nil
+                                          usingBlock:subjectAreaDidChangeBlock];
+        }
+        
+        [self.device unlockForConfiguration];
+    }
+}
+
+- (void)resetFocus {
+
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter removeObserver:self.subjectAreaDidChangeObserver
+                                  name:AVCaptureDeviceSubjectAreaDidChangeNotification
+                                object:nil];
+    
+    [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus
+         andRestriction:AVCaptureAutoFocusRangeRestrictionNear
+         exposeWithMode:AVCaptureExposureModeContinuousAutoExposure
+          atDevicePoint:CGPointMake(.5f, .5f)
+      subjectAreaChange:NO];
+}
+
 @end
