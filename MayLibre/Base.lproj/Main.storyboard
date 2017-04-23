@@ -94,7 +94,7 @@
                         <barButtonItem image="scanner" style="plain" id="sHR-uk-SPl">
                             <connections>
                                 <action selector="scanBarButtonSelected:" destination="nSv-bC-P36" id="f9I-Ku-DJw"/>
-                                <segue destination="ChO-LW-f61" kind="presentation" identifier="openScannerSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="qYo-VF-xo1"/>
+                                <segue destination="ChO-LW-f61" kind="presentation" identifier="openScannerSegue" modalPresentationStyle="fullScreen" id="qYo-VF-xo1"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="qFN-Xv-9bN"/>
@@ -1115,7 +1115,6 @@ Lastname, Surename</string>
                     <view key="view" contentMode="scaleToFill" id="vAK-UU-kQH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="MwY-kx-5Vd" appends="YES" id="Z2C-jE-ttR"/>
