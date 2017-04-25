@@ -65,6 +65,7 @@
 		24D02F5D1D03A26300C8110A /* Place+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F5A1D03A26300C8110A /* Place+CoreDataProperties.m */; };
 		24D02F5E1D03A26300C8110A /* Place.m in Sources */ = {isa = PBXBuildFile; fileRef = 24D02F5C1D03A26300C8110A /* Place.m */; };
 		24DFC5151DFECA10008562CB /* Entry.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DFC5141DFECA10008562CB /* Entry.m */; };
+		24DFF71A1EAD7A3F00A7D4E3 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24DFF7191EAD7A3F00A7D4E3 /* CloudKit.framework */; };
 		24E58BCF1DA2C339003F64AA /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E58BCE1DA2C339003F64AA /* CoreDataStack.m */; };
 		24E58BD21DA38DD5003F64AA /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E58BD01DA38DD5003F64AA /* Store.m */; };
 		537DE48D1DE707C9C4141F62 /* libPods-MayLibre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14A5C155D9B39054042E10E8 /* libPods-MayLibre.a */; };
@@ -189,7 +190,8 @@
 		24DFC5121DFEC8ED008562CB /* MayLibre-alpha-3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MayLibre-alpha-3.xcdatamodel"; sourceTree = "<group>"; };
 		24DFC5131DFECA10008562CB /* Entry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entry.h; sourceTree = "<group>"; };
 		24DFC5141DFECA10008562CB /* Entry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entry.m; sourceTree = "<group>"; };
-		24E58BC51DA1821F003F64AA /* MayLibreTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MayLibreTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		24DFF7181EAD7A3D00A7D4E3 /* MayLibre.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MayLibre.entitlements; sourceTree = "<group>"; };
+		24DFF7191EAD7A3F00A7D4E3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		24E58BCD1DA2C339003F64AA /* CoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataStack.h; sourceTree = "<group>"; };
 		24E58BCE1DA2C339003F64AA /* CoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataStack.m; sourceTree = "<group>"; };
 		24E58BD01DA38DD5003F64AA /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				249C62BA1CCA3342005F77C1 /* Foundation.framework in Frameworks */,
 				249C62B81CCA3338005F77C1 /* UIKit.framework in Frameworks */,
 				249C62B61CCA3319005F77C1 /* AVFoundation.framework in Frameworks */,
+				24DFF71A1EAD7A3F00A7D4E3 /* CloudKit.framework in Frameworks */,
 				249C62B41CCA3312005F77C1 /* CoreGraphics.framework in Frameworks */,
 				537DE48D1DE707C9C4141F62 /* libPods-MayLibre.a in Frameworks */,
 			);
@@ -229,6 +232,7 @@
 		10A999DC49B3E5EDC3557A16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				24DFF7191EAD7A3F00A7D4E3 /* CloudKit.framework */,
 				249C62B91CCA3342005F77C1 /* Foundation.framework */,
 				249C62B71CCA3338005F77C1 /* UIKit.framework */,
 				249C62B51CCA3319005F77C1 /* AVFoundation.framework */,
@@ -315,7 +319,6 @@
 				249C62A71CCA31B2005F77C1 /* MayLibreTests */,
 				249C62891CCA31B2005F77C1 /* Products */,
 				10A999DC49B3E5EDC3557A16 /* Frameworks */,
-				24E58BC51DA1821F003F64AA /* MayLibreTests-Bridging-Header.h */,
 				66298B0EFCDF829EA994BB75 /* Pods */,
 			);
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 		249C628A1CCA31B2005F77C1 /* MayLibre */ = {
 			isa = PBXGroup;
 			children = (
+				24DFF7181EAD7A3D00A7D4E3 /* MayLibre.entitlements */,
 				249C62941CCA31B2005F77C1 /* Main.storyboard */,
 				249C629C1CCA31B2005F77C1 /* LaunchScreen.storyboard */,
 				240135461D7050A6002DC339 /* MayTableViewOptions */,
@@ -479,7 +483,15 @@
 					249C62871CCA31B2005F77C1 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = L79BTFY6FV;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					249C62A31CCA31B2005F77C1 = {
 						CreatedOnToolsVersion = 7.3;
@@ -828,6 +840,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MayLibre/MayLibre.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
@@ -836,6 +849,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.jo.maylibre;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "71a77367-d26e-49af-aff3-b625ff004d5d";
+				PROVISIONING_PROFILE_SPECIFIER = MayLibre;
 				SWIFT_OBJC_BRIDGING_HEADER = "MayLibre/MayLibre-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -848,6 +863,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MayLibre/MayLibre.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = L79BTFY6FV;
@@ -856,6 +872,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.mayflower.jo.maylibre;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "71a77367-d26e-49af-aff3-b625ff004d5d";
+				PROVISIONING_PROFILE_SPECIFIER = MayLibre;
 				SWIFT_OBJC_BRIDGING_HEADER = "MayLibre/MayLibre-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
