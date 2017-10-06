@@ -206,7 +206,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // filter section
     if (indexPath.section == 1) {
-        MayFilterOptionCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        // MayFilterOptionCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         
     }
     
