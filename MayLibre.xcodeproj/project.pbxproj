@@ -29,11 +29,8 @@
 		248775081D71E7AB008FCA2E /* MayActionOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 248775061D71E7AB008FCA2E /* MayActionOptionCell.m */; };
 		248775091D71E7AB008FCA2E /* MayActionOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 248775071D71E7AB008FCA2E /* MayActionOptionCell.xib */; };
 		2487752F1D73091D008FCA2E /* MayTableViewOptionsBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 2487752E1D73091D008FCA2E /* MayTableViewOptionsBag.m */; };
-		248ED2611CCA8E2800D57EF9 /* MayISBN.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2601CCA8E2800D57EF9 /* MayISBN.m */; };
 		248ED2661CCCBE9800D57EF9 /* MayISBNTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2651CCCBE9800D57EF9 /* MayISBNTests.m */; };
-		248ED2691CCD02D000D57EF9 /* MayISBNFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2681CCD02D000D57EF9 /* MayISBNFormatter.m */; };
 		248ED26E1CCEADD200D57EF9 /* export_rangemessage.xml in Resources */ = {isa = PBXBuildFile; fileRef = 248ED26D1CCEADD200D57EF9 /* export_rangemessage.xml */; };
-		248ED2741CCECCCE00D57EF9 /* MayISBNRangeDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 248ED2731CCECCCE00D57EF9 /* MayISBNRangeDictionary.m */; };
 		249C628D1CCA31B2005F77C1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 249C628C1CCA31B2005F77C1 /* main.m */; };
 		249C62901CCA31B2005F77C1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 249C628F1CCA31B2005F77C1 /* AppDelegate.m */; };
 		249C62961CCA31B2005F77C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 249C62941CCA31B2005F77C1 /* Main.storyboard */; };
@@ -124,14 +121,8 @@
 		248775071D71E7AB008FCA2E /* MayActionOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MayActionOptionCell.xib; sourceTree = "<group>"; };
 		2487752D1D73091D008FCA2E /* MayTableViewOptionsBag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayTableViewOptionsBag.h; sourceTree = "<group>"; };
 		2487752E1D73091D008FCA2E /* MayTableViewOptionsBag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayTableViewOptionsBag.m; sourceTree = "<group>"; };
-		248ED25F1CCA8E2800D57EF9 /* MayISBN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayISBN.h; sourceTree = "<group>"; };
-		248ED2601CCA8E2800D57EF9 /* MayISBN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBN.m; sourceTree = "<group>"; };
 		248ED2651CCCBE9800D57EF9 /* MayISBNTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBNTests.m; sourceTree = "<group>"; };
-		248ED2671CCD02D000D57EF9 /* MayISBNFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayISBNFormatter.h; sourceTree = "<group>"; };
-		248ED2681CCD02D000D57EF9 /* MayISBNFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBNFormatter.m; sourceTree = "<group>"; };
 		248ED26D1CCEADD200D57EF9 /* export_rangemessage.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = export_rangemessage.xml; sourceTree = "<group>"; };
-		248ED2721CCECCCE00D57EF9 /* MayISBNRangeDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MayISBNRangeDictionary.h; sourceTree = "<group>"; };
-		248ED2731CCECCCE00D57EF9 /* MayISBNRangeDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MayISBNRangeDictionary.m; sourceTree = "<group>"; };
 		249C62881CCA31B2005F77C1 /* MayLibre.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MayLibre.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		249C628C1CCA31B2005F77C1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		249C628E1CCA31B2005F77C1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -275,19 +266,6 @@
 			name = MayAuthor;
 			sourceTree = "<group>";
 		};
-		2469A5EC1CCFE66200079F58 /* MayISBN */ = {
-			isa = PBXGroup;
-			children = (
-				248ED25F1CCA8E2800D57EF9 /* MayISBN.h */,
-				248ED2601CCA8E2800D57EF9 /* MayISBN.m */,
-				248ED2671CCD02D000D57EF9 /* MayISBNFormatter.h */,
-				248ED2681CCD02D000D57EF9 /* MayISBNFormatter.m */,
-				248ED2721CCECCCE00D57EF9 /* MayISBNRangeDictionary.h */,
-				248ED2731CCECCCE00D57EF9 /* MayISBNRangeDictionary.m */,
-			);
-			name = MayISBN;
-			sourceTree = "<group>";
-		};
 		2469A5F31CCFF58C00079F58 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,7 +320,6 @@
 				2425E1321CE01BCF00EEECB7 /* MayAuthor */,
 				2469A5F31CCFF58C00079F58 /* Models */,
 				249C628B1CCA31B2005F77C1 /* Supporting Files */,
-				2469A5EC1CCFE66200079F58 /* MayISBN */,
 				249C628E1CCA31B2005F77C1 /* AppDelegate.h */,
 				249C628F1CCA31B2005F77C1 /* AppDelegate.m */,
 				249C62BB1CCA3ACE005F77C1 /* MayEntriesController.h */,
@@ -656,14 +633,12 @@
 				24DFC5151DFECA10008562CB /* Entry.m in Sources */,
 				247A9F721CD2CA47007A0D78 /* Category.m in Sources */,
 				2487752F1D73091D008FCA2E /* MayTableViewOptionsBag.m in Sources */,
-				248ED2691CCD02D000D57EF9 /* MayISBNFormatter.m in Sources */,
 				24D02F5D1D03A26300C8110A /* Place+CoreDataProperties.m in Sources */,
 				2469A60C1CD02CA300079F58 /* MayISBNGoogleResolver.m in Sources */,
 				24C59F421E0603CD00635097 /* Someone+CoreDataClass.m in Sources */,
 				2401354E1D706100002DC339 /* MayTableViewOptionsController.m in Sources */,
 				24E58BD21DA38DD5003F64AA /* Store.m in Sources */,
 				24AD23681D7B6A7000A48C64 /* MaySearchController.m in Sources */,
-				248ED2611CCA8E2800D57EF9 /* MayISBN.m in Sources */,
 				249C62901CCA31B2005F77C1 /* AppDelegate.m in Sources */,
 				248000771DC6D6C900114F9F /* MayImagePickerController.m in Sources */,
 				249C62C61CCA3D8A005F77C1 /* MayBarCodeScannerController.m in Sources */,
@@ -683,7 +658,6 @@
 				247A9F711CD2CA47007A0D78 /* Category+CoreDataProperties.m in Sources */,
 				2469A6111CD0495100079F58 /* Entry+CoreDataProperties.m in Sources */,
 				248774FE1D71DB0E008FCA2E /* MaySortOptionCell.m in Sources */,
-				248ED2741CCECCCE00D57EF9 /* MayISBNRangeDictionary.m in Sources */,
 				249C628D1CCA31B2005F77C1 /* main.m in Sources */,
 				247A9F751CD4C278007A0D78 /* HomeController.m in Sources */,
 				247A9F6C1CD1F2BF007A0D78 /* MayDigest.m in Sources */,
